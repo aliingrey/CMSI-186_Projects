@@ -15,7 +15,7 @@
  *  @version 1.0.0  2017-01-02  Ali Ingrey Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-public class HelloWorld {
+public class Hello {
 	public static void main ( String [] args ) {
 		System.out.println( "Hello, world!" );
 	}
