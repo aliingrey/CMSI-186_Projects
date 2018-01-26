@@ -26,29 +26,29 @@ public class CalendarStuff extends CalendarStuffTester {
    * A listing of the days of the week, assigning numbers; Note that the week arbitrarily starts on Sunday
    * these are constants
    */
-   private static final int SUNDAY    = 0;
-   private static final int MONDAY    = SUNDAY    + 1;
-   private static final int TUESDAY   = MONDAY    + 1;
-   private static final int WEDNESDAY = TUESDAY    + 1;
-   private static final int THURSDAY  = WEDNESDAY    + 1;
-   private static final int FRIDAY    = THURSDAY    + 1;
-   private static final int SATURDAY  = FRIDAY    + 1;
+  private static final int SUNDAY    = 0;
+  private static final int MONDAY    = SUNDAY    + 1;
+  private static final int TUESDAY   = MONDAY    + 1;
+  private static final int WEDNESDAY = TUESDAY    + 1;
+  private static final int THURSDAY  = WEDNESDAY    + 1;
+  private static final int FRIDAY    = THURSDAY    + 1;
+  private static final int SATURDAY  = FRIDAY    + 1;
   
   /**
    * A listing of the months of the year, assigning numbers; I suppose these could be ENUMs instead, but whatever
    */
-   private static final int JANUARY    = 0;
-   private static final int FEBRUARY   = JANUARY + 1;
-   private static final int MARCH      = FEBRUARY + 1;
-   private static final int APRIL      = MARCH + 1;
-   private static final int MAY        = APRIL + 1;
-   private static final int JUNE       = MAY + 1;
-   private static final int JULY       = JUNE + 1;
-   private static final int AUGUST     = JULY + 1;
-   private static final int SEPTEMBER  = AUGUST + 1;
-   private static final int OCTOBER    = SEPTEMBER + 1;
-   private static final int NOVEMBER   = OCTOBER + 1;
-   private static final int DECEMBER   = NOVEMBER + 1;
+  private static final int JANUARY    = 0;
+  private static final int FEBRUARY   = JANUARY + 1;
+  private static final int MARCH      = FEBRUARY + 1;
+  private static final int APRIL      = MARCH + 1;
+  private static final int MAY        = APRIL + 1;
+  private static final int JUNE       = MAY + 1;
+  private static final int JULY       = JUNE + 1;
+  private static final int AUGUST     = JULY + 1;
+  private static final int SEPTEMBER  = AUGUST + 1;
+  private static final int OCTOBER    = SEPTEMBER + 1;
+  private static final int NOVEMBER   = OCTOBER + 1;
+  private static final int DECEMBER   = NOVEMBER + 1;
   
   /**
    * An array containing the number of days in each month
@@ -56,17 +56,17 @@ public class CalendarStuff extends CalendarStuffTester {
    */
   //days (in month(s)). has all the numbers of days in the month
   //not final because the 28 becomes 29 on leap year; we change the feb value 
-   private static int[]   days    = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-   private static int[]   leapdays    = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+  private static int[]   days    = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+  private static int[]   leapdays    = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
    //i can't say days[month] if month is a long, i have to say days[(int)month]
     //saying month is long, but treat it as a integer and use it in the array
   /**
    * The constructor for the class
    */
-   public CalendarStuff() {
-      System.out.println( "Calculting leap year" );
-   }
+  public CalendarStuff() {
+    System.out.println( "Calculting leap year" );
+  }
 
   /**
    * A method to determine if the year argument is a leap year or not<br />
@@ -74,15 +74,13 @@ public class CalendarStuff extends CalendarStuffTester {
    * @param    year  long containing four-digit year
    * @return   boolean which is true if the parameter is a leap year
    */
-   public static boolean isLeapYear( long year ) {
-    if ((year % 4 == 0) && (year % 100 != 0) || (year % 4 == 0)) {
-        return true;
+  public static boolean isLeapYear( long year ) {
+    if ((year % 4 == 0) && (year % 100 == 0) && (year % 400 == 0) || (year % 4 == 0) && (year % 400 != 0)) {
+      return true;
     } else {
-        return false;
+      return false;
     }
-   }
-
-
+  }
 
   /**
    * A method to calculate the days in a month, including leap years
@@ -92,11 +90,11 @@ public class CalendarStuff extends CalendarStuffTester {
    * notes: remember that the month variable is used as an indix, and so must
    *         be decremented to make the appropriate index value
    */
-   public static long daysInMonth( long month, long year ) {
-    if (isLeapYear(year) == true) {
-        return leapdays[(int)month];
+  public static long daysInMonth( long month, long year ) {
+    if (isLeapYear(year)) {
+      return leapdays[(int)month - 1];
     } else {
-        return days[(int)month];
+      return days[(int)month - 1];
     }
   }
 
@@ -110,19 +108,9 @@ public class CalendarStuff extends CalendarStuffTester {
    * @param    year2  long    containing four-digit year
    * @return          boolean which is true if the two dates are exactly the same
    */
-   public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-    if (year1 == year2) {
-        if (month1 == month2) {
-            if (day1 == day2) {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    } else {
-        return false;
-    }
-   }
+  public static boolean dateEquals( long month1, long day1, long year1, long month2, long day2, long year2 ) {
+    return (year1 == year2 && month1 == month2 && day1 == day2);
+  }
 
   /**
    * A method to compare the ordering of two dates
@@ -134,34 +122,30 @@ public class CalendarStuff extends CalendarStuffTester {
    * @param    year2  long   containing four-digit year
    * @return   !!!!! int    -1/0/+1 if first date is less than/equal to/greater than second
    */
-   public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
-      if (CalendarStuff.dateEquals(month1, day1, year1, month2, day2, year2) == true) {
-        return 0;
-      } else {
-        if (year1 > year2) {
-            return 1;
-        } else if (year1 < year2) {
-               return -1;//year2 is later
-        } else {
-        if (month1 != month2) {
-            if (month1 > month2) {
-                return 1; //month1 is later
-            } else if (month1 < month2) {
-                return -1; //month2 is later
-            }
-        } else {
-            if (day1 != day2) {
-                if (day1 > day2) {
-                    return 1; //day 1 is later
-                } else if (day1 < day2) {
-                    return -1; //day2 is later
-                }
-            }
+  public static int compareDate( long month1, long day1, long year1, long month2, long day2, long year2 ) {
+    if (CalendarStuff.dateEquals(month1, day1, year1, month2, day2, year2) == true) {
+      return 0;
+    } else {
+
+      if (year1 > year2) {
+        return 1;
+      } else if (year1 < year2) {
+        return -1;//year2 is later 
+
+      }  else {
+        if (month1 > month2) {
+          return 1; //month1 is later
+        } else if (month1 < month2) {
+          return -1; //month2 is later
+        } else if (day1 > day2) {
+          return 1; //day 1 is later
+        } else if (day1 < day2) {
+          return -1; //day2 is later
         }
-      }
-   }
+      } 
+    }
    return 2; //means method failed
-}
+ }
   /**
    * A method to return whether a date is a valid date
    * @param    month long    containing month number, starting with "1" for "January"
@@ -172,23 +156,18 @@ public class CalendarStuff extends CalendarStuffTester {
    *         be decremented to make the appropriate index value
    */
    public static boolean isValidDate( long month, long day, long year ) { //checks for 33rd day of sept
-            if ((month >= 0) && (month <= 11)) {
-                //keep going
-                if ((day > 0) && (day <= daysInMonth((month - 1), year))) {
+    if ((month > 0) && (month <= 12)) {
+      if ((day > 0) && (day <= daysInMonth((month), year))) {
                     //keep going
                     //check if it's a leap year
-                    return true;
-                } else if (isLeapYear(year) == true) {
-                    //if ((day > 0) && (day <=))
-
-                } else {
-                    return false;
-              }
-          
-        }
+        return true;
+      } else {
         return false;
+      }
     }
-    
+    return false;
+  }
+
   
 
   /**
@@ -197,43 +176,43 @@ public class CalendarStuff extends CalendarStuffTester {
    * @return         String containing the string value of the month (no spaces)
    */
    public static String toMonthString( long month ) { //if I pass in a 1, give me the string "January"
-     
-       switch((int)month - 1 ) {
-        case JANUARY: return "January";
-        case FEBRUARY:  return "February";
-        case MARCH:  return  "March";
-        case APRIL:  return  "April";
-        case MAY:  return  "May";
-        case JUNE:  return  "June";
-        case JULY:  return  "July";
-        case AUGUST:  return  "August";
-        case SEPTEMBER:  return  "September";
-        case OCTOBER: return  "October";
-        case NOVEMBER: return  "November";
-        case DECEMBER: return  "December";
-        
-      default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
-    }
-      
-   }
+
+   switch((int)month - 1 ) {
+    case JANUARY: return "January";
+    case FEBRUARY:  return "February";
+    case MARCH:  return  "March";
+    case APRIL:  return  "April";
+    case MAY:  return  "May";
+    case JUNE:  return  "June";
+    case JULY:  return  "July";
+    case AUGUST:  return  "August";
+    case SEPTEMBER:  return  "September";
+    case OCTOBER: return  "October";
+    case NOVEMBER: return  "November";
+    case DECEMBER: return  "December";
+
+    default: throw new IllegalArgumentException( "Illegal month value given to 'toMonthString()'." );
+  }
+
+}
 
   /**
    * A method to return a string version of the day of the week name
    * @param    day int    containing day number, starting with "1" for "Sunday"
    * @return       String containing the string value of the day (no spaces)
    */
-   public static String toDayOfWeekString( int day ) {
-      switch( day - 1 ) {
-        case MONDAY: return "Monday";
-        case TUESDAY: return "Tuesday";
-        case WEDNESDAY: return "Wednesday";
-        case THURSDAY: return "Thursday";
-        case FRIDAY: return "Friday";
-        case SATURDAY: return "Saturday";
-        case SUNDAY: return "Sunday";
-        default : throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
-      }
-   }
+  public static String toDayOfWeekString( int day ) {
+    switch( day - 1 ) {
+      case MONDAY: return "Monday";
+      case TUESDAY: return "Tuesday";
+      case WEDNESDAY: return "Wednesday";
+      case THURSDAY: return "Thursday";
+      case FRIDAY: return "Friday";
+      case SATURDAY: return "Saturday";
+      case SUNDAY: return "Sunday";
+      default : throw new IllegalArgumentException( "Illegal day value given to 'toDayOfWeekString()'." );
+    }
+  }
 
   /**
    * A method to return a count of the total number of days between two valid dates
@@ -245,7 +224,7 @@ public class CalendarStuff extends CalendarStuffTester {
    * @param    year2  long   containing four-digit year
    * @return          long   count of total number of days
    */
-   public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2) {
+  public static long daysBetween( long month1, long day1, long year1, long month2, long day2, long year2) {
       long dayCount = 0; //used in CountTheDays program
       int numLeaps = 0; //calculate number of leap years
       int highYear = 0;
@@ -255,7 +234,6 @@ public class CalendarStuff extends CalendarStuffTester {
       int lowMonth = 0;
       int lowDay = 0;
 
-
       if (compareDate(year1, month1, day1, year2, month2, day2) == 1) { //year 1 is later
         highYear = (int)year1;
         highMonth = (int)month1;
@@ -264,111 +242,43 @@ public class CalendarStuff extends CalendarStuffTester {
         lowMonth = (int)month2;
         lowDay = (int)day2;
 
-
       } else if (compareDate(year1, month1, day1, year2, month2, day2) == -1) { //year 2 is later
         highYear = (int)year2;
         highMonth = (int)month2;
         highDay = (int)day2;
         lowYear = (int)year1;
-        lowMonth = (int)month2;
-        lowDay = (int)day2;
-
-
+        lowMonth = (int)month1;
+        lowDay = (int)day1;
 
       } else {
         dayCount = 0;
       }
-
-      for (int i = lowYear; i <= highYear; i++) {
-        if (isLeapYear(i) == true) {
-            numLeaps++;
+      
+      for (int i = lowYear; i < highYear; i++) {
+        if (isLeapYear(i)) {
+          numLeaps++;
         }
       }
 
-      int differenceyear = (Math.abs(highYear - lowYear));
+      long differenceyear = (highYear - lowYear);
       dayCount += (differenceyear*365) + numLeaps;
-
-
-    if (highYear > lowYear) {
-    //12-30-2005 and 01-02-2006 (3 days later)
-      //push dec 30 forward a year + 365// - (days and months)
-      if (lowMonth > highMonth) {
-        if (isLeapYear(highYear) == false) {
-          for (int i = lowMonth; i < highMonth; i++) {
-            dayCount -= days[i];
-          }
+  
+      for (int i = 1; i < highMonth; i++) {
+        if (isLeapYear(highYear)) {
+          dayCount += leapdays[i];
+        } else {
+          dayCount += days[i];
         }
-         dayCount += (lowDay + 365) - highDay;
-
-      } else if (highMonth == lowMonth && lowDay == highDay) { 
-        dayCount += 0; //already added leap days and number of years
-
-      } else if (highMonth == lowMonth && highDay < lowDay) {
-        //08-15-2001 and 08-14-2002 (364 days later)
-        dayCount += lowDay + (differenceyear)*365 - highDay;
-
-      } else if (highMonth > lowMonth && lowDay > highDay) {
-        //03-15-2006 and 08-05-2007 (month bigger, day smaller) 
-        //03-15-2005 and 08-05-2008 (month bigger, day smaller * includes a leap year)
-        dayCount += lowDay + (differenceyear)*365 - numLeaps; 
-
-        //subtract months from 07 to 04
-        for (int i = lowMonth; i < highMonth; i++) {
-          if (isLeapYear(i) == true) {
-            dayCount -= leapdays[i];
-          } else {
-            dayCount -= days[i];
-          }
-        }
-        dayCount += ((highYear - lowYear)*365 - numLeaps); //left off hHERE
-      } else if (lowMonth > highMonth && lowDay < highDay) {
-      //11-15-2005 and 10-10-2008 (month smaller, day smaller)
-      //11-15-2001 and 07-10-2025 (month smaller, day smaller * with leap year)
-        for (int i = lowMonth; i < highMonth; i++) {
+      }
+      for (int i = 1; i < lowMonth; i++) {
+        if (isLeapYear(lowYear)) {
+          dayCount -= leapdays[i];
+        } else {
           dayCount -= days[i];
         }
-        dayCount += (differenceyear*365 + numLeaps) - (Math.abs(lowDay - highDay));
       }
-
-    } else if (lowYear > highYear) {
-
-    } else { //if the years are equal
-
-      for (int i = lowYear; i <= highYear; i++) {
-        if (isLeapYear(i) == true) {
-            numLeaps++;
-        }
-      }
-
-      dayCount += (differenceyear*365) + numLeaps;
-
-      
-      for (int i = lowMonth; i < highMonth; i++) {
-        dayCount += days[i - 1];
-      }
-      if (highMonth > lowMonth) {
-        //04/05/2002 and 02/05/2002
-        if (highDay > lowDay) {
-          dayCount = highDay - lowDay;
-        } else if (highDay < lowDay) { //05/10/2001 and 07/02/2001
-          dayCount = lowDay + ( days[lowMonth] + days[lowMonth + 1] - (highDay);
-
-        } else { //days are equal
-        }
-      } else if (highMonth < lowMonth) {
-
-
-      } else { //months are equal 03/05/2018 and 03/10/2018
-        if (highDay > lowDay) {
-          dayCount += Math.abs(highDay - lowDay);
-        } else if (highDay < lowDay) {
-          //03-16-2005 and 03-15-2005 (month same, day smaller)
-          dayCount += Math.abs(lowDay - highDay);            
-        } else {
-          dayCount = 0;
-        }
-      } 
-     }
-     return dayCount;
-    }
+      dayCount = dayCount + Math.abs(highDay - lowDay);
+      dayCount = Math.abs(dayCount); 
+    return dayCount;
+  }
 }
