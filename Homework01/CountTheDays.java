@@ -19,61 +19,13 @@
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-01-02  B.J. Johnson  Initial writing and release
  *  @version 1.0.1  2018-01-25  Ali Ingrey    Submitted for Homework 01 in Spring 2018
+  * @version 1.0.2  2018-01-28  Ali Ingrey    Edited to make corrections, re-committed
  
- public static long CountTheDays( long month1, long day1, long year1, long month2, long day2, long year2) {
-      long dayCount = 0; //used in CountTheDays program
-      int numLeaps = 0; //calculate number of leap years
-      int highYear = 0;
-      int highMonth = 0;
-      int highDay = 0;
-      int lowYear = 0;
-      int lowMonth = 0;
-      int lowDay = 0;
+public class CountTheDays {
+  public static void main ( String [] args ) {
 
-      if (compareDate(year1, month1, day1, year2, month2, day2) == 1) { //year 1 is later
-        highYear = (int)year1;
-        highMonth = (int)month1;
-        highDay = (int)day1;
-        lowYear = (int)year2;
-        lowMonth = (int)month2;
-        lowDay = (int)day2;
+    long dayCount = CalendarStuff.daysBetween( Long.parseLong( args[0] ), Long.parseLong( args[1] ), Long.parseLong( args[2] ), Long.parseLong( args[3] ), Long.parseLong( args[4] ), Long.parseLong( args[5] ) );
 
-      } else if (compareDate(year1, month1, day1, year2, month2, day2) == -1) { //year 2 is later
-        highYear = (int)year2;
-        highMonth = (int)month2;
-        highDay = (int)day2;
-        lowYear = (int)year1;
-        lowMonth = (int)month1;
-        lowDay = (int)day1;
-
-      } else {
-        dayCount = 0;
-      }
-      
-      for (int i = lowYear; i < highYear; i++) {
-        if (isLeapYear(i)) {
-          numLeaps++;
-        }
-      }
-
-      long differenceyear = (highYear - lowYear);
-      dayCount += (differenceyear*365) + numLeaps;
-  
-      for (int i = 1; i < highMonth; i++) {
-        if (isLeapYear(highYear)) {
-          dayCount += leapdays[i];
-        } else {
-          dayCount += days[i];
-        }
-      }
-      for (int i = 1; i < lowMonth; i++) {
-        if (isLeapYear(lowYear)) {
-          dayCount -= leapdays[i];
-        } else {
-          dayCount -= days[i];
-        }
-      }
-      dayCount = dayCount + Math.abs(highDay - lowDay);
-      dayCount = Math.abs(dayCount); 
-    return dayCount;
+    System.out.println( "The distance between the two dates is" + dayCount + "days");
   }
+}
