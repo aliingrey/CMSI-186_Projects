@@ -271,13 +271,14 @@ public class CalendarStuff extends CalendarStuffTester {
         }
       }
       
-      for (int i = lowYear; i <= highYear; i++) {
+      
+      for (int i = lowYear; i < highYear; i++) {
         if (isLeapYear(i)) {
           numLeaps++;
         }
       }
       
-      dayCount += (differenceyear*365);
+      dayCount += (differenceyear*365) + numLeaps;
       
       //if idate is after feb 28, (high year), then you do add one more
       dayCount = dayCount + highDay - lowDay;
