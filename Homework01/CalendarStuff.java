@@ -234,7 +234,7 @@ public class CalendarStuff extends CalendarStuffTester {
       int lowMonth = 0;
       int lowDay = 0;
 
-      if (compareDate(year1, month1, day1, year2, month2, day2) == 1) { //year 1 is later
+      if (compareDate(year1, month1, day1, year2, month2, day2) == -1) { //year 1 is later
         highYear = (int)year1;
         highMonth = (int)month1;
         highDay = (int)day1;
@@ -242,42 +242,45 @@ public class CalendarStuff extends CalendarStuffTester {
         lowMonth = (int)month2;
         lowDay = (int)day2;
 
-      } else if (compareDate(year1, month1, day1, year2, month2, day2) == -1) { //year 2 is later
+      } else if (compareDate(year1, month1, day1, year2, month2, day2) == 1) { //year 2 is later
         highYear = (int)year2;
         highMonth = (int)month2;
         highDay = (int)day2;
         lowYear = (int)year1;
         lowMonth = (int)month1;
         lowDay = (int)day1;
-
+       
       } else {
         dayCount = 0;
       }
-      
-      for (int i = lowYear; i < highYear; i++) {
-        if (isLeapYear(i)) {
-          numLeaps++;
-        }
-      }
 
       long differenceyear = (highYear - lowYear);
-      dayCount += (differenceyear*365) + numLeaps;
   
-      for (int i = 1; i < highMonth; i++) {
+      for (int i = 0; i < highMonth-1; i++) {
         if (isLeapYear(highYear)) {
           dayCount += leapdays[i];
         } else {
           dayCount += days[i];
         }
       }
-      for (int i = 1; i < lowMonth; i++) {
+      for (int i = 0; i < lowMonth-1; i++) {
         if (isLeapYear(lowYear)) {
           dayCount -= leapdays[i];
         } else {
           dayCount -= days[i];
         }
       }
-      dayCount = dayCount + Math.abs(highDay - lowDay);
+      
+      for (int i = lowYear; i <= highYear; i++) {
+        if (isLeapYear(i)) {
+          numLeaps++;
+        }
+      }
+      
+      dayCount += (differenceyear*365);
+      
+      //if idate is after feb 28, (high year), then you do add one more
+      dayCount = dayCount + highDay - lowDay;
       dayCount = Math.abs(dayCount); 
     return dayCount;
   }
