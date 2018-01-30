@@ -26,15 +26,15 @@ public class StringStuff {
     }
 
 
-  public static boolean isPalindrome( String s) {
-      String reverse = ""; //empty string to add to 
-      for (int i = s.length - 1; i >= 0; i--) {
+   public static boolean isPalindrome( String s ) {
+      String reverse = new String (""); //empty string to add to 
+      for (int i = s.length() - 1; i > -1; i--) {
           reverse = reverse + s.charAt(i);
+          //System.out.println(reverse);
       }
-      if (s == reverse) {
+      if (s.equals(reverse)) {
           return true;
         } else {
           return false;
         }
-      return true;
    }
