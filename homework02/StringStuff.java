@@ -13,17 +13,18 @@ public class StringStuff {
    * @return  boolean which is true if there is a vowel, or false otherwise
    */
    public static boolean containsVowel( String s ) {
-       for (int i = 0; i < 5; i++) {
-        if ((s.charAt(i) == 'a' ) || (s.charAt(i) == 'e')  || (s.charAt(i) == 'i') || (s.charAt(i) == 'o') || (s.charAt(i) == 'u')) {
+       for (int i = 0; i < s.length(); i++) {
+           if ((s.charAt(i) == 'a' ) || (s.charAt(i) == 'e')  || (s.charAt(i) == 'i') || (s.charAt(i) == 'o') || (s.charAt(i) == 'u') 
+               || (s.charAt(i) == 'A' ) || (s.charAt(i) == 'E')  || (s.charAt(i) == 'I') || (s.charAt(i) == 'O' ) || (s.charAt(i) == 'U')) {
                return true;
-        } else {
-            if (s.charAt(i) == 'y') {
-                return true;
-            } else {
-                return false;
-            }
-    
-    }
+           } else {
+               if ((s.charAt(i) == 'y') || (s.charAt(i) == 'Y')) {
+                   return true;
+               }
+            }      
+       }
+       return false;
+   }
 
 
    public static boolean isPalindrome( String s ) {
