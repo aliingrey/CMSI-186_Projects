@@ -24,8 +24,8 @@ import java.util.LinkedHashSet;
 
 public class StringStuff {
   
-  private static final String upperCaseAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  private static final String lowerCaseAlphabet = "abcdefghijklmnopqrstuvwxyz";
+  private static final String upperCaseAlphabet = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  private static final String lowerCaseAlphabet = " abcdefghijklmnopqrstuvwxyz";
 
   /**
    * Method to determine if a string contains one of the vowels: A, E, I, O, U, and sometimes Y.
@@ -72,7 +72,7 @@ public class StringStuff {
      String evens = "";
       for (int i = 0; i < s.length(); i++) {
      
-             if ((upperCaseAlphabet.indexOf(s.substring(i, i + 1).toUpperCase()) + 1) % 2 == 0) {
+             if ((upperCaseAlphabet.indexOf(s.substring(i, i + 1).toUpperCase())) % 2 == 0) {
                  evens += s.charAt(i);
              }
          
@@ -87,7 +87,7 @@ public class StringStuff {
    public static String oddsOnly( String s ) {
       String odds = "";
       for (int i = 0; i < s.length(); i++) {
-         if ((upperCaseAlphabet.indexOf(s.substring(i, i + 1).toUpperCase()) + 1) % 2 != 0) {
+         if ((upperCaseAlphabet.indexOf(s.substring(i, i + 1).toUpperCase())) % 2 != 0) {
                  odds += s.charAt(i);
              }
       }
@@ -105,16 +105,14 @@ public class StringStuff {
       String evenString = evensOnly(s);
       String noDuplicates = "";
        for (int i = 0; i < evenString.length(); i++) {
-           for (int j = i + 1; j < evenString.length(); i++) {
-               if (evenString.charAt(i) == evenString.charAt(j)) {
-                  noDuplicates += evenString.charAt(i);
-                  System.out.println(noDuplicates);
-               }
-            }
+           if (!evenString.substring(i + 1, evenString.length()).contains(evenString.substring(i, i + 1))) {
+            noDuplicates += evenString.substring(i, i + 1);
         }
       
-      return noDuplicates;
+
    }
+         return noDuplicates;
+}
   /**
    * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
    * numbers of the alphabet, but with no duplicate characters in the resulting string.
@@ -123,7 +121,16 @@ public class StringStuff {
    * @return  String containing the &quot;odd&quot; letters from the input without duplicates
    */
    public static String oddsOnlyNoDupes( String s ) {
-      return new String( "IK" );
+      String oddString = oddsOnly(s);
+      String noDuplicates = "";
+      for (int i = 0; i < oddString.length(); i++) {
+           if (!oddString.substring(i + 1, oddString.length()).contains(oddString.substring(i, i + 1))) {
+            noDuplicates += oddString.substring(i, i + 1);
+        }
+      
+
+   }
+      return noDuplicates;   
    }
 
   /**
