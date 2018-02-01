@@ -66,12 +66,7 @@ public class StringStuff {
 
 
   /**
-   * Method to return the characters in a string that correspond to the &quot;EVEN&quot; index
-   * numbers of the alphabet.  The letters B, D, F, H, J, L, N, P, R, T, V, X, and Z are even,
-   * corresponding to the numbers 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, and 26.
-   *
-   * @param s String containing the data to be parsed for &quot;even&quot; letters
-   * @return  String containing the &quot;even&quot; letters from the input
+   * make sure it goes through alphabet
    */
    public static String evensOnly( String s ) {
      String evens = "";
@@ -87,12 +82,7 @@ public class StringStuff {
    }
 
   /**
-   * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
-   * numbers of the alphabet.  The letters A, C, E, G, I, K, M, O, Q, S, U, W, and Y are odd,
-   * corresponding to the numbers 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, and 25.
-   *
-   * @param s String containing the data to be parsed for &quot;odd&quot; letters
-   * @return  String containing the &quot;odd&quot; letters from the input
+   * make sure it goes through alphabet
    */
    public static String oddsOnly( String s ) {
       String odds = "";
@@ -103,3 +93,76 @@ public class StringStuff {
       }
       return odds;
    }
+
+  /**
+   * Method to return the characters in a string that correspond to the &quot;EVEN&quot; index
+   * numbers of the alphabet, but with no duplicate characters in the resulting string.
+   *
+   * @param s String containing the data to be parsed for &quot;even&quot; letters
+   * @return  String containing the &quot;even&quot; letters from the input without duplicates
+   */
+   public static String evensOnlyNoDupes( String s ) {
+      String evenString = evensOnly(s);
+      String noDuplicates = "";
+       for (int i = 0; i < evenString.length(); i++) {
+           for (int j = i + 1; j < evenString.length(); i++) {
+               if (evenString.charAt(i) == evenString.charAt(j)) {
+                  noDuplicates += evenString.charAt(i);
+                  System.out.println(noDuplicates);
+               }
+            }
+        }
+      
+      return noDuplicates;
+   }
+  /**
+   * Method to return the characters in a string that correspond to the &quot;ODD&quot; index
+   * numbers of the alphabet, but with no duplicate characters in the resulting string.
+   *
+   * @param s String containing the data to be parsed for &quot;odd&quot; letters
+   * @return  String containing the &quot;odd&quot; letters from the input without duplicates
+   */
+   public static String oddsOnlyNoDupes( String s ) {
+      return new String( "IK" );
+   }
+
+  /**
+   * WORKS
+   */
+   public static String reverse( String s ) {
+      String reverse = "";
+      for (int i = s.length() - 1; i > -1; i--) {
+         reverse += s.charAt(i);
+      }
+      return reverse;
+   }
+
+  /**
+   * Main method to test the methods in this class
+   *
+   * @param args String array containing command line parameters
+   */
+   public static void main( String args[] ) {
+      String blah = new String( "Blah blah blah" );
+      String woof = new String( "BCDBCDBCDBCDBCD" );
+      String pal1 = new String( "a" );
+      String pal2 = new String( "ab" );
+      String pal3 = new String( "aba" );
+      String pal4 = new String( "amanaplanacanalpanama" );
+      String pal5 = new String( "abba" );
+      System.out.println( containsVowel( blah ) );
+      System.out.println( containsVowel( woof ) );
+      System.out.println( isPalindrome( pal1 ) );
+      System.out.println( isPalindrome( pal2 ) );
+      System.out.println( isPalindrome( pal3 ) );
+      System.out.println( isPalindrome( pal4 ) );
+      System.out.println( isPalindrome( pal5 ) );
+      System.out.println( "evensOnly()        returns: " + evensOnly( "REHEARSALSZ" ) );
+      System.out.println( "evensOnly()        returns: " + evensOnly( "REhearSALsz" ) );
+      System.out.println( "evensOnlyNoDupes() returns: " + evensOnlyNoDupes( "REhearSALsz" ) );
+      System.out.println( "oddsOnly()         returns: " + oddsOnly( "xylophones" ) );
+      System.out.println( "oddsOnly()         returns: " + oddsOnly( "XYloPHonES" ) );
+      System.out.println( "oddsOnlyNoDupes()  returns: " + oddsOnlyNoDupes( "XYloPHonES" ) );
+      System.out.println( "reverse()          returns: " + reverse( "REHEARSALSZ" ) );
+   }
+}
