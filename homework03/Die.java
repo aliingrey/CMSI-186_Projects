@@ -105,14 +105,21 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-      return "the die value is: " + d.pips;
+      return "the die value is: " + d.pips; //?? check!
    }
 
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      System.out.println( "Hello world from the Die class..." );
+    Die d1 = new Die(7); //7 sides
+    System.out.println( "Hello world from the Die class..." ); 
+    System.out.println(d1.roll());
+    System.out.println(d1.getValue());
+    //System.out.println(d1.setSides());
+    System.out.println(d1.toString());
+         
+    //d1.getValue(); d1.toString
    }
 
 }
