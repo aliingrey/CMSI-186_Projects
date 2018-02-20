@@ -26,7 +26,7 @@
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-09  B.J. Johnson  Initial writing and release
- 	@version 1.0.1  2018-02-22  Ali Ingrey    Submitted for Homework 03
+    @version 1.0.1  2018-02-22  Ali Ingrey    Submitted for Homework 03
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 //can do ds[x].roll();
@@ -51,12 +51,12 @@ public class DiceSet {
    * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
    */
    public DiceSet( int c, int s ) { // Constructor for a set of k dice each with n-sides (k ≥ 1 and n ≥ four)
-	ds = new Die[ c ];
-	count = c;
-	sides = s;
-	for (int i = 0; i < c; i ++) {
-	   	ds [i] = new Die(s);
-	  }
+    ds = new Die[ c ];
+    count = c;
+    sides = s;
+    for (int i = 0; i < c; i ++) {
+        ds [i] = new Die(s);
+      }
    }
 
  
@@ -64,9 +64,9 @@ public class DiceSet {
    * @return the sum of all the dice values in the set
    */
    public int sum() {
-   	sum = 0; //every time we call, reinitialize to zero
-   	for (int i = 0; i < count; i++) {
-   		sum += ds[i].getValue();
+    sum = 0; //every time we call, reinitialize to zero
+    for (int i = 0; i < count; i++) {
+        sum += ds[i].getValue();
      }
     return sum;
    }
@@ -77,10 +77,10 @@ public class DiceSet {
    *  the values of the dice in the set
    */
    public void roll() { //loop: rolls all of them
-   	for (int i = 0; i < count; i ++) {
-   		System.out.println( ds[i].roll() );
-   		//ds[i].roll();
-   	}
+    for (int i = 0; i < count; i ++) {
+        System.out.println( ds[i].roll() );
+        //ds[i].roll();
+    }
    }
 
   /**
@@ -121,16 +121,21 @@ public class DiceSet {
    * @return Class-wide version of the preceding instance method
    */
    public static String toString( DiceSet ds ) {
-      return "";
+       String result = "{" ;
+       for (int i = 0; i < ds.count; i++) {
+           result += "[" + ds.getIndividual() + "]";
+        }
+       result += "}";
+      return result;
    }
 
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
    public boolean isIdentical( DiceSet ds ) {
-   	//number of dice and the number of sides they have
-   	//if they are the name # of dice and the same # of sides
-   		//if we do, do the values compare? take the total
+    //number of dice and the number of sides they have
+    //if they are the name # of dice and the same # of sides
+        //if we do, do the values compare? take the total
       return true;
    }
   /**
