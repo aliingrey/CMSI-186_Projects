@@ -52,7 +52,6 @@ public class Die {
       throw new IllegalArgumentException("Can't roll the dice, you don't have enough sides! The minimum is 4.");
     } else {
       sides = nSides;
-     // nSides = sides;
     }
      //return sides;
    }
@@ -97,7 +96,8 @@ public class Die {
    * @return String representation of this Die
    */
    public String toString() {
-    return "the die value is: " + pips;
+    String str = "[" + Integer.toString(pips) + "]";
+    return str;
    }
 
   /**
@@ -114,10 +114,10 @@ public class Die {
    public static void main( String[] args ) {
     Die d1 = new Die(7); //7 sides
     System.out.println( "Hello world from the Die class..." ); 
-    System.out.println(d1.roll());
-    System.out.println(d1.getValue());
+    System.out.println( "your roll is " + d1.roll());
+    System.out.println( "the value of the roll is " + d1.getValue());
     //System.out.println(d1.setSides());
-    System.out.println(d1.toString());
+    System.out.println("the string form of the dice is " + d1.toString());
          
     //d1.getValue(); d1.toString
    }
