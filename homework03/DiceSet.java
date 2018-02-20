@@ -54,6 +54,10 @@ public class DiceSet {
     ds = new Die[ c ];
     count = c;
     sides = s;
+    if (count < 1) {
+    	throw new IllegalArgumentException("You don't have enough die");
+    }
+
     for (int i = 0; i < c; i ++) {
         ds [i] = new Die(s);
       }
@@ -120,24 +124,42 @@ public class DiceSet {
   /**
    * @return Class-wide version of the preceding instance method
    */
-   public static String toString( DiceSet ds ) {
+   public static String toString( DiceSet ds1 ) {
+   	return ds1.toString();
+   	/*
        String result = "{" ;
        for (int i = 0; i < ds.count; i++) {
-           result += "[" + ds.getIndividual() + "]";
+           result += "[" + ds1.ds[i].toString() + "]"; //getIndividual()
+           //    String str = "[" + Integer.toString(pips) + "]";
+
         }
        result += "}";
       return result;
+      */
    }
+
 
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
    public boolean isIdentical( DiceSet ds ) {
-    //number of dice and the number of sides they have
-    //if they are the name # of dice and the same # of sides
-        //if we do, do the values compare? take the total
-      return true;
-   }
+       for (int i = 0; i < count - 1; i++) {
+        for (int k = 0; k < count - 1; k++) {
+            if (ds[i] == ds[i + 1]) {
+                System.out.println("the dice have the same number of sides");
+                for (int i = 0; i < count - 1; i++) {
+                    for (int k = 0; k < count - 1; k++) {
+                        if (ds[i].sum() == ds[i + 1].sum()) {
+                            System.out.println("the sum of the dice arrays are the same");
+                            return true;
+                        }
+                    }
+                }
+                return false;
+         }
+        }
+    }
+}
   /**
    * A little test main to check things out
    */
@@ -145,6 +167,7 @@ public class DiceSet {
       // You do this part!
       DiceSet AliGame = new DiceSet(2, 5);
       AliGame.roll();
+
       String result = new String();
       System.out.println(AliGame.toString());
    }
