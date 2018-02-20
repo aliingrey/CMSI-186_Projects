@@ -140,8 +140,8 @@ public class DiceSet {
       // You do this part!
       DiceSet AliGame = new DiceSet(2, 5);
       AliGame.roll();
-      String result = new String;
-      System.out.println(AliGame.toString);
+      String result = new String();
+      System.out.println(AliGame.toString());
    }
 
 }
