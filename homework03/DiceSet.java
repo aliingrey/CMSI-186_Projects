@@ -29,6 +29,8 @@
  	@version 1.0.1  2018-02-22  Ali Ingrey    Submitted for Homework 03
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+//can do ds[x].roll();
+
 public class DiceSet {
   /**
    * private instance data
@@ -36,7 +38,7 @@ public class DiceSet {
    private int count;
    private int sides;
    private Die[] ds = null; //creates aan array of dice objects
-   //can do ds[x].roll();
+   
    private int sum = 0;
 
 
@@ -48,12 +50,14 @@ public class DiceSet {
    * @throws IllegalArgumentException if one or both arguments don't make sense
    * @note   parameters are checked for validity; invalid values throw "IllegalArgumentException"
    */
-   public DiceSet( int count, int sides ) { // Constructor for a set of k dice each with n-sides (k ≥ 1 and n ≥ four)
-	    ds = new Die[ count ];
-	    for (int i = 0; i < count - 1; i ++) {
-	    	ds [i] = new Die(sides);
-	    }
-	}
+   public DiceSet( int c, int s ) { // Constructor for a set of k dice each with n-sides (k ≥ 1 and n ≥ four)
+	ds = new Die[ c ];
+	count = c;
+	sides = s;
+	for (int i = 0; i < c; i ++) {
+	   	ds [i] = new Die(s);
+	  }
+   }
 
  
   /**
@@ -61,9 +65,10 @@ public class DiceSet {
    */
    public int sum() {
    	sum = 0; //every time we call, reinitialize to zero
-   	//for loop
-   		//sum += Die.ds.getValue(i);
-      return 0;
+   	for (int i = 0; i < count; i++) {
+   		sum += ds[i].getValue();
+     }
+    return sum;
    }
 
   /**
@@ -71,9 +76,11 @@ public class DiceSet {
    *  NOTE: you will need to use one of the "toString()" methods to obtain
    *  the values of the dice in the set
    */
-   public void roll() {
-   	//rolls all of them
-   	//loop
+   public void roll() { //loop: rolls all of them
+   	for (int i = 0; i < count; i ++) {
+   		System.out.println( ds[i].roll() );
+   		//ds[i].roll();
+   	}
    }
 
   /**
@@ -82,10 +89,12 @@ public class DiceSet {
    * @return the integer value of the newly rolled die
    * @trhows IllegalArgumentException if the index is out of range
    */
-   public int rollIndividual( int dieIndex ) {
-   	//hand me an index and i'm going to call the roll method on that single instance to make a new one
-      return 0;
+   public int rollIndividual( int dieIndex ) { //hand me an index and i'm going to call the roll method on that single instance to make a new one
+    return ds[dieIndex].roll();
    }
+
+
+
 
   /**
    * Gets the value of the die in this set indexed by 'dieIndex'
@@ -93,14 +102,18 @@ public class DiceSet {
    * @trhows IllegalArgumentException if the index is out of range
    */
    public int getIndividual( int dieIndex ) {
-      return -999;
+      return ds[dieIndex].getValue();
    }
 
   /**
    * @return Public Instance method that returns a String representation of the DiceSet instance
    */
    public String toString() {
-      String result = "";
+       String result = "{" ;
+       for (int i = 0; i < count; i++) {
+           result += ds[i].toString();
+        }
+       result += "}";
       return result;
    }
 
@@ -125,6 +138,10 @@ public class DiceSet {
    */
    public static void main( String[] args ) {
       // You do this part!
+      DiceSet AliGame = new DiceSet(2, 5);
+      AliGame.roll();
+      String result = new String;
+      System.out.println(result);
    }
 
 }
