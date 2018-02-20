@@ -141,7 +141,7 @@ public class DiceSet {
       DiceSet AliGame = new DiceSet(2, 5);
       AliGame.roll();
       String result = new String;
-      System.out.println(result);
+      System.out.println(AliGame.toString);
    }
 
 }
