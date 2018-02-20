@@ -39,7 +39,7 @@ public class DiceSet {
    private int sides;
    private Die[] ds = null; //creates aan array of dice objects
    
-   private int sum = 0;
+   private int diceSum = 0;
 
 
    // public constructor:
@@ -68,11 +68,11 @@ public class DiceSet {
    * @return the sum of all the dice values in the set
    */
    public int sum() {
-    sum = 0; //every time we call, reinitialize to zero
+    diceSum = 0; //every time we call, reinitialize to zero
     for (int i = 0; i < count; i++) {
-        sum += ds[i].getValue();
+        diceSum += ds[i].getValue();
      }
-    return sum;
+    return diceSum;
    }
 
   /**
@@ -82,8 +82,8 @@ public class DiceSet {
    */
    public void roll() { //loop: rolls all of them
     for (int i = 0; i < count; i ++) {
-        System.out.println( ds[i].roll() );
-        //ds[i].roll();
+        //System.out.println( ds[i].roll() );
+        ds[i].roll();
     }
    }
 
@@ -96,9 +96,6 @@ public class DiceSet {
    public int rollIndividual( int dieIndex ) { //hand me an index and i'm going to call the roll method on that single instance to make a new one
     return ds[dieIndex].roll();
    }
-
-
-
 
   /**
    * Gets the value of the die in this set indexed by 'dieIndex'
@@ -142,24 +139,12 @@ public class DiceSet {
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
-   public boolean isIdentical( DiceSet ds ) {
-       for (int i = 0; i < count - 1; i++) {
-        for (int k = 0; k < count - 1; k++) {
-            if (ds[i] == ds[i + 1]) {
-                System.out.println("the dice have the same number of sides");
-                for (int i = 0; i < count - 1; i++) {
-                    for (int k = 0; k < count - 1; k++) {
-                        if (ds[i].sum() == ds[i + 1].sum()) {
-                            System.out.println("the sum of the dice arrays are the same");
-                            return true;
-                        }
-                    }
-                }
-                return false;
-         }
-        }
-    }
-}
+   public boolean isIdentical( DiceSet ds1, DiceSet ds ) {
+   	if ( (ds1.count == ds.count) && (ds1.sides == ds.sides) && (ds1.sum() == ds.sum()) ) {
+   	  return true;
+   		}
+   	  return false;
+	} 
   /**
    * A little test main to check things out
    */
@@ -170,6 +155,8 @@ public class DiceSet {
 
       String result = new String();
       System.out.println(AliGame.toString());
+
+      //AliGame.isIdentical();
    }
 
 }
