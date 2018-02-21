@@ -61,7 +61,7 @@ public class Die {
    * @return  integer value of the result of the roll, randomly selected
    */
    public int roll() {
-    pips = (int)Math.floor(Math.random()* (sides - 1)) + 1;
+    pips = (int)Math.floor(Math.random()* sides) + 1;
     return pips;
    }
 
