@@ -12,18 +12,17 @@ public class HighRoll {
    System.out.println( "\nWelcome to Ali's Dice Rolling Game! \n" );
     
     if (args.length == 0) {
-    	System.out.println("Usage: java HighRoll <# dice> <# sides>");
+    	System.out.println("Usage Instructions - java HighRoll enter two numbers: <# dice> <# sides>");
     	System.exit(-1);
     }
 
-    System.out.println( "Instructions: enter two numbers, so the first is <# of dice> and the second is <# of sides>" );
     dSet = new DiceSet(Integer.parseInt(args[0]), Integer.parseInt(args[1]) );
       
     BufferedReader input = new BufferedReader( new InputStreamReader( System.in ) );
 
     while( true ) {
-    	 System.out.println( "Type in the number of the following menu options you want to do:");
-   		 System.out.println( "\n Option 1 in the list must be: ROLL ALL THE DICE \n" + 
+    	System.out.println( "Type in the number of the following menu options you want to do:");
+   		System.out.println( "\n Option 1 in the list must be: ROLL ALL THE DICE \n" + 
     					" Option 2 in the list must be: ROLL A SINGLE DIE \n" +
     					" Option 3 in the list must be: CALCULATE THE SCORE FOR THIS SET \n" + 
     					" Option 4 in the list must be: SAVE THIS SCORE AS HIGH SCORE   \n" +
