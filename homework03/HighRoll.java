@@ -1,47 +1,30 @@
-/*
-
-You will need to have a main that constructs the dice set, has rolls, and displays scores from each roll. 
-
-The rules are as follows:
-
-Implement a Textual User Interface (TUI) on the command line. 
-This will display a list of options to the user, and will prompt for input. 
-Based on that input your program will do what the user selected, then will display the results, a blank line or two, and then re-display the options.
-
-Option 1 in the list must be: ROLL ALL THE DICE
-Option 2 in the list must be: ROLL A SINGLE DIE
-Option 3 in the list must be: CALCULATE THE SCORE FOR THIS SET
-Option 4 in the list must be: SAVE THIS SCORE AS HIGH SCORE
-Option 5 in the list must be: DISPLAY THE HIGH SCORE
-Option 6 in the list must be: ENTER 'Q' TO QUIT THE PROGRAM
-*/
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class HighRoll {
-  
-    public int currentScore = 0;
-    public int highScore = 0;
+   private int currentScore;
+   private int highScore;
+
     
    public static void main( String args[] ) {
+   
     
     DiceSet dSet;
-      System.out.println( "\n Welcome to Ali's Dice Rolling Game! \n" );
-      System.out.println( "     Press the 'q' key to quit the program." );
-      
+    
+    System.out.println( "\n Welcome to Ali's Dice Rolling Game! \n" );
+    System.out.println( "     Press the 'q' key to quit the program." );
+    
+    dSet = new DiceSet(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
     if (args.length == 0) {
         //prompt for two arguments
         //create new DiceSet with arguments: dSet = new DiceSet(args[0], args[1]);
+        //} else if (args.length == 2) {
         
-    
-    } else if (args.length == 2) {
-        dSet = new DiceSet(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-    } else {
-        System.out.println( "  Instructions: enter two numbers, so the first is <# of dice> and the second is <# of sides>" );
-        //break;
-    }
+        } else {
+            System.out.println( "  Instructions: enter two numbers, so the first is <# of dice> and the second is <# of sides>" );
+            //break
+        }
     
     System.out.println( "type in the number of the following menu options you want to do: ");
     System.out.println( "Option 1 in the list must be: ROLL ALL THE DICE \n Option 2 in the list must be: ROLL A SINGLE DIE \n Option 3 in the list must be: CALCULATE THE SCORE FOR THIS SET \n Option 4 in the list must be: SAVE THIS SCORE AS HIGH SCORE Option 5 in the list must be: DISPLAY THE HIGH SCORE \n Option 6 in the list must be: ENTER 'Q' TO QUIT THE PROGRAM" );
@@ -62,8 +45,16 @@ public class HighRoll {
                   dSet.roll();
               }
               if('2' == inputLine.charAt(0) ) { //Option 2 in the list must be: ROLL A SINGLE DIE
-                  System.out.println("which dice would you like to roll?" );
+                  
                   System.out.println( dSet );
+                  System.out.println("would you like to roll an individual dice?" );
+                  
+                  if ( ('Y' == inputLine.charAt(0) ) || ('y' == inputLine.charAt(0) ) ) {
+                      System.out.println("which dice would you like to roll?" );
+                      rollIndividual( inputLine.charAt(0) );
+                    } 
+                  
+                  //rollIndividual( int dieIndex ) 
                   
                   /*
                   * For option 2, you may present a second prompt to get the number of the die to roll, 
@@ -83,10 +74,10 @@ public class HighRoll {
                   dSet.sum();
               }
               if('4' == inputLine.charAt(0) ) { //Option 4 in the list must be: SAVE THIS SCORE AS HIGH SCORE
-                  highScore = dSet.sum();
+                  //highScore = dSet.sum();
               }
               if('5' == inputLine.charAt(0) ) { //Option 5 in the list must be: DISPLAY THE HIGH SCORE
-                  System.out.println("highscore: " + highScore);
+                  //System.out.println("highscore: " + highScore);
               }
               if(( 'q' == inputLine.charAt(0) ) || ( 'Q' == inputLine.charAt(0) ) || ('6' == inputLine.charAt(0) )) { //Option 6 in the list must be: ENTER 'Q' TO QUIT THE PROGRAM
                    break;
