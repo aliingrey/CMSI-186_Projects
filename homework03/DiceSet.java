@@ -1,7 +1,7 @@
 /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *  File name     :  DiceSet.java
  *  Purpose       :  Provides a class describing a set of dice
- *  Author        :  B.J. Johnson
+ *  Author        :  Ali Ingrey
  *  Date          :  2017-02-09
  *  Description   :  This class provides everything needed (pretty much) to describe a set of dice.  The
  *                   idea here is to have an implementing class that uses the Die.java class.  Includes
@@ -37,7 +37,7 @@ public class DiceSet {
    */
    private int count;
    private int sides;
-   private Die[] ds = null; //creates aan array of dice objects
+   private Die[] ds = null; //creates an array of dice objects
    
    private int diceSum = 0;
 
@@ -59,7 +59,7 @@ public class DiceSet {
     }
 
     for (int i = 0; i < c; i ++) {
-        ds [i] = new Die(s);
+        ds[i] = new Die(s);
       }
    }
 
@@ -82,7 +82,6 @@ public class DiceSet {
    */
    public void roll() { //loop: rolls all of them
     for (int i = 0; i < count; i ++) {
-        //System.out.println( ds[i].roll() );
         ds[i].roll();
     }
    }
@@ -123,40 +122,39 @@ public class DiceSet {
    */
    public static String toString( DiceSet ds1 ) {
    	return ds1.toString();
-   	/*
-       String result = "{" ;
-       for (int i = 0; i < ds.count; i++) {
-           result += "[" + ds1.ds[i].toString() + "]"; //getIndividual()
-           //    String str = "[" + Integer.toString(pips) + "]";
-
-        }
-       result += "}";
-      return result;
-      */
    }
 
 
   /**
    * @return  tru iff this set is identical to the set passed as an argument
    */
-   public boolean isIdentical( DiceSet ds1, DiceSet ds ) {
-   	if ( (ds1.count == ds.count) && (ds1.sides == ds.sides) && (ds1.sum() == ds.sum()) ) {
-   	  return true;
+   public boolean isIdentical( DiceSet ds2) {
+   	if (this.sides == ds2.sides) {
+   		if (this.count == ds2.sides) {
+   			if (this.sum() == ds2.sum() ) {
+   				return true;
+   			}
    		}
+    }
    	  return false;
-	} 
+    } 
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      // You do this part!
-      DiceSet AliGame = new DiceSet(2, 5);
-      AliGame.roll();
+      DiceSet ds = new DiceSet(4, 6);
+
+      ds.roll(); // System.out.println("roll: " + AliGame.roll() );
+
+      System.out.println("sum: " + ds.sum() );
 
       String result = new String();
-      System.out.println(AliGame.toString());
+      System.out.println(ds.toString());
 
-      //AliGame.isIdentical();
+
+      DiceSet ds2 = new DiceSet(7, 5);
+      ds.isIdentical(ds2);
+
    }
 
 }
