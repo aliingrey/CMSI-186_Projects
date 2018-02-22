@@ -129,7 +129,7 @@ public class DiceSet {
    */
    public boolean isIdentical( DiceSet ds2) {
     if (this.sides == ds2.sides) {
-        if (this.count == ds2.sides) {
+        if (this.count == ds2.count) {
             if (this.sum() == ds2.sum() ) {
                 return true;
             }
