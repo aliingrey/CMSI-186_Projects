@@ -40,7 +40,6 @@ public class Die {
    private int pips;
    private final int MINIMUM_SIDES = 4;
 
-   // public constructor:
   /**
    * constructor - way of creating an object (instantiation of a thing) from a class (def of a thing)
    * @param nSides int value containing the number of sides to build on THIS Die
@@ -101,7 +100,7 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-      return "the die value is: " + Integer.toString(d.pips);
+      return "the die value is: " + d.pips; 
    }
 
   /**
@@ -109,10 +108,15 @@ public class Die {
    */
    public static void main( String[] args ) {
     Die d1 = new Die(7);
-    System.out.println( "Welcome to the Die class!" ); 
-    System.out.println( "your roll is " + d1.roll());
+    System.out.println( "\nWelcome to the Die class!" ); 
+    System.out.println( "your roll is: " + d1.roll());
     System.out.println( "the value of the roll is " + d1.getValue() );
     System.out.println("the string form of the dice is " + d1.toString() );
+    
+    d1.setSides(100);
+    System.out.println( "\nSet sides to 100." ); 
+    System.out.println( "your roll with a 100-sided dice is: " + d1.roll());
+    
    }
 
 }
