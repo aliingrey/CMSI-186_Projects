@@ -92,7 +92,7 @@ public class DiceSet {
    * @return the integer value of the newly rolled die
    * @trhows IllegalArgumentException if the index is out of range
    */
-   public int rollIndividual( int dieIndex ) { //hand me an index and i'm going to call the roll method on that single instance to make a new one
+   public int rollIndividual( int dieIndex ) {
     return ds[dieIndex].roll();
    }
 
@@ -142,21 +142,38 @@ public class DiceSet {
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-      System.out.println("welcome to DiceSet.java");
+      System.out.println("\nWelcome to DiceSet.java!");
       
       DiceSet ds = new DiceSet(4, 6);
-      
-      ds.roll(); 
+      ds.roll();
       
       String result = new String();
-      System.out.println("here is your dice set:  " + ds.toString());
-
-      System.out.println("the sum of your dice set:  " + ds.sum() );
-
-      DiceSet ds2 = new DiceSet(7, 5);
-      System.out.println("the your dice set is identical to DiceSet ds2:  " + ds.isIdentical(ds2) );
-     
-
+      System.out.println("\nHere is your dice set:  " + ds.toString());
+      
+      DiceSet ds2 = new DiceSet(4, 6);
+      ds2.roll();
+      
+      System.out.println("\nindividual dice at position 1: " + ds.getIndividual(0)); 
+      System.out.println("Roll individual dice at position 1: " + ds.rollIndividual(0));
+      System.out.println("Here is your new dice set with the dice at position 1 rolled again:  " + ds.toString());
+      
+      System.out.println("\nindividual dice at position 2: " + ds.getIndividual(1)); 
+      System.out.println("Roll individual dice at position 2: " + ds.rollIndividual(1));
+      System.out.println("Here is your new dice set with the dice at position 2 rolled again:  " + ds.toString());
+      
+      System.out.println("\nindividual dice at position 3: " + ds.getIndividual(2)); 
+      System.out.println("Roll individual dice at position 3: " + ds.rollIndividual(2));
+      System.out.println("Here is your new dice set with the dice at position 3 rolled again:  " + ds.toString());
+      
+      System.out.println("\nindividual dice at position 4: " + ds.getIndividual(3)); 
+      System.out.println("Roll individual dice at position 4: " + ds.rollIndividual(3));
+      System.out.println("Here is your new dice set with the dice at position 4 rolled again:  " + ds.toString());
+      
+      System.out.println("\nthe sum of your dice set:  " + ds.sum() );
+      
+      System.out.println("\nHere is your second dice set:  " + ds2.toString());
+      System.out.println("the sum of your second dice set:  " + ds2.sum() );
+      System.out.println("the first dice set is identical to the second dice set: " + ds.isIdentical(ds2) );
    }
 
 }
