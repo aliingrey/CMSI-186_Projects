@@ -53,7 +53,6 @@ public class Die {
     } else {
       sides = nSides;
     }
-     //return sides;
    }
 
   /**
@@ -73,9 +72,6 @@ public class Die {
    * @return the pip count of THIS die instance
    */
    public int getValue() {
-      /* if (pips == null) {
-        throw new IllegalArgumentException("dice roll is not a number");
-      }  */
       return pips;
     }
 
@@ -105,21 +101,18 @@ public class Die {
    * @return String representation of this Die
    */
    public static String toString( Die d ) {
-      return "the die value is: " + d.pips; //?? check!
+      return "the die value is: " + Integer.toString(d.pips);
    }
 
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
-    Die d1 = new Die(7); //7 sides
-    System.out.println( "Hello world from the Die class..." ); 
+    Die d1 = new Die(7);
+    System.out.println( "Welcome to the Die class!" ); 
     System.out.println( "your roll is " + d1.roll());
-    System.out.println( "the value of the roll is " + d1.getValue());
-    //System.out.println(d1.setSides());
-    System.out.println("the string form of the dice is " + d1.toString());
-         
-    //d1.getValue(); d1.toString
+    System.out.println( "the value of the roll is " + d1.getValue() );
+    System.out.println("the string form of the dice is " + d1.toString() );
    }
 
 }
