@@ -55,7 +55,7 @@ public class DiceSet {
     count = c;
     sides = s;
     if (count < 1) {
-    	throw new IllegalArgumentException("You don't have enough die");
+        throw new IllegalArgumentException("You don't have enough die");
     }
 
     for (int i = 0; i < c; i ++) {
@@ -121,7 +121,7 @@ public class DiceSet {
    * @return Class-wide version of the preceding instance method
    */
    public static String toString( DiceSet ds1 ) {
-   	return ds1.toString();
+    return ds1.toString();
    }
 
 
@@ -129,31 +129,33 @@ public class DiceSet {
    * @return  tru iff this set is identical to the set passed as an argument
    */
    public boolean isIdentical( DiceSet ds2) {
-   	if (this.sides == ds2.sides) {
-   		if (this.count == ds2.sides) {
-   			if (this.sum() == ds2.sum() ) {
-   				return true;
-   			}
-   		}
+    if (this.sides == ds2.sides) {
+        if (this.count == ds2.sides) {
+            if (this.sum() == ds2.sum() ) {
+                return true;
+            }
+        }
     }
-   	  return false;
+      return false;
     } 
   /**
    * A little test main to check things out
    */
    public static void main( String[] args ) {
+      System.out.println("welcome to DiceSet.java");
+      
       DiceSet ds = new DiceSet(4, 6);
-
-      ds.roll(); // System.out.println("roll: " + AliGame.roll() );
-
-      System.out.println("sum: " + ds.sum() );
-
+      
+      ds.roll(); 
+      
       String result = new String();
-      System.out.println(ds.toString());
+      System.out.println("here is your dice set:  " + ds.toString());
 
+      System.out.println("the sum of your dice set:  " + ds.sum() );
 
       DiceSet ds2 = new DiceSet(7, 5);
-      ds.isIdentical(ds2);
+      System.out.println("the your dice set is identical to DiceSet ds2:  " + ds.isIdentical(ds2) );
+     
 
    }
 
