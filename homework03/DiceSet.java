@@ -42,7 +42,6 @@ public class DiceSet {
    private int diceSum = 0;
 
 
-   // public constructor:
   /**
    * constructor
    * @param  count int value containing total dice count
@@ -68,7 +67,7 @@ public class DiceSet {
    * @return the sum of all the dice values in the set
    */
    public int sum() {
-    diceSum = 0; //every time we call, reinitialize to zero
+    diceSum = 0; 
     for (int i = 0; i < count; i++) {
         diceSum += ds[i].getValue();
      }
@@ -80,7 +79,7 @@ public class DiceSet {
    *  NOTE: you will need to use one of the "toString()" methods to obtain
    *  the values of the dice in the set
    */
-   public void roll() { //loop: rolls all of them
+   public void roll() { 
     for (int i = 0; i < count; i ++) {
         ds[i].roll();
     }
