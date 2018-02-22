@@ -56,7 +56,7 @@ public class HighRoll {
 
               } else if('4' == inputLine.charAt(0) ) { //Option 4 in the list must be: SAVE THIS SCORE AS HIGH SCORE
                   highScore = dSet.sum(); //highscore ref from static context
-                  System.out.println("Your score " + highScore + "is saved.");
+                  System.out.println("Your score " + highScore + " is saved.");
 
               } else if('5' == inputLine.charAt(0) ) { //Option 5 in the list must be: DISPLAY THE HIGH SCORE
                   System.out.println("highscore: " + highScore);
