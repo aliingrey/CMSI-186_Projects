@@ -79,9 +79,8 @@ public class Clock {
    *  @return double-precision value of the hour hand location
    */
    public double getHourHandAngle() {
-    totalHours = totalSeconds/3600; //1 hour = seconds/3600
-    degrees = totalHours * 30; //30 degrees per hour, 
-    return degrees;
+    hourAngle = Math.floor(degrees/30);
+    return hourAngle;
    }
 
   /**
@@ -118,11 +117,15 @@ public class Clock {
    */
    public String toString() {
     //convert to hours, minutes, and seconds
+    /*
+    totalHours = totalSeconds/3600; //1 hour = seconds/3600
+    degrees = totalHours * 30; //30 degrees per hour, 
+    */
     //seconds/3600 = hours
     //mod of seconds/3600 = minutes
-
-      timePrint = totalHours + ":" + totalMinutes + ":" + totalSeconds;
-      return "toString"; //hh:mm:ss.sss
+      String timeString = (int)totalHours + ":" + (int)totalMinutes + ":" + totalSeconds;
+      //System.out.println(timeString);
+      return timeString; //hh:mm:ss.sss
    }
 
   /**
@@ -133,17 +136,19 @@ public class Clock {
    *  remember you are trying to BREAK your code, not just prove it works!
    */
    public static void main( String args[] ) {
-
+      Clock clock = new Clock(95, 0);
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
-      System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
+    // System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
       System.out.println( "  Creating a new clock: " );
-      Clock clock = new Clock(10, 50);
-      System.out.println( "    New clock created: " + clock.toString() );
-      System.out.println("totalSeconds: " + tick() );
-      System.out.println("hour hand angle: " + getHourHandAngle() );
-      System.out.println("minute hand angle: " + getMinuteHandAngle() ) ;
-      System.out.println("hand angle: " + getHandAngle() );
+      System.out.println("tick: " + clock.tick() );
+      System.out.println("hour: " + clock.getHourHandAngle() );
+      System.out.println("Minute hand angle: " + clock.getMinuteHandAngle() );
+      System.out.println("Hand angle: " + clock.getHandAngle() );
+      System.out.println("Total seconds: " + clock.getTotalSeconds() );
+      System.out.println("String format: " + clock.toString() );
+      
+  
       //System.out.print( "      sending X degrees, expecting double value: Y " );
    }
 }
