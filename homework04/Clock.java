@@ -52,7 +52,7 @@ public class Clock {
    *  Constructor goes here
    */
    public Clock(double nDegrees, double timeSlice) {
-    if ( (degrees > MAXIMUM_DEGREE_VALUE) || (degrees < 0.0) ) {
+    if ( (nDegrees > MAXIMUM_DEGREE_VALUE) || (nDegrees < 0.0) ) {
       System.exit((int)INVALID_ARGUMENT_VALUE);
     }
 
@@ -95,6 +95,9 @@ public class Clock {
    */
    public double getMinuteHandAngle() {
     minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
+    while (minuteAngle >= 360) {
+      minuteAngle = minuteAngle- 360;
+    }
     return minuteAngle;
    }
 
@@ -120,6 +123,11 @@ public class Clock {
    *  Method to return a String representation of this clock
    *  @return String value of the current clock
    */
+
+   public double getDegree() {
+    return degrees;
+   }
+
    public String toString() { //convert to hours, minutes, and seconds
     hours = Math.floor((int)totalSeconds/3600); //gives you total hours
     minutes = Math.floor( ((int)totalSeconds % 3600)/ 60);
@@ -136,12 +144,13 @@ public class Clock {
    *  remember you are trying to BREAK your code, not just prove it works!
    */
    public static void main( String args[] ) {
-      Clock clock = new Clock(90, 60);
+      Clock clock = new Clock(150, 60);
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
     // System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
-      clock.tick();
-      clock.tick();
+      for (int i = 0; i < 299; i++ ) {
+        clock.tick();
+      }
       System.out.println( "  Creating a new clock: " );
       System.out.println("tick: " + clock.tick() );
       System.out.println("Hour hand angle: " + clock.getHourHandAngle() );
