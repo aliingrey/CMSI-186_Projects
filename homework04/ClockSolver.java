@@ -26,8 +26,6 @@ public class ClockSolver {
    private final double DEFAULT_TIME_SLICE_SECONDS = 60.0;
    private final double EPSILON_VALUE              = 0.1; // small value for double-precision comparisons
 
-
-
   /**
    *  Constructor
    *  This just calls the superclass constructor, which is "Object"
@@ -81,12 +79,15 @@ public class ClockSolver {
    *                args[1] is the time slice; this is optional and defaults to 60 seconds
    */
    public static void main( String args[] ) {
+    ClockSolver cse = new ClockSolver(45, 60);
+    double[] timeValues = new double[3];
     double nDegrees = Double.parseDouble(args[0]);
     double timeSlice = Double.parseDouble(args[1]);
-    double[] timeValues = new double[3];
-    ClockSolver cse = new ClockSolver(nDegrees, timeSlice);
-      
+    
+    
+    
       
     System.exit( 0 );
+
    }
 }
