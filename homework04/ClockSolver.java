@@ -24,20 +24,23 @@ public class ClockSolver {
    */
    private final double MAX_TIME_SLICE_IN_SECONDS  = 1800.00;
    private final double DEFAULT_TIME_SLICE_SECONDS = 60.0;
+   private static final double MAXIMUM_DEGREE_VALUE = 360.0;
+   private static final double INVALID_ARGUMENT_VALUE = -1.0;
    private final double EPSILON_VALUE              = 0.1; // small value for double-precision comparisons
-   private int nDegrees;
-   private int timeSlice;
+   private static double nDegrees;
+   private static double timeSlice;
    private Clock clock = null;
   /**
    *  Constructor
    *  This just calls the superclass constructor, which is "Object"
    */
-   public ClockSolver(double n, double t) {
+   public ClockSolver() {
+    /*
       clock = new Clock( n , t ); 
       n = nDegrees;
       t = timeSlice;
 
-      clock.handleInitialArguments(nDegrees, timeSlice);
+    */
 
 
      
@@ -59,14 +62,36 @@ public class ClockSolver {
      // args[1] if present will specify a time slice value; if not present, defaults to 60 seconds
      // you may want to consider using args[2] for an "angle window"
 
+
+      //  
+    
       System.out.println( "\n   Hello world, from the ClockSolver program!!\n\n" ) ;
       if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
                              "   Usage: java ClockSolver <angle> [timeSlice]\n" +
                              "   Please try again..........." );
          System.exit( 1 );
+      } 
+
+      double nDegrees = Double.parseDouble(args[0]);
+      
+      if ( (nDegrees > MAXIMUM_DEGREE_VALUE) || (nDegrees < 0.0) ) {
+        System.exit((int)INVALID_ARGUMENT_VALUE);
       }
-      //Clock clock = new Clock();
+
+      if (args.length == 2) {
+        double timeSlice = Double.parseDouble(args[1]); 
+
+          if (timeSlice <= 0 || timeSlice > 1800.0) {
+            System.out.println( "   Sorry you must enter at least one argument\n" +
+                             "   Usage: java ClockSolver <angle> [timeSlice]\n" +
+                             "   Please try again..........." );
+            System.exit( 1 );
+          }   
+      } else {
+        timeSlice = 60.0;
+      }  
+
    }
 
   /**
@@ -78,14 +103,18 @@ public class ClockSolver {
    *                args[1] is the time slice; this is optional and defaults to 60 seconds
    */
    public static void main( String args[] ) {
+    ClockSolver cse = new ClockSolver();
+    cse.handleInitialArguments(args);
+
     double nDegrees = Double.parseDouble(args[0]);
-    double timeSlice = Double.parseDouble(args[1]);  
+    if (args.length == 2) {
+      double timeSlice = Double.parseDouble(args[1]); 
+    } else {
+      timeSlice = 60.0;
+    }
+    Clock clock = new Clock (nDegrees, timeSlice);
+    //set them in the clock
 
-    ClockSolver cse = new ClockSolver(args[]);
-    double[] timeValues = new double[3];
-
-    
-    
     while (clock.getTotalSeconds() <= 43200) {
         clock.tick();
         if ( Math.abs(clock.getHandAngle() - (int)clock.getDegree()) <= 0.1) {
