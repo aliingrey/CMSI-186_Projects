@@ -30,6 +30,7 @@ public class ClockSolver {
    private static double nDegrees;
    private static double timeSlice;
    private Clock clock = null;
+
   /**
    *  Constructor
    *  This just calls the superclass constructor, which is "Object"
@@ -42,14 +43,10 @@ public class ClockSolver {
 
     */
 
-
-     
    //hh:mm:ss.sss keep this and update it with every increment through the loop
    //or just keep track of total number of seconds
    //}
-   //System.exit(0);
-    
-    
+   //System.exit(0);    
    }
 
   /**
@@ -62,10 +59,8 @@ public class ClockSolver {
      // args[1] if present will specify a time slice value; if not present, defaults to 60 seconds
      // you may want to consider using args[2] for an "angle window"
 
+      System.out.println( "\n   Hello world, from the ClockSolver program!!\n" ) ;
 
-      //  
-    
-      System.out.println( "\n   Hello world, from the ClockSolver program!!\n\n" ) ;
       if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
                              "   Usage: java ClockSolver <angle> [timeSlice]\n" +
@@ -76,6 +71,8 @@ public class ClockSolver {
       double nDegrees = Double.parseDouble(args[0]);
       
       if ( (nDegrees > MAXIMUM_DEGREE_VALUE) || (nDegrees < 0.0) ) {
+        System.out.println("   Your degree value is out of bounds!\n" +
+                          "   Please enter a value between 0.0 and 360 degrees.");
         System.exit((int)INVALID_ARGUMENT_VALUE);
       }
 
@@ -83,9 +80,9 @@ public class ClockSolver {
         double timeSlice = Double.parseDouble(args[1]); 
 
           if (timeSlice <= 0 || timeSlice > 1800.0) {
-            System.out.println( "   Sorry you must enter at least one argument\n" +
-                             "   Usage: java ClockSolver <angle> [timeSlice]\n" +
-                             "   Please try again..........." );
+            System.out.println( "   Your timeSlice value is out of bounds!\n" +
+                            // "   Usage: java ClockSolver <angle> [timeSlice]\n" +
+                             "   Please try again with a timeSlice between 0 and 180" );
             System.exit( 1 );
           }   
       } else {
@@ -112,17 +109,18 @@ public class ClockSolver {
     } else {
       timeSlice = 60.0;
     }
+
     Clock clock = new Clock (nDegrees, timeSlice);
-    //set them in the clock
 
     while (clock.getTotalSeconds() <= 43200) {
-        clock.tick();
-        if ( Math.abs(clock.getHandAngle() - (int)clock.getDegree()) <= 0.1) {
+      clock.tick();    
+      //getHandAngle is not incrementing
+      System.out.println("hand angle: " + clock.getHandAngle() + " degree: " + clock.getDegree());
+      //System.out.println(clock.getHandAngle());
+        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= 0.1) { //!!
           System.out.println(clock.toString());
         }
-     }
-      
+     } 
     System.exit( 0 );
-
    }
 }
