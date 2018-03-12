@@ -55,14 +55,7 @@ public class Clock {
     degrees = nDegrees; //target angle
     this.timeSlice = timeSlice; //timeSlice = args[0];
 
-    if ( (nDegrees > MAXIMUM_DEGREE_VALUE) || (nDegrees < 0.0) ) {
-      System.exit((int)INVALID_ARGUMENT_VALUE);
-    }
-
-    if (timeSlice <= 0 || timeSlice > 1800.0) {
-      timeSlice = 60.0;
-    }
-
+    
     
    }
   /**
@@ -128,6 +121,12 @@ public class Clock {
    }
 
    public String toString() { //convert to hours, minutes, and seconds
+/*
+  seconds "#.000"
+  minutes: "00"
+  system.out .. df.format(hours)
+*/
+
     hours = Math.floor((int)totalSeconds/3600);
 
     minutes = Math.floor( ( totalSeconds - (hours * 3600) ) / 60 );
@@ -155,6 +154,7 @@ public class Clock {
    */
    public static void main( String args[] ) {
       Clock clock = new Clock(90, 30);
+      //ClockSolver cse = new Clock(45, 60);
     
       for (int i = 0; i < 121; i++ ) {
           clock.tick();
