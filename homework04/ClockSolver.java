@@ -107,7 +107,6 @@ public class ClockSolver {
     double nDegrees = Double.parseDouble(args[0]);
     
     if (args.length == 2) {
-//      double timeSlice = Double.parseDouble(args[1]); 
       double timeSlice = Double.parseDouble(args[1]);
     } else {
       timeSlice = 60.0;
