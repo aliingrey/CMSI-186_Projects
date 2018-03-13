@@ -73,15 +73,6 @@ public class Clock {
    */
    public double getHourHandAngle() {
     hourAngle = totalSeconds * HOUR_HAND_DEGREES_PER_SECOND;
-    while (hourAngle > MAXIMUM_DEGREE_VALUE) {
-      hourAngle -= MAXIMUM_DEGREE_VALUE;
-    }
-    /*
-
-    if (hourAngle >= 180) {
-      hourAngle = hourAngle - 360; 
-    }
-    */
     return hourAngle;
 
    }
@@ -91,10 +82,7 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
-    while (minuteAngle >= MAXIMUM_DEGREE_VALUE) {
-      minuteAngle -= MAXIMUM_DEGREE_VALUE;
-    }
+    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND - ( 360 * Math.floor( minuteAngle / 360 ) );
     return minuteAngle;
    }
 
@@ -105,7 +93,7 @@ public class Clock {
    public double getHandAngle() {
     angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
     if (minuteAngle - hourAngle > 180) {
-      angleBetween -= 360;
+      angleBetween = 360 - angleBetween;
     }
     return angleBetween;
    }
