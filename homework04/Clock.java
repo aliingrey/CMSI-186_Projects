@@ -64,6 +64,7 @@ public class Clock {
    public double tick() {
     totalSeconds += timeSlice;
     return totalSeconds;
+
    }
 
   /**
@@ -71,8 +72,12 @@ public class Clock {
    *  @return double-precision value of the hour hand location
    */
    public double getHourHandAngle() {
-    hourAngle = (totalSeconds * HOUR_HAND_DEGREES_PER_SECOND) % 360;
+    hourAngle = totalSeconds * HOUR_HAND_DEGREES_PER_SECOND;
+    while (hourAngle > MAXIMUM_DEGREE_VALUE) {
+      hourAngle -= MAXIMUM_DEGREE_VALUE;
+    }
     /*
+
     if (hourAngle >= 180) {
       hourAngle = hourAngle - 360; 
     }
@@ -86,15 +91,11 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-    minuteAngle = (totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND) % 360;
-    /*
-    while (minuteAngle >= 360) {
-      minuteAngle = minuteAngle - 360;
+    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
+    while (minuteAngle >= MAXIMUM_DEGREE_VALUE) {
+      minuteAngle -= MAXIMUM_DEGREE_VALUE;
     }
-    */
     return minuteAngle;
-    
-
    }
 
   /**
@@ -104,7 +105,7 @@ public class Clock {
    public double getHandAngle() {
     angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
     if (minuteAngle - hourAngle > 180) {
-      angleBetween = 360 - angleBetween;
+      angleBetween -= 360;
     }
     return angleBetween;
    }
@@ -152,11 +153,7 @@ public class Clock {
    */
    public static void main( String args[] ) {
       Clock clock = new Clock(90, 30);
-      /*
-      for (int i = 0; i < 5; i++ ) {
-          clock.tick();
-      }
-    */
+
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
     // System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
@@ -167,5 +164,5 @@ public class Clock {
       System.out.println("angle between: " + clock.getHandAngle() );
       System.out.println("total seconds elapsed: " + clock.getTotalSeconds() );
       System.out.println( clock.toString() );
-   }
-}
+    }
+} 
