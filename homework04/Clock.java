@@ -48,7 +48,7 @@ public class Clock {
 
       totalSeconds = 0;
       degrees = nDegrees;
-      this.timeSlice = timeSlice;
+      this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;;
       seconds = 0;
       minutes = 0;
       hours = 0;
