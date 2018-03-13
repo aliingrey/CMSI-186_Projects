@@ -28,8 +28,8 @@ public class Clock {
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834; 
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
 
-   private double degrees = 0;
-   private double timeSlice = 0; //in seconds
+   private static double degrees = 0;
+   private static double timeSlice = 0; //in seconds
    private double totalSeconds = 0; //total seconds that have elapsed since you've added a timeSlice
    private double totalMinutes = 0;
    private double totalHours = 0;
@@ -148,7 +148,7 @@ public class Clock {
    public static void main( String args[] ) {
       
       double degrees = Double.parseDouble(args[0]);
-      
+
       if (args.length == 2) {
         double timeSlice = Double.parseDouble(args[1]);
       } else {
