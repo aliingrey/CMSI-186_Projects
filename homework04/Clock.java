@@ -44,11 +44,16 @@ public class Clock {
 /*
    *  Constructor goes here
    */
+  public Clock (double nDegrees) {
+    timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
+    totalSeconds = 0;
+   }
+
    public Clock(double nDegrees, double timeSlice) {
 
       totalSeconds = 0;
       degrees = nDegrees;
-      this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
+      this.timeSlice = timeSlice;
       seconds = 0;
       minutes = 0;
       hours = 0;
@@ -82,7 +87,7 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-    minuteAngle = ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) - ( 360 * Math.floor( ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) / 360 ) );
+    minuteAngle = ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) % 360.0;
     return minuteAngle;
 
    }
@@ -95,10 +100,8 @@ public class Clock {
     double angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
     if (angleBetween > 360) {
       angleBetween = 360 - angleBetween;
-
     } 
     return angleBetween;
-   
    }
 
   /**
@@ -143,7 +146,11 @@ public class Clock {
    *  remember you are trying to BREAK your code, not just prove it works!
    */
    public static void main( String args[] ) {
-      Clock clock = new Clock(90, 60);
+      
+      double degrees = Double.parseDouble(args[0]);
+      double timeSlice = Double.parseDouble(args[1]);
+//!!
+      Clock clock = new Clock(degrees, timeSlice);
 
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
