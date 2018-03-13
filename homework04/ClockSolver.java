@@ -112,14 +112,14 @@ public class ClockSolver {
       timeSlice = 60.0;
     }
 
-    Clock clock = new Clock (90, 60); //(cse.angle, cse.timeSlice)
+//!!
+    Clock clock = new Clock (nDegrees, timeSlice); //(cse.angle, cse.timeSlice)
     System.out.println("searching for a " + clock.getDegree() + " angle");
     while (clock.getTotalSeconds() <= 43200) {
       clock.tick();    
-        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= 0.1) { //!!
+        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= 1) { //!!
           System.out.println(clock.toString());
         }
-        //System.out.println("hand angle " + clock.getHandAngle() + " degree " + clock.getDegree());
      } 
     System.exit( 0 );
    }
