@@ -148,7 +148,12 @@ public class Clock {
    public static void main( String args[] ) {
       
       double degrees = Double.parseDouble(args[0]);
-      double timeSlice = Double.parseDouble(args[1]);
+      
+      if (args.length == 2) {
+        double timeSlice = Double.parseDouble(args[1]);
+      } else {
+        timeSlice = 60.0;
+      }
 //!!
       Clock clock = new Clock(degrees, timeSlice);
 
