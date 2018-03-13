@@ -40,7 +40,6 @@ public class ClockSolver {
       clock = new Clock( n , t ); 
       n = nDegrees;
       t = timeSlice;
-
     */
 
    //hh:mm:ss.sss keep this and update it with every increment through the loop
@@ -111,8 +110,8 @@ public class ClockSolver {
       timeSlice = 60.0;
     }
 
-    Clock clock = new Clock (60, 60);
-    System.out.println("searching for a " + clock.getDegree() + " degree angle with a " + args[1] + " second timeslice.");
+    Clock clock = new Clock (nDegrees, timeSlice);
+    System.out.println("searching for a " + clock.getDegree() + " angle");
     while (clock.getTotalSeconds() <= 43200) {
       clock.tick();    
         if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= 0.1) { //!!
