@@ -28,12 +28,11 @@ public class Clock {
    private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834; 
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
 
-   private double degrees;
-   private double timeSlice; //in seconds
-   private double totalSeconds; //total seconds that have elapsed since you've added a timeSlice
+   private double degrees = 0;
+   private double timeSlice = 0; //in seconds
+   private double totalSeconds = 0; //total seconds that have elapsed since you've added a timeSlice
    private double totalMinutes = 0;
    private double totalHours = 0;
-   private String timePrint; 
 
    double hourAngle = 0;
    double minuteAngle = 0;
@@ -42,18 +41,21 @@ public class Clock {
    double hours;
    double minutes;
    double seconds;
-
-  /**
+/*
    *  Constructor goes here
    */
    public Clock(double nDegrees, double timeSlice) {
-    degrees = nDegrees; //target angle
-    this.timeSlice = timeSlice; //timeSlice = args[0];
-    hours = 00;
-    minutes = 00;
-    seconds = 00;
-    totalSeconds = 0;  
-    //
+
+      totalSeconds = 0;
+      degrees = nDegrees;
+      this.timeSlice = timeSlice;
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+      minuteAngle = 0;
+      hourAngle = 0;
+
+      
    }
   /**
    *  Methods go here
@@ -82,7 +84,10 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND - ( 360 * Math.floor( minuteAngle / 360 ) );
+    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
+    if (minuteAngle > 360.0) {
+      minuteAngle -= 360.0;
+    }
     return minuteAngle;
    }
 
@@ -92,10 +97,13 @@ public class Clock {
    */
    public double getHandAngle() {
     angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
+    
     if (minuteAngle - hourAngle > 180) {
       angleBetween = 360 - angleBetween;
     }
+    
     return angleBetween;
+    
    }
 
   /**
@@ -140,7 +148,7 @@ public class Clock {
    *  remember you are trying to BREAK your code, not just prove it works!
    */
    public static void main( String args[] ) {
-      Clock clock = new Clock(90, 30);
+      Clock clock = new Clock(90, 60);
 
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
