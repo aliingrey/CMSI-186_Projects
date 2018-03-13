@@ -29,7 +29,7 @@ public class Clock {
 
    private double degrees;
    private double timeSlice; //in seconds
-   private double totalSeconds = 0; //total seconds that have elapsed since you've added a timeSlice
+   private double totalSeconds; //total seconds that have elapsed since you've added a timeSlice
    private double totalMinutes = 0;
    private double totalHours = 0;
    private String timePrint; 
@@ -38,15 +38,9 @@ public class Clock {
    double minuteAngle = 0;
    double angleBetween = 0;
 
-   double hours = 0;
-   double minutes = 0;
-   double seconds = 0;
-
-  /*
-   private double hourAngle = getHourHandAngle();
-   private double minuteAngle = getMinuteHandAngle();
-   */
-   
+   double hours;
+   double minutes;
+   double seconds;
 
   /**
    *  Constructor goes here
@@ -54,9 +48,11 @@ public class Clock {
    public Clock(double nDegrees, double timeSlice) {
     degrees = nDegrees; //target angle
     this.timeSlice = timeSlice; //timeSlice = args[0];
-
-    
-    
+    hours = 00;
+    minutes = 00;
+    seconds = 00;
+    totalSeconds = 0;  
+    //
    }
   /**
    *  Methods go here
@@ -74,11 +70,14 @@ public class Clock {
    *  @return double-precision value of the hour hand location
    */
    public double getHourHandAngle() {
-    hourAngle = totalSeconds * HOUR_HAND_DEGREES_PER_SECOND;
-    while (hourAngle >= 12) {
-      hourAngle = hourAngle - 12;
+    hourAngle = (totalSeconds * HOUR_HAND_DEGREES_PER_SECOND) % 360;
+    /*
+    if (hourAngle >= 180) {
+      hourAngle = hourAngle - 360; 
     }
+    */
     return hourAngle;
+
    }
 
   /**
@@ -86,11 +85,15 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
+    minuteAngle = (totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND) % 360;
+    /*
     while (minuteAngle >= 360) {
       minuteAngle = minuteAngle - 360;
     }
+    */
     return minuteAngle;
+    
+
    }
 
   /**
@@ -99,6 +102,9 @@ public class Clock {
    */
    public double getHandAngle() {
     angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
+    if (minuteAngle - hourAngle > 180) {
+      angleBetween = 360 - angleBetween;
+    }
     return angleBetween;
    }
 
@@ -121,11 +127,11 @@ public class Clock {
    }
 
    public String toString() { //convert to hours, minutes, and seconds
-/*
-  seconds "#.000"
-  minutes: "00"
-  system.out .. df.format(hours)
-*/
+    /*
+    seconds "#.000"
+    minutes: "00"
+    system.out .. df.format(hours)
+    */
 
     hours = Math.floor((int)totalSeconds/3600);
 
@@ -154,18 +160,16 @@ public class Clock {
    */
    public static void main( String args[] ) {
       Clock clock = new Clock(90, 30);
-      //ClockSolver cse = new Clock(45, 60);
-    
-      for (int i = 0; i < 121; i++ ) {
+      /*
+      for (int i = 0; i < 5; i++ ) {
           clock.tick();
       }
-    
+    */
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
     // System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
-      
-      System.out.println( "  Creating a new clock: " );
-      //System.out.println("tick: " + clock.tick() );
+      System.out.println( "\n  Creating a new clock: " );
+      clock.tick();
       System.out.println("Hour hand angle: " + clock.getHourHandAngle() );
       System.out.println("Minute hand angle: " + clock.getMinuteHandAngle() );
       System.out.println("angle between: " + clock.getHandAngle() );
