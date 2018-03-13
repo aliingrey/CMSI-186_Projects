@@ -18,6 +18,7 @@
  *  @version 1.0.0  2017-02-28  B.J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+
 public class ClockSolver {
   /**
    *  Class field definintions go here
@@ -101,6 +102,8 @@ public class ClockSolver {
     ClockSolver cse = new ClockSolver();
     cse.handleInitialArguments(args);
 
+    double[] timeValues = new double[3];
+    
     double nDegrees = Double.parseDouble(args[0]);
     
     if (args.length == 2) {
@@ -110,7 +113,7 @@ public class ClockSolver {
       timeSlice = 60.0;
     }
 
-    Clock clock = new Clock (nDegrees, timeSlice);
+    Clock clock = new Clock (nDegrees, timeSlice); //(cse.angle, cse.timeSlice)
     System.out.println("searching for a " + clock.getDegree() + " angle");
     while (clock.getTotalSeconds() <= 43200) {
       clock.tick();    
