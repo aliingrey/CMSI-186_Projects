@@ -16,6 +16,7 @@
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-28  B.J. Johnson  Initial writing and release
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+import java.text.DecimalFormat;
 
 public class Clock {
   /**
@@ -127,27 +128,18 @@ public class Clock {
    }
 
    public String toString() { //convert to hours, minutes, and seconds
-    /*
-    seconds "#.000"
-    minutes: "00"
-    system.out .. df.format(hours)
-    */
+    String hmString = "00";
+    String secondString = "00.0";
+    DecimalFormat hmStringFormat = new DecimalFormat(hmString);
+    DecimalFormat secondStringFormat = new DecimalFormat(secondString);
 
     hours = Math.floor((int)totalSeconds/3600);
 
     minutes = Math.floor( ( totalSeconds - (hours * 3600) ) / 60 );
-    //minutes = Math.floor( ((int)totalSeconds % 3600)/ 60);
-    //minutes = totalSeconds % 3600;
-    
+ 
     seconds = (totalSeconds - (hours * 3600) - (minutes * 60)) % 60 ;
-    String timeString = (int)hours + ":" + (int)minutes + ":" + (int)seconds;
-    return timeString; //hh:mm:ss.sss
-
-    /*
-    hours = Math.floor((int)totalSeconds/3600); //gives you total hours
-    minutes = Math.floor( ((int)totalSeconds % 3600)/ 60);
-    seconds = Math.floor( totalSeconds % 60 );
-    */
+    String timeString = hmStringFormat.format(hours) + ":" + hmStringFormat.format(minutes) + ":" + secondStringFormat.format(seconds);
+    return timeString; 
 
    }
 
