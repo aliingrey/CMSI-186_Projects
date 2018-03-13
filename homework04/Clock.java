@@ -48,14 +48,12 @@ public class Clock {
 
       totalSeconds = 0;
       degrees = nDegrees;
-      this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;;
+      this.timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
       seconds = 0;
       minutes = 0;
       hours = 0;
       minuteAngle = 0;
       hourAngle = 0;
-
-      
    }
   /**
    *  Methods go here
@@ -84,11 +82,9 @@ public class Clock {
    *  @return double-precision value of the minute hand location
    */
    public double getMinuteHandAngle() {
-    minuteAngle = totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND;
-    if (minuteAngle > 360.0) {
-      minuteAngle -= 360.0;
-    }
+    minuteAngle = ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) - ( 360 * Math.floor( ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) / 360 ) );
     return minuteAngle;
+
    }
 
   /**
@@ -96,14 +92,13 @@ public class Clock {
    *  @return double-precision value of the angle between the two hands
    */
    public double getHandAngle() {
-    angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
-    
-    if (minuteAngle - hourAngle > 180) {
+    double angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
+    if (angleBetween > 360) {
       angleBetween = 360 - angleBetween;
-    }
-    
+
+    } 
     return angleBetween;
-    
+   
    }
 
   /**
