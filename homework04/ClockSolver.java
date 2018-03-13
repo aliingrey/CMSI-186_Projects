@@ -45,7 +45,6 @@ public class ClockSolver {
 
    //hh:mm:ss.sss keep this and update it with every increment through the loop
    //or just keep track of total number of seconds
-   //}
    //System.exit(0);    
    }
 
@@ -104,22 +103,22 @@ public class ClockSolver {
     cse.handleInitialArguments(args);
 
     double nDegrees = Double.parseDouble(args[0]);
+    
     if (args.length == 2) {
-      double timeSlice = Double.parseDouble(args[1]); 
+//      double timeSlice = Double.parseDouble(args[1]); 
+      double timeSlice = Double.parseDouble(args[1]);
     } else {
       timeSlice = 60.0;
     }
 
-    Clock clock = new Clock (nDegrees, timeSlice);
-
+    Clock clock = new Clock ();
+    System.out.println("searching for a " + clock.getDegree() + " degree angle with a " + timeSlice + " timeslice.");
     while (clock.getTotalSeconds() <= 43200) {
       clock.tick();    
-      //getHandAngle is not incrementing
-      System.out.println("hand angle: " + clock.getHandAngle() + " degree: " + clock.getDegree());
-      //System.out.println(clock.getHandAngle());
         if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= 0.1) { //!!
           System.out.println(clock.toString());
         }
+        //System.out.println(clock.getHandAngle());
      } 
     System.exit( 0 );
    }
