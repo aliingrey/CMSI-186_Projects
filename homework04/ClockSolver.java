@@ -108,10 +108,10 @@ public class ClockSolver {
     
     if (args.length == 2) {
       timeSlice = Double.parseDouble(args[1]);
-      System.out.println("timeSlice: " + timeSlice);
+    //System.out.println("timeSlice: " + timeSlice);
     } else {
       timeSlice = 60.0;
-      System.out.println("timeSlice1 " + timeSlice);
+    //System.out.println("timeSlice1 " + timeSlice);
     }
 
 
@@ -119,11 +119,11 @@ public class ClockSolver {
     System.out.println("searching for a " + clock.getDegree() + " angle");
     while (clock.getTotalSeconds() <= 43200) {
           
-        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= 1.5) { //!!
+        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= .5) { //!!
           System.out.println(clock.toString());
         }
         clock.tick();
-  //  System.out.println(clock.getHandAngle());
+   // System.out.println(clock.getHandAngle());
      } 
     System.exit( 0 );
    }
