@@ -107,12 +107,14 @@ public class ClockSolver {
     double nDegrees = Double.parseDouble(args[0]);
     
     if (args.length == 2) {
-      double timeSlice = Double.parseDouble(args[1]);
+      timeSlice = Double.parseDouble(args[1]);
+      System.out.println("timeSlice " + timeSlice);
     } else {
       timeSlice = 60.0;
+      System.out.println("timeSlice1" + timeSlice);
     }
 
-//!!
+
     Clock clock = new Clock (nDegrees, timeSlice); //(cse.angle, cse.timeSlice)
     System.out.println("searching for a " + clock.getDegree() + " angle");
     while (clock.getTotalSeconds() <= 43200) {
