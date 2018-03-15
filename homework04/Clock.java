@@ -68,6 +68,11 @@ public class Clock {
    */
    public double tick() {
     totalSeconds += timeSlice;
+
+    hours = Math.floor((int)totalSeconds/3600);
+    minutes = Math.floor( ( totalSeconds - ( 3600 * hours ) ) / 60 ); 
+    seconds = (totalSeconds - (hours * 3600) - (minutes * 60)) % 60;
+
     return totalSeconds;
 
    }
@@ -101,8 +106,8 @@ public class Clock {
     double angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
     
     if (angleBetween > 180) {
-      angleBetween = 360 - angleBetween;
-    }
+      angleBetween = MAXIMUM_DEGREE_VALUE - angleBetween;
+    }  
     return angleBetween;
    }
 
@@ -124,15 +129,11 @@ public class Clock {
     return degrees;
    }
 
-   public String toString() { //convert to hours, minutes, and seconds
+   public String toString() { 
     String hmString = "00";
     String secondString = "00.0";
     DecimalFormat hmStringFormat = new DecimalFormat(hmString);
     DecimalFormat secondStringFormat = new DecimalFormat(secondString);
-
-    hours = Math.floor((int)totalSeconds/3600);
-    minutes = Math.floor( ( totalSeconds - ( 3600 * hours ) ) / 60 ); 
-    seconds = (totalSeconds - (hours * 3600) - (minutes * 60)) % 60;
 
     String timeString = hmStringFormat.format(hours) + ":" + hmStringFormat.format(minutes) + ":" + secondStringFormat.format(seconds);
     return timeString;
