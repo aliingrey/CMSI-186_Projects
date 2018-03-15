@@ -29,8 +29,8 @@ public class Clock {
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
 
    private static double degrees = 0;
-   private static double timeSlice = 0; //in seconds
-   private double totalSeconds; //total seconds that have elapsed since you've added a timeSlice
+   private static double timeSlice = 0; 
+   private double totalSeconds; 
    private double totalMinutes = 0;
    private double totalHours = 0;
 
@@ -88,9 +88,6 @@ public class Clock {
    */
    public double getMinuteHandAngle() {
     minuteAngle = Math.floor( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) % 360.0; //5
-    //minuteAngle =  totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ;
-    //minuteAngle = ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) - ( MAXIMUM_DEGREE_VALUE * ( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) / MAXIMUM_DEGREE_VALUE  );
-    //System.out.println(minuteAngle);
     return minuteAngle;
 
    }
@@ -105,10 +102,8 @@ public class Clock {
     
     if (angleBetween > 180) {
       angleBetween = 360 - angleBetween;
-    } 
-    
+    }
     return angleBetween;
-     //return ( Math.abs( this.getHourHandAngle() - this.getMinuteHandAngle() ) > 180.0 ) ? ( MAXIMUM_DEGREE_VALUE - Math.abs( this.getHourHandAngle() - this.getMinuteHandAngle() ) ) : Math.abs( this.getHourHandAngle() - this.getMinuteHandAngle() );
    }
 
   /**
@@ -165,12 +160,9 @@ public class Clock {
 
       System.out.println( "\nCLOCK CLASS TESTER PROGRAM\n" +
                           "--------------------------\n" );
-    // System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
+      System.out.println( "  I deleted the validateAngleArg method because I check for the angle in the clock constructor" );
       System.out.println( "\n  Creating a new clock: " );
       clock.tick();
-      //clock.tick();
-      //System.out.println("Hour hand angle: " + clock.getHourHandAngle() );
-      //System.out.println("Minute hand angle: " + clock.getMinuteHandAngle() );
       System.out.println("angle between: " + clock.getHandAngle() );
       System.out.println("total seconds elapsed: " + clock.getTotalSeconds() );
       System.out.println( clock.toString() );
