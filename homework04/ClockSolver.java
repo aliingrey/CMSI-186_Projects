@@ -27,7 +27,7 @@ public class ClockSolver {
    private final double DEFAULT_TIME_SLICE_SECONDS = 60.0;
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
    private static final double INVALID_ARGUMENT_VALUE = -1.0;
-   private final double EPSILON_VALUE              = 0.1; // small value for double-precision comparisons
+   static final double EPSILON_VALUE = 0.5;
    private static double nDegrees;
    private static double timeSlice;
    private Clock clock = null;
@@ -37,15 +37,7 @@ public class ClockSolver {
    *  This just calls the superclass constructor, which is "Object"
    */
    public ClockSolver() {
-    /*
-      clock = new Clock( n , t ); 
-      n = nDegrees;
-      t = timeSlice;
-    */
-
-   //hh:mm:ss.sss keep this and update it with every increment through the loop
-   //or just keep track of total number of seconds
-   //System.exit(0);    
+  
    }
 
   /**
@@ -80,7 +72,6 @@ public class ClockSolver {
 
           if (timeSlice <= 0 || timeSlice > 1800.0) {
             System.out.println( "   Your timeSlice value is out of bounds!\n" +
-                            // "   Usage: java ClockSolver <angle> [timeSlice]\n" +
                              "   Please try again with a timeSlice between 0 and 180" );
             System.exit( 1 );
           }   
@@ -108,10 +99,8 @@ public class ClockSolver {
     
     if (args.length == 2) {
       timeSlice = Double.parseDouble(args[1]);
-    //System.out.println("timeSlice: " + timeSlice);
     } else {
       timeSlice = 60.0;
-    //System.out.println("timeSlice1 " + timeSlice);
     }
 
 
@@ -119,11 +108,10 @@ public class ClockSolver {
     System.out.println("searching for a " + clock.getDegree() + " angle");
     while (clock.getTotalSeconds() <= 43200) {
           
-        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= .5) { //!!
+        if (Math.abs(clock.getHandAngle() - clock.getDegree()) <= EPSILON_VALUE) { //!!
           System.out.println(clock.toString());
         }
         clock.tick();
-   // System.out.println(clock.getHandAngle());
      } 
     System.exit( 0 );
    }
