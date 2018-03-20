@@ -16,6 +16,7 @@ public class Ball {
 	private double yPosition;
 	private double xSpeed;
 	private double ySpeed;
+	private String ballString;
 	//at time 0, they're all put into motion at random speeds
 
 	//constructor
@@ -29,6 +30,7 @@ public class Ball {
 	public double getVelocity() {
 		v0 = (Math.pow(xSpeed,2)) + (Math.pow(ySpeed,2));
 		v0 = Math.sqrt(v0);
+		System.out.println("Your initial velocity is: " + v0);
 		return v0;
 		//pthagrem theorem/totalSeconds
 	}
@@ -39,8 +41,12 @@ public class Ball {
 	@ the rate of one per cent per second until it is traveling less than one inch per second
 	at which point it comes to rest.
 	*/
+
 	public double frictionFromMovement() {
-		ballVelocity = v0 - ( (v0 * 0.001) * timeSlice); //import Timer.java
+		ballVelocity = v0 - ( (v0 * 0.001)); //import Timer.java
+		//constantly decreasoing velocity
+		//moves a little, then decreases velocity
+		System.out.println("Velocity with friction is: " + ballVelocity);
 		return ballVelocity;
 	}
 	//could do a field class (Field.java)
@@ -50,20 +56,33 @@ public class Ball {
 	namely the x- and y-coordinates of the ball's starting position [measured in feet]
 	followed by its speeds in the x- and y-directions [in feet per second].
 	*/
-	public double ballPosition() {
+	public double xballPosition() {
 		//increase x1 by x1 every timeSlice
-		xPosition = xPosition + xSpeed*timeSlice;
-   		yPosition = yPosition + ySpeed*timeSlice;
+		xPosition += xSpeed;
+   		System.out.println("x: " + xPosition);
+   		return xPosition;
+
+	}
+
+	public double yballPosition() {
+		yPosition = ySpeed;
+		System.out.println("y: " + yPosition);
+		return yPosition;
 	}
 
 	public String toString() {
+		ballString = "update this";
 		//position
 		//velocity, if 0 - report @ rest
+		return ballString;
 	}
 	
 	public static void main( String args[] ) {
-		Timer timer = new Timer();
 		Ball ball = new Ball(100, 100, 5, 10);
+		ball.getVelocity();
+		ball.frictionFromMovement();
+		ball.xballPosition();
+		ball.yballPosition();
 
 
 		//System.out.println("Your ball starts with a velocity of: " + (int)v0  + "meters per second");
