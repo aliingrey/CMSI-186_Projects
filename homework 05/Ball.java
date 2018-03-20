@@ -9,7 +9,7 @@ public class Ball {
 	private double RADIUS = 4.45;
 	private double WEIGHT = 1;
 	private double friction = 0;
-	private double v0;
+	//private double v0;
 	private double ballVelocity;
 
 	private double xPosition;
@@ -28,10 +28,10 @@ public class Ball {
 	}
 
 	public double getVelocity() {
-		v0 = (Math.pow(xSpeed,2)) + (Math.pow(ySpeed,2));
-		v0 = Math.sqrt(v0);
-		System.out.println("Your initial velocity is: " + v0);
-		return v0;
+		ballVelocity = (Math.pow(xSpeed,2)) + (Math.pow(ySpeed,2));
+		ballVelocity = Math.sqrt(ballVelocity);
+		System.out.println("Initial velocity: " + ballVelocity);
+		return ballVelocity;
 		//pthagrem theorem/totalSeconds
 	}
 
@@ -42,12 +42,23 @@ public class Ball {
 	at which point it comes to rest.
 	*/
 
-	public double frictionFromMovement() {
-		ballVelocity = v0 - ( (v0 * 0.001)); //import Timer.java
-		//constantly decreasoing velocity
-		//moves a little, then decreases velocity
-		System.out.println("Velocity with friction is: " + ballVelocity);
-		return ballVelocity;
+	public double xFriction() { //what happens when velocity are neg numbers
+		//absolute value
+		xSpeed -= xSpeed * 0.01;
+		//ySpeed -= ySpeed * 0.01;
+		//ballVelocity -= ballVelocity * 0.001; //import Timer.java
+		System.out.println("Velocity with friction is at x is: " + xSpeed);
+		//System.out.println("Velocity with friction is at y is: " + ySpeed)
+		return xSpeed;
+	}
+	public double yFriction() { //what happens when velocity are neg numbers
+		//absolute value
+		//xSpeed -= xSpeed * 0.01;
+		ySpeed -= ySpeed * 0.01;
+		//ballVelocity -= ballVelocity * 0.001; //import Timer.java
+		//System.out.println("Velocity with friction is at x is: " + xSpeed);
+		System.out.println("Velocity with friction is at y is: " + ySpeed);
+		return ySpeed;
 	}
 	//could do a field class (Field.java)
 
@@ -56,17 +67,17 @@ public class Ball {
 	namely the x- and y-coordinates of the ball's starting position [measured in feet]
 	followed by its speeds in the x- and y-directions [in feet per second].
 	*/
-	public double xballPosition() {
+	public double UpdateXPosition() {
 		//increase x1 by x1 every timeSlice
 		xPosition += xSpeed;
-   		System.out.println("x: " + xPosition);
+   		System.out.println("new x position: " + xPosition);
    		return xPosition;
 
 	}
 
-	public double yballPosition() {
-		yPosition = ySpeed;
-		System.out.println("y: " + yPosition);
+	public double UpdateYPosition() {
+		yPosition += ySpeed;
+		System.out.println("new y position: " + yPosition);
 		return yPosition;
 	}
 
@@ -78,12 +89,17 @@ public class Ball {
 	}
 	
 	public static void main( String args[] ) {
-		Ball ball = new Ball(100, 100, 5, 10);
+		Ball ball = new Ball(100, 100, 3, 4);
+		System.out.println("Starting ball position is: " + ball.xPosition + ", " + ball.yPosition);
+		System.out.println("Starting ball speeds are: " + ball.xSpeed + ", " + ball.ySpeed);
 		ball.getVelocity();
-		ball.frictionFromMovement();
-		ball.xballPosition();
-		ball.yballPosition();
-
+		ball.UpdateXPosition();
+		ball.UpdateYPosition();
+		ball.xFriction();
+		ball.yFriction();
+		
+		ball.UpdateXPosition();
+		ball.UpdateYPosition();
 
 		//System.out.println("Your ball starts with a velocity of: " + (int)v0  + "meters per second");
 		
