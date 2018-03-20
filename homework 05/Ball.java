@@ -43,20 +43,12 @@ public class Ball {
 	*/
 
 	public double xFriction() { //what happens when velocity are neg numbers
-		//absolute value
 		xSpeed -= xSpeed * 0.01;
-		//ySpeed -= ySpeed * 0.01;
-		//ballVelocity -= ballVelocity * 0.001; //import Timer.java
 		System.out.println("Velocity with friction is at x is: " + xSpeed);
-		//System.out.println("Velocity with friction is at y is: " + ySpeed)
 		return xSpeed;
 	}
 	public double yFriction() { //what happens when velocity are neg numbers
-		//absolute value
-		//xSpeed -= xSpeed * 0.01;
 		ySpeed -= ySpeed * 0.01;
-		//ballVelocity -= ballVelocity * 0.001; //import Timer.java
-		//System.out.println("Velocity with friction is at x is: " + xSpeed);
 		System.out.println("Velocity with friction is at y is: " + ySpeed);
 		return ySpeed;
 	}
@@ -68,7 +60,6 @@ public class Ball {
 	followed by its speeds in the x- and y-directions [in feet per second].
 	*/
 	public double UpdateXPosition() {
-		//increase x1 by x1 every timeSlice
 		xPosition += xSpeed;
    		System.out.println("new x position: " + xPosition);
    		return xPosition;
@@ -82,6 +73,7 @@ public class Ball {
 	}
 
 	public String toString() {
+		//total movement
 		ballString = "update this";
 		//position
 		//velocity, if 0 - report @ rest
@@ -97,7 +89,7 @@ public class Ball {
 		ball.UpdateYPosition();
 		ball.xFriction();
 		ball.yFriction();
-		
+
 		ball.UpdateXPosition();
 		ball.UpdateYPosition();
 
