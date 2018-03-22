@@ -1,8 +1,4 @@
-/*
-
-get timer to work (timeSlice)!!
-
-*/
+//import java.text.DecimalFormat;
 
 public class Ball {
 
@@ -16,6 +12,8 @@ public class Ball {
 	private double xSpeed;
 	private double ySpeed;
 	private String ballString;
+
+	private static final double FRICTION = 0.01;
 	//at time 0, they're all put into motion at random speeds
 
 	//constructor
@@ -42,13 +40,11 @@ public class Ball {
 	*/
 
 	public double xFriction() { //what happens when velocity are neg numbers
-		xSpeed -= xSpeed * 0.01;
-		//System.out.println("Velocity with friction is at x is: " + xSpeed);
+		xSpeed -= xSpeed * FRICTION;
 		return xSpeed;
 	}
 	public double yFriction() { //what happens when velocity are neg numbers
-		ySpeed -= ySpeed * 0.01;
-		//System.out.println("Velocity with friction is at y is: " + ySpeed);
+		ySpeed -= ySpeed * FRICTION;
 		return ySpeed;
 	}
 	//could do a field class (Field.java)
@@ -71,14 +67,15 @@ public class Ball {
 		return yPosition;
 	}
 
-	public String toString() {
+		public String toString() {
 		//current x and y position
 		//current x and y velocity values
 		//total movement
 		if (xSpeed == 0 && ySpeed == 0) {
-			ballString = "Ball (NAME?): position " + UpdateXPosition() + ", " + UpdateYPosition() + "<at rest>";
+			//traveling less than one inch per second, at which point it comes to rest.
+			ballString = "POSITOIN " + UpdateXPosition() + ", " + UpdateYPosition() + "    <at rest>";
 		} else {
-			ballString = "Ball (NAME?): position " + UpdateXPosition() + ", " + UpdateYPosition() + " Ball b1: speed " + xFriction() + ", " + yFriction();
+			ballString = "POSITOIN " + UpdateXPosition() + ", " + UpdateYPosition() + "    SPEED " + xFriction() + ", " + yFriction() + " m/s";
 		}
 
 		//velocity, if 0 - report @ rest
@@ -87,17 +84,30 @@ public class Ball {
 	}
 	
 	public static void main( String args[] ) {
+
+		System.out.println("\nnew ball - b1");
 		Ball b1 = new Ball(10, 50, 2, 6);
 		b1.toString();
 		b1.toString();
 		b1.toString();
-		System.out.println("b2");
+		System.out.println("\nnew ball - b2");
 		Ball b2 = new Ball(20, 60, 3, 7);
 		b2.toString();
 		b2.toString();
 		b2.toString();
 		b2.toString();
-		
+		System.out.println("\nnew ball - b3");
+		Ball b3 = new Ball(30, 70, 4, 8);
+		b3.toString();
+		b3.toString();
+		b3.toString();
+		b3.toString();
+		System.out.println("\nnew ball - b4");
+		Ball b4 = new Ball(40, 80, 5, 9);
+		b4.toString();
+		b4.toString();
+		b4.toString();
+		b4.toString();
 		//System.out.println("Your ball starts with a velocity of: " + (int)v0  + "meters per second");
 		
 	}
