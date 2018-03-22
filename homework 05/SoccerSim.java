@@ -6,24 +6,43 @@ public class SoccerSim{
 	private static double ballCount;
 	private Timer stopWatch = null;
 	private double j = 0;
-	//pole
+
+	private static final double POLE = 15;
 	//field
+	private static final double CENTERFIELD_X = 0;
+	private static final double CENTERFIELD_Y = 0;
+	private static final double OUTOFBOUNDS_X = 45;
+	private static final double OUTOFBOUNDS_Y = 60;
+	
 
 
 	public SoccerSim(){
 
 	}
 
+	/*
+	if (Ball.length > 1) {
 
+	}
+
+   public boolean checkCollision(double x2, double y2){
+    if ((Math.abs(x-x2) <= RADIUS) && (Math.abs(y-y2) <= RADIUS)) {
+      return true;
+    } else {
+      return false; 
+    }
+   }
+   */
 	//args: x1, y1, xv1, x2, y2, xv2 (new ball) x1, y1 ...
 	
 	//creating multiple balls
 	//collision cheeck
 	public static void main( String args[] ) {
+	  System.out.println( "\n   Starting the SoccerSim game!\n\n" );
+	  Timer a = new Timer(60);
 
 	  if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
-                             "   Usage: java ClockSolver <angle> [timeSlice]\n" +
                              "   Please try again..........." );
          System.exit( 1 );
       } 
@@ -49,11 +68,5 @@ public class SoccerSim{
 	  	double ySpeed = Double.parseDouble(args[i + 3]);
 	  }
 	  
-
-	  //args: x1, y1, xv1, x2, y2, xv2 (new ball) x1, y1 ...
-	  
-
-
-
 	}
 }
