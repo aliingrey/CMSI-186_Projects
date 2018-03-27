@@ -2,9 +2,8 @@ import java.text.DecimalFormat;
 
 public class Ball {
 
-	private double RADIUS = 4.45;
-	private double WEIGHT = 1;
-	private double friction = 0;
+	private final double RADIUS = 4.45;
+	private final double WEIGHT = 1;
 	private double ballVelocity;
 
 	private double xPosition;
@@ -71,6 +70,7 @@ public class Ball {
 	}
 
 	public boolean atRest() {
+		//if ( ( xSpeed*12 <= 1.0 ) && ( ySpeed*12 <= 1.0 ) ) {
 		if ( Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) ) < 0.083 ) {
 			return true;
 		} else {
