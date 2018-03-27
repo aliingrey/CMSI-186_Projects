@@ -19,11 +19,6 @@ public class SoccerSim {
 
   public SoccerSim() {
     soccerClock = new Clock(90, 60);
-    
-    private double updateBallCount() {
-        ballCount = ((int)Math.floor(args.length / 4));
-        return ballCount;
-    }
   }
   
   public boolean findCollision() {
@@ -52,7 +47,6 @@ public class SoccerSim {
       } else {
         return false;
       }
-      
     }
    }
 
@@ -65,7 +59,9 @@ public class SoccerSim {
                              "   Please try again..........." );
          System.exit( 1 );
     } 
-    
+    private static double updateBallCount() {
+        return ballCount;
+    }
     
     if ((args.length % 4) == 1) {
       double timeSlice = Double.parseDouble(args[4]);
