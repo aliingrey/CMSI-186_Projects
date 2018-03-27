@@ -18,9 +18,6 @@
 import java.text.DecimalFormat;
 
 public class Clock {
-  /**
-   *  Class field definintions go here
-   */
    private static final double DEFAULT_TIME_SLICE_IN_SECONDS = 60.0;
    private static final double INVALID_ARGUMENT_VALUE = -1.0;
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
@@ -40,9 +37,7 @@ public class Clock {
    double hours;
    double minutes;
    double seconds;
-/*
-   *  Constructor goes here
-   */
+
   public Clock (double nDegrees) {
     timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
     totalSeconds = 0;
@@ -59,12 +54,7 @@ public class Clock {
       minuteAngle = 0;
       hourAngle = 0;
    }
-  /**
-   *  Methods go here
-   *
-   *  Method to calculate the next tick from the time increment
-   *  @return double-precision value of the current clock tick
-   */
+
    public double tick() {
     totalSeconds += timeSlice;
 
@@ -107,30 +97,19 @@ public class Clock {
       return timeSlice;
    }
 
-  /**
-   *  Method to calculate and return the current position of the hour hand
-   *  @return double-precision value of the hour hand location
-   */
    public double getHourHandAngle() {
     hourAngle = totalSeconds * HOUR_HAND_DEGREES_PER_SECOND;
     return hourAngle;
 
    }
 
-  /**
-   *  Method to calculate and return the current position of the minute hand
-   *  @return double-precision value of the minute hand location
-   */
    public double getMinuteHandAngle() {
     minuteAngle = Math.floor( totalSeconds * MINUTE_HAND_DEGREES_PER_SECOND ) % 360.0; //5
     return minuteAngle;
 
    }
 
-  /**
-   *  Method to calculate and return the angle between the hands
-   *  @return double-precision value of the angle between the two hands
-   */
+
    public double getHandAngle() {
 
     double angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
@@ -141,20 +120,10 @@ public class Clock {
     return angleBetween;
    }
 
-  /**
-   *  Method to fetch the total number of seconds
-   *   we can use this to tell when 12 hours have elapsed
-   *  @return double-precision value the total seconds private variable
-   */
    public double getTotalSeconds() { //tells you how far along you are in your simulation
     return totalSeconds;
    }
-
-  /**
-   *  Method to return a String representation of this clock
-   *  @return String value of the current clock
-   */
-
+  
    public double getDegree() {
     return degrees;
    }
@@ -169,13 +138,6 @@ public class Clock {
     return timeString;
    }
 
-  /**
-   *  The main program starts here
-   *  remember the constraints from the project description
-   *  @see  http://bjohnson.lmu.build/cmsi186web/homework04.html
-   *  be sure to make LOTS of tests!!
-   *  remember you are trying to BREAK your code, not just prove it works!
-   */
    public static void main( String args[] ) {
       if (args.length == 0) {
         timeSlice = DEFAULT_TIME_SLICE_IN_SECONDS;
