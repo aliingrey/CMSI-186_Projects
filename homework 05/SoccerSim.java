@@ -36,7 +36,7 @@ public class SoccerSim {
    }
    public boolean outOfBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
-      if ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition()< -FIELD_HEIGHT) ) {
+      if ( ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition()< -FIELD_HEIGHT) ) {
         System.out.println("ob from the y direction");
         return true;
       } else if ( (ballArray[i].UpdateYPosition() > FIELD_WIDTH) || (ballArray[i].UpdateYPosition() < -FIELD_WIDTH) ) {
