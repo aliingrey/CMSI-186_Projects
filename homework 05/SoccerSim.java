@@ -1,7 +1,7 @@
 public class SoccerSim {
   private final double RADIUS = 4.45;
   private final double WEIGHT = 1;
-	
+  
   private static final double DEFAULT_TIME_SLICE = 30;
 
   private static final double FIELD_WIDTH = 1000.0;
@@ -19,7 +19,7 @@ public class SoccerSim {
   public SoccerSim() {
     soccerClock = new Clock();
   }
-	
+  
   public boolean findCollision() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( ( Math.abs(ballArray[i].UpdateXPosition()) - X_POLE <= RADIUS ) && ( Math.abs(ballArray[i].UpdateYPosition()) - Y_POLE <= RADIUS ) ) {
@@ -48,6 +48,8 @@ public class SoccerSim {
     }
    }
   public static void main(String[] args[]) {
+    System.out.println("\n  Hello, world, from the SoccerSim program!");
+    SoccerSim localSoccerSim = new SoccerSim();
 
     if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
@@ -79,9 +81,11 @@ public class SoccerSim {
         j += 4;
     }
 
+    for (int i = 0; i < ballArray.length; i++) {
+      ballArray[i].moveBall(timeSlice);
+    }
 
-    System.out.println("\n  Hello, world, from the SoccerSim program!");
-    SoccerSim localSoccerSim = new SoccerSim();
+
+   
      }
   }
-	
