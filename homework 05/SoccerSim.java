@@ -17,7 +17,7 @@ public class SoccerSim {
   private Clock soccerClock = null;
 
   public SoccerSim() {
-    soccerClock = new Clock();
+    soccerClock = new Clock(90, 60);
   }
   
   public boolean findCollision() {
@@ -36,10 +36,10 @@ public class SoccerSim {
    }
    public boolean outOfBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
-      if ( (ballArray[i] > FIELD_HEIGHT) || (ballArray[i] < -FIELD_HEIGHT) ) {
+      if ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition()< -FIELD_HEIGHT) ) {
         System.out.println("ob from the y direction");
         return true;
-      } else if ( (ballArray[i] > FIELD_WIDTH) || (ballArray[i] < -FIELD_WIDTH) ) {
+      } else if ( (ballArray[i].UpdateYPosition() > FIELD_WIDTH) || (ballArray[i].UpdateYPosition() < -FIELD_WIDTH) ) {
         System.out.println("ob from the x direction");
         return true;
       } else {
