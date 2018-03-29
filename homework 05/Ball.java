@@ -1,9 +1,6 @@
 import java.text.DecimalFormat;
 
 public class Ball {
-
-	private final double RADIUS = 4.45;
-	private final double WEIGHT = 1;
 	private double ballVelocity;
 
 	private double xPosition;
@@ -14,6 +11,7 @@ public class Ball {
 	private double timeSlice;
 
 	private static final double FRICTION = 0.01;
+	private static final double MINIIMUM_SPEED = 0.083;
 
 	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed, double userTimeSlice) {
 		this.xPosition = xPosition; //m/s across
@@ -29,11 +27,22 @@ public class Ball {
 
 		yPosition = yPosition;
 		ySpeed -= ySpeed * FRICTION;
+		ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
+	}
+	
+
+	public void moveWithTime() {
+		xPosition += xSpeed * timeSlice;
+    	yPosition += ySpeed * timeSlice;
+
+	    xSpeed *= (Math.pow( 1 - FRICTION, timeSlice ));
+	    ySpeed *= (Math.pow( 1 - FRICTION, timeSlice ));
+	    ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
 	}
 	
 	public double getVelocity() {
 		ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
-		//System.out.println("Initial velocity: " + ballVelocity);
+		System.out.println("ballVelocity: " + ballVelocity);
 		return ballVelocity;
 	}
 
@@ -71,7 +80,7 @@ public class Ball {
 
 	public boolean atRest() {
 		//if ( ( xSpeed*12 <= 1.0 ) && ( ySpeed*12 <= 1.0 ) ) {
-		if ( Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) ) < 0.083 ) {
+		if ( Math.abs( ballVelocity ) < MINIIMUM_SPEED ) {
 			return true;
 		} else {
      		return false;
@@ -112,6 +121,7 @@ public class Ball {
 		Ball b2 = new Ball(20, 60, 3, 7, 30);
 		b2.moveBall();
 		b2.toString();
+		b2.getVelocity();
 		b2.moveBall();
 		b2.toString();
 		b2.moveBall();
@@ -138,10 +148,7 @@ public class Ball {
 		b4.toString();
 		b4.moveBall();
 		b4.toString();
-		//System.out.println("Your ball starts with a velocity of: " + (int)v0  + "meters per second");
 
-
-		
 	}
 
 }
