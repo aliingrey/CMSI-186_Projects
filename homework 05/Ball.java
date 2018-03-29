@@ -35,8 +35,8 @@ public class Ball {
 		xPosition += xSpeed * timeSlice;
     	yPosition += ySpeed * timeSlice;
 
-	    xSpeed *= (Math.pow( 1 - FRICTION, timeSlice ));
-	    ySpeed *= (Math.pow( 1 - FRICTION, timeSlice ));
+	    xSpeed = xSpeed * (Math.pow( 1 - FRICTION, timeSlice ));
+	    ySpeed = ySpeed * (Math.pow( 1 - FRICTION, timeSlice ));
 	    ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
 	}
 	
