@@ -17,10 +17,12 @@ public class SoccerSim {
   private Ball[] ballArray = null;
   private Clock soccerClock = null;
 
+  String inputConversionError = "your input can not be converted, please try again";
+
   public SoccerSim() {
     soccerClock = new Clock(90, 60);
   }
-  
+
   public boolean findCollision() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( (ballArray[i].UpdateXPosition() - X_POLE <= RADIUS ) && ( ballArray[i].UpdateYPosition() - Y_POLE <= RADIUS ) ) {
@@ -28,14 +30,18 @@ public class SoccerSim {
         return true;
       }
       for (int j = i + 1; j < ballArray.length; j++) {
-        double collisionPthag1 = Math.sqrt( (ballArray[i].UpdateXPosition() - ballArray[j]) * (ballArray[i].UpdateXPosition() - ballArray[j]));
-        double collisionPthag2 = Math.sqrt( (ballArray[i].UpdateYPosition() - ballArray[j]) * (ballArray[i].UpdateYPosition() - ballArray[j]));
-        if ((collisionPthag1 + collisionPthag2) * INCHES_PER_FOOT <=1) {
-          return true;
-        }       
+        double velocityDifferenceX = Math.abs( ballArray[i].UpdateXPosition() - ballArray[i + 1].UpdateXPosition() );
+        double velocityDifferenceY = Math.abs( ballArray[i].UpdateYPosition() - ballArray[i + 1].UpdateYPosition() );
+        if ( (velocityDifferenceX <= RADIUS) && (velocityDifferenceY <= RADIUS) ) {
+          return true;       
        }
      }
+
+     for (int i = 0; i < ballArray.length; i++) {
+        ballArray[i].moveWithTime(timeSlice);
+     }
    }
+
    public boolean outOfBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition() < 0) ) {
@@ -50,34 +56,43 @@ public class SoccerSim {
     }
    }
 
-  public static void main(String[] args[]) {
-    System.out.println("\n  Hello, world, from the SoccerSim program!");
-    SoccerSim localSoccerSim = new SoccerSim();
-
+  private int setUp(String[] args[]) throws NumberFormatException {
     if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
                              "   Please try again..........." );
          System.exit( 1 );
-    } 
-    private static double updateBallCount() {
-        return ballCount;
     }
-    
+
     if ((args.length % 4) == 1) {
-      double timeSlice = Double.parseDouble(args[4]);
-      if ( (args.length - 1) % 4 == 0) {
-        ballCount = args.length/4;
-        System.out.println("you've created " + ballCount + " balls");
+      try {
+        double timeSlice = Double.parseDouble(args[4]);
+        if ( (args.length - 1) % 4 == 0) {
+          ballCount = (int)args.length/4;
+          System.out.println("you've created " + ballCount + " balls");
+        }
+      } catch (NumberFormatException cantConvert) { 
+        System.out.println("make sure you put in numbers for xPosition, yPosition, xSpeed, ySpeed, and an optional timeSlice");
+
       }
     }
-    
+
     if ((args.length % 4) == 0) {
-      ballCount = args.length/4;
-      soccerClock = new Clock( 90, DEFAULT_TIMESLICE );
-      System.out.println("you've created " + args.length/4 + " balls");
+      try {
+        ballCount = (int)args.length/4;
+        soccerClock = new Clock( 90, 1 );
+        System.out.println("you've created " + args.length/4 + " balls");
+      } catch (NumberFormatException cantConvert) { 
+        System.out.println("make sure you put in numbers for xPosition, yPosition, xSpeed, ySpeed, and an optional timeSlice");
+      }
+      
     }
+    return ballCount;
+  }
 
-
+  
+  public static void main(String[] args[]) {
+    System.out.println("\n  Hello, world, from the SoccerSim program!");
+    SoccerSim localSoccerSim = new SoccerSim();
 
     ballArray = new Ball[ballCount];
 
