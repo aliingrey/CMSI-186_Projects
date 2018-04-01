@@ -14,7 +14,7 @@ public class SoccerSim {
   private double timeSlice = 1.0;
   private int ballCount = 0;
   
-  private Ball[] ballArray = null;
+  private static Ball[] ballArray = null;
   private Clock soccerClock = null;
 
   String inputConversionError = "your input can not be converted, please try again";
@@ -65,8 +65,9 @@ public class SoccerSim {
     }
 
     if ((args.length % 4) == 1) {
+      double argLength = Double.parseDouble(args.lenth);
       try {
-        soccerClock.timeSlice = Double.parseDouble([args.length - 1]);
+        soccerClock.timeSlice = Double.parseDouble(args[args.length - 1]);
         if ( (args.length - 1) % 4 == 0) {
           ballCount = (int)args.length/4;
           System.out.println("you've created " + ballCount + " balls");
@@ -101,10 +102,10 @@ public class SoccerSim {
     int j = 0;
     
     for (int i = 0; i < ballArray.length; i++)  {
-        xPosition = Double.parseDouble(args[(j + 0)]);
-        yPosition = Double.parseDouble(args[(j + 1)]);
-        xSpeed = Double.parseDouble(args[(j + 2)]);
-        ySpeed = Double.parseDouble(args[(j + 3)]);
+        Ball.xPosition = Double.parseDouble(args[(j + 0)]);
+        Ball.yPosition = Double.parseDouble(args[(j + 1)]);
+        Ball.xSpeed = Double.parseDouble(args[(j + 2)]);
+        Ball.ySpeed = Double.parseDouble(args[(j + 3)]);
         ballArray[i] = new Ball(xPosition, yPosition, xSpeed, ySpeed);
         j += 4;
     }
