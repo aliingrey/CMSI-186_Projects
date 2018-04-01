@@ -102,11 +102,13 @@ public class SoccerSim {
     int j = 0;
     
     for (int i = 0; i < ballArray.length; i++)  {
+      /*
         Ball.xPosition = Double.parseDouble(args[(j + 0)]);
         Ball.yPosition = Double.parseDouble(args[(j + 1)]);
         Ball.xSpeed = Double.parseDouble(args[(j + 2)]);
         Ball.ySpeed = Double.parseDouble(args[(j + 3)]);
-        ballArray[i] = new Ball(xPosition, yPosition, xSpeed, ySpeed);
+      */
+        ballArray[i] = new Ball( Double.parseDouble(args[(j + 0)]), Double.parseDouble(args[(j + 1)]), Double.parseDouble(args[(j + 2)]), Double.parseDouble(args[(j + 3)]) );
         j += 4;
     }
 
