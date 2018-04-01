@@ -12,7 +12,7 @@ public class Ball {
 
 	private static final double FRICTION = 0.01;
 	private static final double MINIIMUM_SPEED = 0.083;
-
+/*
 	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed, double userTimeSlice) {
 		this.xPosition = xPosition; //m/s across
 		this.yPosition = yPosition; //m/s up/down
@@ -20,6 +20,7 @@ public class Ball {
 		this.ySpeed = ySpeed;
 		this.timeSlice = userTimeSlice;
 	}
+*/
 	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed) {
 		this.xPosition = xPosition; //m/s across
 		this.yPosition = yPosition; //m/s up/down
@@ -111,7 +112,7 @@ public class Ball {
                           "--------------------------\n" );
 
 		System.out.println("\nnew ball - b1");
-		Ball b1 = new Ball(10, 50, 2, 6, 30);
+		Ball b1 = new Ball(10, 50, 2, 6);
 		System.out.println( "The velocity of the ball is " + b1.getVelocity() + " ft/s.");
 		b1.moveBall();
 		b1.toString();
@@ -124,7 +125,7 @@ public class Ball {
 		b1.moveBall();
 		b1.toString();
 		System.out.println("\nnew ball - b2");
-		Ball b2 = new Ball(20, 60, 3, 7, 30);
+		Ball b2 = new Ball(20, 60, 3, 7);
 		b2.moveBall();
 		b2.toString();
 		b2.getVelocity();
@@ -135,7 +136,7 @@ public class Ball {
 		b2.moveBall();
 		b2.toString();
 		System.out.println("\nnew ball - b3");
-		Ball b3 = new Ball(30, 70, 4, 8, 30);
+		Ball b3 = new Ball(30, 70, 4, 8);
 		b3.moveBall();
 		b3.toString();
 		b3.moveBall();
@@ -145,7 +146,7 @@ public class Ball {
 		b3.moveBall();
 		b3.toString();
 		System.out.println("\nnew ball - b4");
-		Ball b4 = new Ball(40, 80, 5, 9, 30);
+		Ball b4 = new Ball(40, 80, 5, 9);
 		b4.moveBall();
 		b4.toString();
 		b4.moveBall();
