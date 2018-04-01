@@ -21,6 +21,7 @@ public class SoccerSim {
 
   public SoccerSim() {
     soccerClock = new Clock(90, 60);
+    ballArray = new Ball[ballCount];
   }
 
   private boolean findCollision() {
@@ -37,8 +38,8 @@ public class SoccerSim {
        }
      }
 
-     for (int i = 0; i < ballArray.length; i++) {
-        ballArray[i].moveWithTime(timeSlice);
+     for (int k = 0; k < ballArray.length; k++) {
+        ballArray[k].moveWithTime();
      }
    }
    }
@@ -65,7 +66,7 @@ public class SoccerSim {
 
     if ((args.length % 4) == 1) {
       try {
-        double timeSlice = Double.parseDouble(args[4]);
+        soccerClock.timeSlice = Double.parseDouble([args.length - 1]);
         if ( (args.length - 1) % 4 == 0) {
           ballCount = (int)args.length/4;
           System.out.println("you've created " + ballCount + " balls");
@@ -95,7 +96,7 @@ public class SoccerSim {
     System.out.println("\n  Hello, world, from the SoccerSim program!");
     SoccerSim localSoccerSim = new SoccerSim();
 
-    ballArray = new Ball[ballCount];
+    //ballArray = new Ball[ballCount];
 
     int j = 0;
     
