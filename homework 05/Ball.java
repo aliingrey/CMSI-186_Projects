@@ -3,10 +3,10 @@ import java.text.DecimalFormat;
 public class Ball {
 	private double ballVelocity;
 
-	private double xPosition;
-	private double yPosition;
-	private double xSpeed;
-	private double ySpeed;
+	public static double xPosition;
+	public static double yPosition;
+	public static double xSpeed;
+	public static double ySpeed;
 	private String ballString;
 	private double timeSlice;
 
@@ -19,6 +19,12 @@ public class Ball {
 		this.xSpeed = xSpeed;
 		this.ySpeed = ySpeed;
 		this.timeSlice = userTimeSlice;
+	}
+	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed) {
+		this.xPosition = xPosition; //m/s across
+		this.yPosition = yPosition; //m/s up/down
+		this.xSpeed = xSpeed;
+		this.ySpeed = ySpeed;
 	}
 
 	public void moveBall() {
