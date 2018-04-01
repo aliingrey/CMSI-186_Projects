@@ -113,7 +113,7 @@ public class SoccerSim {
     }
 
     for (int i = 0; i < ballArray.length; i++) {
-        ballArray[i].moveBall(timeSlice);
+        ballArray[i].moveBall();
     }
    
      }
