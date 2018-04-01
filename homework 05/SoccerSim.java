@@ -23,7 +23,7 @@ public class SoccerSim {
     soccerClock = new Clock(90, 60);
   }
 
-  public boolean findCollision() {
+  private boolean findCollision() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( (ballArray[i].UpdateXPosition() - X_POLE <= RADIUS ) && ( ballArray[i].UpdateYPosition() - Y_POLE <= RADIUS ) ) {
         System.out.println("the ball hit the pole!");
@@ -41,8 +41,8 @@ public class SoccerSim {
         ballArray[i].moveWithTime(timeSlice);
      }
    }
-
-   public boolean outOfBounds() {
+   }
+   private boolean outOfBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition() < 0) ) {
         System.out.println("ob from the y direction");
@@ -89,6 +89,7 @@ public class SoccerSim {
     return ballCount;
   }
 
+
   
   public static void main(String[] args[]) {
     System.out.println("\n  Hello, world, from the SoccerSim program!");
@@ -110,8 +111,7 @@ public class SoccerSim {
     for (int i = 0; i < ballArray.length; i++) {
         ballArray[i].moveBall(timeSlice);
     }
-
-
    
      }
   }
+
