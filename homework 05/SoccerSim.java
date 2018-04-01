@@ -2,7 +2,7 @@ public class SoccerSim {
   private final double RADIUS = 4.45;
   private final double WEIGHT = 1;
   
-  private static final double DEFAULT_TIME_SLICE = 30;
+  private static final double DEFAULT_TIME_SLICE = 1;
   private static final double INCHES_PER_FOOT = 12;
 
   private static final double FIELD_WIDTH = 1000.0;
@@ -10,6 +10,7 @@ public class SoccerSim {
 
   private static final double X_POLE = 10;
   private static final double Y_POLE = 10;
+
 
   private double timeSlice = 1.0;
   private int ballCount = 0;
@@ -36,28 +37,25 @@ public class SoccerSim {
         if ( (velocityDifferenceX <= RADIUS) && (velocityDifferenceY <= RADIUS) ) {
           return true;       
        }
-     }
-
-     for (int k = 0; k < ballArray.length; k++) {
-        ballArray[k].moveWithTime();
-     }
+     }  
    }
+   return false;
    }
-   private boolean outOfBounds() {
+   private boolean inBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition() < 0) ) {
         System.out.println("ob from the y direction");
-        return true;
-      } else if ( (ballArray[i].UpdateYPosition() > FIELD_WIDTH) || (ballArray[i].UpdateYPosition() < 0) ) {
-        System.out.println("ob from the x direction");
-        return true;
-      } else {
         return false;
-      }
+      } if ( (ballArray[i].UpdateYPosition() > FIELD_WIDTH) || (ballArray[i].UpdateYPosition() < 0) ) {
+        System.out.println("ob from the x direction");
+        return false;
+      } 
     }
+    return true;
    }
 
-  private int setUp(String[] args[]) throws NumberFormatException {
+  public void setUp(String[] args) throws NumberFormatException {
+    ballArray = new Ball[ballCount];
     if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
                              "   Please try again..........." );
@@ -65,7 +63,6 @@ public class SoccerSim {
     }
 
     if ((args.length % 4) == 1) {
-      double argLength = Double.parseDouble(args.lenth);
       try {
         soccerClock.timeSlice = Double.parseDouble(args[args.length - 1]);
         if ( (args.length - 1) % 4 == 0) {
@@ -80,42 +77,44 @@ public class SoccerSim {
 
     if ((args.length % 4) == 0) {
       try {
+        //timeSlice
         ballCount = (int)args.length/4;
         soccerClock = new Clock( 90, 1 );
+        int j = 0;
+        for (int i = 0; i < ballArray.length; i++)  {
+            ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
+            j += 4;
+        }
+
         System.out.println("you've created " + args.length/4 + " balls");
       } catch (NumberFormatException cantConvert) { 
         System.out.println("make sure you put in numbers for xPosition, yPosition, xSpeed, ySpeed, and an optional timeSlice");
       }
       
     }
-    return ballCount;
+    
   }
 
 
   
-  public static void main(String[] args[]) {
+  public static void main(String[] args) {
     System.out.println("\n  Hello, world, from the SoccerSim program!");
     SoccerSim localSoccerSim = new SoccerSim();
+    Ball ballWithTimeSlice = new Ball(40, 20, 5, 10, 60);
+    Ball ballWithNoTimeSlice = new Ball(40, 20, 5, 10);
 
-    //ballArray = new Ball[ballCount];
-
-    int j = 0;
     
-    for (int i = 0; i < ballArray.length; i++)  {
-      /*
-        Ball.xPosition = Double.parseDouble(args[(j + 0)]);
-        Ball.yPosition = Double.parseDouble(args[(j + 1)]);
-        Ball.xSpeed = Double.parseDouble(args[(j + 2)]);
-        Ball.ySpeed = Double.parseDouble(args[(j + 3)]);
-      */
-        ballArray[i] = new Ball( Double.parseDouble(args[(j + 0)]), Double.parseDouble(args[(j + 1)]), Double.parseDouble(args[(j + 2)]), Double.parseDouble(args[(j + 3)]) );
-        j += 4;
-    }
+
+    
+    for (int k = 0; k < ballArray.length; k++) {
+        ballArray[k].moveWithTime();
+     }
+    
 
     for (int i = 0; i < ballArray.length; i++) {
         ballArray[i].moveBall();
     }
    
-     }
+    }
   }
 
