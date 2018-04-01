@@ -25,22 +25,30 @@ public class SoccerSim {
     ballArray = new Ball[ballCount];
   }
 
-  private boolean findCollision() {
+  private boolean poleCollision() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( (ballArray[i].UpdateXPosition() - X_POLE <= RADIUS ) && ( ballArray[i].UpdateYPosition() - Y_POLE <= RADIUS ) ) {
         System.out.println("the ball hit the pole!");
         return true;
       }
+    }
+    return false;
+  }
+  private boolean ballCollision() {
+     for (int i = 0; i < ballArray.length - 1; i++) {
       for (int j = i + 1; j < ballArray.length; j++) {
         double velocityDifferenceX = Math.abs( ballArray[i].UpdateXPosition() - ballArray[i + 1].UpdateXPosition() );
         double velocityDifferenceY = Math.abs( ballArray[i].UpdateYPosition() - ballArray[i + 1].UpdateYPosition() );
         if ( (velocityDifferenceX <= RADIUS) && (velocityDifferenceY <= RADIUS) ) {
+          System.out.println("the balls collided.");
           return true;       
        }
+      }
      }  
+     return false;
    }
-   return false;
-   }
+
+
    private boolean inBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
       if ( ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition() < 0) ) {
@@ -62,13 +70,21 @@ public class SoccerSim {
          System.exit( 1 );
     }
 
+    if( (args.length % 4) == 2 || (args.length % 4) == 3 ) {
+         System.out.println( "   Sorry you must enter a proper number of arguments\n" +
+                             "   Please try again..........." );
+         System.exit( 1 );
+    }
+
+
+
     if ((args.length % 4) == 1) {
       try {
         soccerClock.timeSlice = Double.parseDouble(args[args.length - 1]);
         if ( (args.length - 1) % 4 == 0) {
           ballCount = (int)args.length/4;
           ballArray = new Ball[ballCount];
-          System.out.println("you've created " + ballCount + " balls");
+          System.out.println("you've created " + ballCount + " balls with a timeSlice argument.");
 
           int i = 0;
           for (int j = 0; j < ballArray.length - 1; j++)  {
@@ -104,25 +120,19 @@ public class SoccerSim {
   }
 
 
-  
+  public void UpdateSim() {
+    for (int i = 0; i < ballArray.length; i++) {
+      ballArray[i].moveWithTime();
+    }
+  }
+
   public static void main(String[] args) {
     System.out.println("\n  Hello, world, from the SoccerSim program!");
-    SoccerSim localSoccerSim = new SoccerSim();
-   // Ball ballWithTimeSlice = new Ball(40, 20, 5, 10, 1);
-   //Ball ballWithNoTimeSlice = new Ball(40, 20, 5, 10);
+    SoccerSim newSoccerSim = new SoccerSim();
 
-    
-
-    
-    for (int k = 0; k < ballArray.length; k++) {
-        ballArray[k].moveWithTime();
-     }
-    
-/*
-    for (int i = 0; i < ballArray.length; i++) {
-        ballArray[i].moveBall();
-    }
-*/   
+    newSoccerSim.setUp(args);
+    newSoccerSim.poleCollision();
+    newSoccerSim.ballCollision();
     }
   }
 
