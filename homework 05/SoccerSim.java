@@ -55,7 +55,7 @@ public class SoccerSim {
    }
 
   public void setUp(String[] args) throws NumberFormatException {
-    ballArray = new Ball[ballCount];
+    
     if( 0 == args.length ) {
          System.out.println( "   Sorry you must enter at least one argument\n" +
                              "   Please try again..........." );
@@ -67,7 +67,14 @@ public class SoccerSim {
         soccerClock.timeSlice = Double.parseDouble(args[args.length - 1]);
         if ( (args.length - 1) % 4 == 0) {
           ballCount = (int)args.length/4;
+          ballArray = new Ball[ballCount];
           System.out.println("you've created " + ballCount + " balls");
+
+          int i = 0;
+          for (int j = 0; j < ballArray.length - 1; j++)  {
+              ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
+              i += 4;
+          }
         }
       } catch (NumberFormatException cantConvert) { 
         System.out.println("make sure you put in numbers for xPosition, yPosition, xSpeed, ySpeed, and an optional timeSlice");
@@ -77,13 +84,14 @@ public class SoccerSim {
 
     if ((args.length % 4) == 0) {
       try {
-        //timeSlice
+        timeSlice = DEFAULT_TIME_SLICE;
         ballCount = (int)args.length/4;
+        ballArray = new Ball[ballCount];
         soccerClock = new Clock( 90, 1 );
-        int j = 0;
-        for (int i = 0; i < ballArray.length; i++)  {
+        int i = 0;
+        for (int j = 0; j < ballArray.length; j++)  {
             ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
-            j += 4;
+            i += 4;
         }
 
         System.out.println("you've created " + args.length/4 + " balls");
@@ -100,8 +108,8 @@ public class SoccerSim {
   public static void main(String[] args) {
     System.out.println("\n  Hello, world, from the SoccerSim program!");
     SoccerSim localSoccerSim = new SoccerSim();
-    Ball ballWithTimeSlice = new Ball(40, 20, 5, 10, 60);
-    Ball ballWithNoTimeSlice = new Ball(40, 20, 5, 10);
+   // Ball ballWithTimeSlice = new Ball(40, 20, 5, 10, 1);
+   //Ball ballWithNoTimeSlice = new Ball(40, 20, 5, 10);
 
     
 
@@ -110,11 +118,11 @@ public class SoccerSim {
         ballArray[k].moveWithTime();
      }
     
-
+/*
     for (int i = 0; i < ballArray.length; i++) {
         ballArray[i].moveBall();
     }
-   
+*/   
     }
   }
 
