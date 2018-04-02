@@ -1,156 +1,142 @@
-public class SoccerSim {
-  private final double RADIUS = 4.45;
-  private final double RADIUS_IN_FEET = 4.45/12;
-  private final double WEIGHT = 1;
-  
-  private static final double DEFAULT_TIME_SLICE = 1;
-  private static final double INCHES_PER_FOOT = 12;
+import java.text.DecimalFormat;
 
-  private static final double FIELD_WIDTH = 1000.0;
-  private static final double FIELD_HEIGHT = 1000.0;
+public class Ball {
+	private double ballVelocity;
+	private  double xPosition;
+	private  double yPosition;
+	private  double xSpeed;
+	private  double ySpeed;
+	private String ballString;
+	private double timeSlice;
 
-  private static final double X_POLE = 10;
-  private static final double Y_POLE = 10;
+	private static final double FRICTION = 0.01;
+	private static final double MINIIMUM_SPEED = 0.083;
 
+	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed) {
+		this.xPosition = xPosition; //m/s across
+		this.yPosition = yPosition; //m/s up/down
+		this.xSpeed = xSpeed;
+		this.ySpeed = ySpeed;
+	}
 
-  private double timeSlice = 1.0;
-  private int ballCount = 0;
-  
-  private static Ball[] ballArray = null;
-  private Clock soccerClock = null;
+	public void moveBall() {
+		xPosition += xSpeed; //*timeSlice
+		xSpeed -= xSpeed * FRICTION;
 
-  String inputConversionError = "your input can not be converted, please try again";
+		yPosition = yPosition;
+		ySpeed -= ySpeed * FRICTION;
+		ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
+	}
+	
 
-  public SoccerSim() {
-    soccerClock = new Clock(90, 60);
-  }
+	public void moveWithTime() {
+		this.timeSlice = timeSlice;
+		xPosition += xSpeed * timeSlice;
+    	yPosition += ySpeed * timeSlice;
 
-  private boolean poleCollision() {
-    for (int i = 0; i < ballArray.length - 1; i++) {
-      if ( (ballArray[i].UpdateXPosition() - X_POLE <= RADIUS ) && ( ballArray[i].UpdateYPosition() - Y_POLE <= RADIUS ) ) {
-        System.out.println("the ball hit the pole!");
-        return true;
-      }
-    }
-    return false;
-  }
-  private boolean ballCollision() {
-    
-     for (int i = 0; i < ballArray.length - 1; i++) {
-      for (int j = i + 1; j < ballArray.length; j++) {
-        double distance = Math.sqrt(Math.pow(ballArray[i].UpdateXPosition() 
-          - ballArray[j].UpdateXPosition(), 2) 
-        + Math.pow(ballArray[i].UpdateYPosition() 
-          - ballArray[j].UpdateYPosition(), 2) );  
-
-          if (distance <= RADIUS_IN_FEET*2) {
-           System.out.println("the balls collided at " + ballArray[i].UpdateXPosition() + " and " + ballArray[i].UpdateYPosition());
-           return true;
-          }   
-       }
-
-      }  
-     
-     System.out.println("the balls do not collide");
-     return false;
-   }
-
-
-   private boolean inBounds() {
-    for (int i = 0; i < ballArray.length; i++) {
-      System.out.println(ballArray[i].UpdateXPosition());
-      System.out.println(ballArray[i].UpdateYPosition());
-      if ( ( ballArray[i].UpdateXPosition() > FIELD_WIDTH) || (ballArray[i].UpdateXPosition() < 0) ) {
-        System.out.println("ball is out of bounds from the x direction");
-        return false;
-      } if ( (ballArray[i].UpdateYPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateYPosition() < 0) ) {
-        System.out.println("ball is out of bounds from the y direction");
-        return false;
-      } 
-    }
-    return true;
-   }
-
-  public void setUp(String[] args) throws NumberFormatException {
-    
-    if( 0 == args.length ) {
-         System.out.println( "   Sorry you must enter at least one argument\n" +
-                             "   Please try again..........." );
-         System.exit( 1 );
-    }
-
-    if( (args.length % 4) == 2 || (args.length % 4) == 3 ) {
-         System.out.println( "   Sorry you must enter a proper number of arguments\n" +
-                             "   Please try again..........." );
-         System.exit( 1 );
-    }
+	    xSpeed = xSpeed * (Math.pow( 1 - FRICTION, timeSlice ));
+	    ySpeed = ySpeed * (Math.pow( 1 - FRICTION, timeSlice ));
+	    ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
+	}
+	
 
 
 
-    if ((args.length % 4) == 1) {
-      try {
-        soccerClock.timeSlice = Double.parseDouble(args[args.length - 1]);
-        if ( (args.length - 1) % 4 == 0) {
-          ballCount = (int)args.length/4;
-          ballArray = new Ball[ballCount];
-          System.out.println("you've created " + ballCount + " balls with a timeSlice argument.");
+	public double getVelocity() {
+		ballVelocity = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
+		//System.out.println("ballVelocity: " + ballVelocity);
+		return ballVelocity;
+	}
 
-          int i = 0;
-          for (int j = 0; j < ballArray.length - 1; j++)  {
-              ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
-              i += 4;
-          }
-        }
-      } catch (NumberFormatException cantConvert) { 
-        System.out.println("make sure you put in numbers for xPosition, yPosition, xSpeed, ySpeed, and an optional timeSlice");
+	public double UpdateXSpeed() { 
+		return xSpeed;
+	}
 
-      }
-    }
+	public double UpdateYSpeed() { 
+		return ySpeed;
+	}
 
-    if ((args.length % 4) == 0) {
-      try {
-        timeSlice = DEFAULT_TIME_SLICE;
-        ballCount = (int)args.length/4;
-        ballArray = new Ball[ballCount];
+	public double UpdateXPosition() {
+   		return xPosition;
+	}
 
-        int i = 0;
-        for (int j = 0; j < ballArray.length; j++)  {
-            ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
-            i += 4;
-        }
-        
-        for (Ball b : ballArray) {
-                System.out.println(b.toString());
-        }
-        
+	public double UpdateYPosition() {
+		return yPosition;
+	}
 
-        System.out.println("you've created " + args.length/4 + " balls");
-      } catch (NumberFormatException cantConvert) { 
-        System.out.println("make sure you put in numbers for xPosition, yPosition, xSpeed, ySpeed, and an optional timeSlice");
-      }
-      
-    }
-    
-  }
+	public boolean atRest() {
+		if ( Math.abs( getVelocity() ) < MINIIMUM_SPEED ) {
+			return true;
+		} else {
+     		return false;
+		}
+	}
+
+	public String toString() {
+		String stringFormat = "00.0000";
+		DecimalFormat outputFormat = new DecimalFormat( stringFormat );
+
+		if (atRest() == true) {
+			ballString = "position " + outputFormat.format(xPosition) + ", " + outputFormat.format(yPosition) + "    <at rest>";
+		} else {
+			ballString = "position " + outputFormat.format(xPosition) + ", " + outputFormat.format(yPosition) + "    SPEED " + outputFormat.format(xSpeed) + ", " + outputFormat.format(ySpeed) + " m/s";
+		}
+		//System.out.println(ballString);
+		return ballString;
+	}
+	
+	public static void main( String args[] ) {
+    System.out.println( "\nBaLL CLASS TESTER PROGRAM\n" +
+                          "--------------------------\n" );
+
+		System.out.println("\nnew ball - b1");
+		Ball b1 = new Ball(10, 50, 2, 6);
+		System.out.println( "The velocity of the ball is " + b1.getVelocity() + " ft/s.");
+		b1.moveBall();
+		b1.toString();
+		b1.moveBall();
+		b1.toString();
+		b1.moveBall();
+		b1.toString();
+		b1.moveBall();
+		b1.toString();
+		b1.moveBall();
+		b1.toString();
+		System.out.println("\nnew ball - b2");
+		Ball b2 = new Ball(20, 60, 3, 7);
+		b2.moveBall();
+		b2.toString();
+		b2.getVelocity();
+		b2.moveBall();
+		b2.toString();
+		b2.moveBall();
+		b2.toString();
+		b2.moveBall();
+		b2.toString();
+		System.out.println("\nnew ball - b3");
+		Ball b3 = new Ball(30, 70, 4, 8);
+		b3.moveBall();
+		b3.toString();
+		b3.moveBall();
+		b3.toString();
+		b3.moveBall();
+		b3.toString();
+		b3.moveBall();
+		b3.toString();
+		System.out.println("\nnew ball - b4");
+		Ball b4 = new Ball(40, 80, 5, 9);
+		b4.moveBall();
+		b4.toString();
+		b4.moveBall();
+		b4.toString();
+		b4.moveBall();
+		b4.toString();
+		b4.moveBall();
+		b4.toString();
 
 
-  public void UpdateSim() {
-    for (int i = 0; i < ballArray.length; i++) {
-      ballArray[i].moveWithTime();
-    }
-    System.out.println("-- update --");
-  }
 
-  public static void main(String[] args) {
-    System.out.println("\n  Hello, world, from the SoccerSim program!");
-    SoccerSim newSoccerSim = new SoccerSim();
+		b1.toString();
+	}
 
-    newSoccerSim.setUp(args);
-    newSoccerSim.poleCollision();
-    newSoccerSim.ballCollision();
-    newSoccerSim.UpdateSim();
-    System.out.println(newSoccerSim.inBounds());
-
-    }
-  }
-
+}
