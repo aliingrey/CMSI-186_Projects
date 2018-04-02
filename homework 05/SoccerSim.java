@@ -57,12 +57,14 @@ public class SoccerSim {
 
 
    private boolean inBounds() {
-    for (int i = 0; i < ballArray.length - 1; i++) {
+    for (int i = 0; i < ballArray.length; i++) {
+      System.out.println(ballArray[i].UpdateXPosition());
+      System.out.println(ballArray[i].UpdateYPosition());
       if ( ( ballArray[i].UpdateXPosition() > FIELD_WIDTH) || (ballArray[i].UpdateXPosition() < 0) ) {
-        System.out.println("ob from the y direction");
+        System.out.println("ball is out of bounds from the x direction");
         return false;
       } if ( (ballArray[i].UpdateYPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateYPosition() < 0) ) {
-        System.out.println("ob from the x direction");
+        System.out.println("ball is out of bounds from the y direction");
         return false;
       } 
     }
@@ -115,7 +117,6 @@ public class SoccerSim {
         for (int j = 0; j < ballArray.length; j++)  {
             ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
             i += 4;
-            System.out.println("j " + ballArray[j].toString());
         }
         
         for (Ball b : ballArray) {
@@ -148,11 +149,8 @@ public class SoccerSim {
     newSoccerSim.poleCollision();
     newSoccerSim.ballCollision();
     newSoccerSim.UpdateSim();
-    //newSoccerSim.poleCollision();
-    //newSoccerSim.ballCollision();
-    //newSoccerSim.UpdateSim();
-    //newSoccerSim.poleCollision();
-    //newSoccerSim.inBounds();
+    System.out.println(newSoccerSim.inBounds());
+
     }
   }
 
