@@ -23,7 +23,6 @@ public class SoccerSim {
 
   public SoccerSim() {
     soccerClock = new Clock(90, 60);
-    ballArray = new Ball[ballCount];
   }
 
   private boolean poleCollision() {
@@ -36,26 +35,33 @@ public class SoccerSim {
     return false;
   }
   private boolean ballCollision() {
+    
      for (int i = 0; i < ballArray.length - 1; i++) {
       for (int j = i + 1; j < ballArray.length; j++) {
-        double velocityDifferenceX = Math.abs( ballArray[i].UpdateXPosition() - ballArray[i + 1].UpdateXPosition() );
-        double velocityDifferenceY = Math.abs( ballArray[i].UpdateYPosition() - ballArray[i + 1].UpdateYPosition() );
-        if ( (velocityDifferenceX <= RADIUS_IN_FEET) && (velocityDifferenceY <= RADIUS_IN_FEET) ) {
-          System.out.println("the balls collided at " + ballArray[i].UpdateXPosition() + " and " + ballArray[i].UpdateYPosition());
-          return true;       
+        double distance = Math.sqrt(Math.pow(ballArray[i].UpdateXPosition() 
+          - ballArray[j].UpdateXPosition(), 2) 
+        + Math.pow(ballArray[i].UpdateYPosition() 
+          - ballArray[j].UpdateYPosition(), 2) );  
+
+          if (distance <= RADIUS_IN_FEET*2) {
+           System.out.println("the balls collided at " + ballArray[i].UpdateXPosition() + " and " + ballArray[i].UpdateYPosition());
+           return true;
+          }   
        }
-      }
-     }  
+
+      }  
+     
+     System.out.println("the balls do not collide");
      return false;
    }
 
 
    private boolean inBounds() {
     for (int i = 0; i < ballArray.length - 1; i++) {
-      if ( ( ballArray[i].UpdateXPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateXPosition() < 0) ) {
+      if ( ( ballArray[i].UpdateXPosition() > FIELD_WIDTH) || (ballArray[i].UpdateXPosition() < 0) ) {
         System.out.println("ob from the y direction");
         return false;
-      } if ( (ballArray[i].UpdateYPosition() > FIELD_WIDTH) || (ballArray[i].UpdateYPosition() < 0) ) {
+      } if ( (ballArray[i].UpdateYPosition() > FIELD_HEIGHT) || (ballArray[i].UpdateYPosition() < 0) ) {
         System.out.println("ob from the x direction");
         return false;
       } 
@@ -104,12 +110,18 @@ public class SoccerSim {
         timeSlice = DEFAULT_TIME_SLICE;
         ballCount = (int)args.length/4;
         ballArray = new Ball[ballCount];
-        soccerClock = new Clock( 90, 1 );
+
         int i = 0;
         for (int j = 0; j < ballArray.length; j++)  {
             ballArray[j] = new Ball( Double.parseDouble(args[(i + 0)]), Double.parseDouble(args[(i + 1)]), Double.parseDouble(args[(i + 2)]), Double.parseDouble(args[(i + 3)]) );
             i += 4;
+            System.out.println("j " + ballArray[j].toString());
         }
+        
+        for (Ball b : ballArray) {
+                System.out.println(b.toString());
+        }
+        
 
         System.out.println("you've created " + args.length/4 + " balls");
       } catch (NumberFormatException cantConvert) { 
@@ -136,11 +148,11 @@ public class SoccerSim {
     newSoccerSim.poleCollision();
     newSoccerSim.ballCollision();
     newSoccerSim.UpdateSim();
-    newSoccerSim.poleCollision();
-    newSoccerSim.ballCollision();
-    newSoccerSim.UpdateSim();
-    newSoccerSim.poleCollision();
-    newSoccerSim.inBounds();
+    //newSoccerSim.poleCollision();
+    //newSoccerSim.ballCollision();
+    //newSoccerSim.UpdateSim();
+    //newSoccerSim.poleCollision();
+    //newSoccerSim.inBounds();
     }
   }
 
