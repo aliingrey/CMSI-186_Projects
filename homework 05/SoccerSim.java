@@ -19,8 +19,6 @@ public class SoccerSim {
   private static Ball[] ballArray = null;
   private Clock soccerClock = null;
 
-  String inputConversionError = "your input can not be converted, please try again";
-
   public SoccerSim() {
     soccerClock = new Clock(90, 60);
   }
@@ -134,7 +132,7 @@ public class SoccerSim {
   }
 
 
-  public void UpdateSim() {
+  public void UpdateBalls() {
     for (int i = 0; i < ballArray.length; i++) {
       ballArray[i].moveWithTime();
     }
@@ -148,7 +146,7 @@ public class SoccerSim {
     newSoccerSim.setUp(args);
     newSoccerSim.poleCollision();
     newSoccerSim.ballCollision();
-    newSoccerSim.UpdateSim();
+    newSoccerSim.UpdateBalls();
     System.out.println(newSoccerSim.inBounds());
 
     }
