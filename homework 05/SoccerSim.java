@@ -1,5 +1,6 @@
 public class SoccerSim {
   private final double RADIUS = 4.45;
+  private final double RADIUS_IN_FEET = 4.45/12;
   private final double WEIGHT = 1;
   
   private static final double DEFAULT_TIME_SLICE = 1;
@@ -39,8 +40,8 @@ public class SoccerSim {
       for (int j = i + 1; j < ballArray.length; j++) {
         double velocityDifferenceX = Math.abs( ballArray[i].UpdateXPosition() - ballArray[i + 1].UpdateXPosition() );
         double velocityDifferenceY = Math.abs( ballArray[i].UpdateYPosition() - ballArray[i + 1].UpdateYPosition() );
-        if ( (velocityDifferenceX <= RADIUS) && (velocityDifferenceY <= RADIUS) ) {
-          System.out.println("the balls collided.");
+        if ( (velocityDifferenceX <= RADIUS_IN_FEET) && (velocityDifferenceY <= RADIUS_IN_FEET) ) {
+          System.out.println("the balls collided at " + ballArray[i].UpdateXPosition() + " and " + ballArray[i].UpdateYPosition());
           return true;       
        }
       }
@@ -124,6 +125,7 @@ public class SoccerSim {
     for (int i = 0; i < ballArray.length; i++) {
       ballArray[i].moveWithTime();
     }
+    System.out.println("-- update --");
   }
 
   public static void main(String[] args) {
@@ -133,6 +135,12 @@ public class SoccerSim {
     newSoccerSim.setUp(args);
     newSoccerSim.poleCollision();
     newSoccerSim.ballCollision();
+    newSoccerSim.UpdateSim();
+    newSoccerSim.poleCollision();
+    newSoccerSim.ballCollision();
+    newSoccerSim.UpdateSim();
+    newSoccerSim.poleCollision();
+    newSoccerSim.inBounds();
     }
   }
 
