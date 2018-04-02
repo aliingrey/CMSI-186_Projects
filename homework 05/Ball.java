@@ -3,24 +3,16 @@ import java.text.DecimalFormat;
 public class Ball {
 	private double ballVelocity;
 
-	public static double xPosition;
-	public static double yPosition;
-	public static double xSpeed;
-	public static double ySpeed;
+	private  double xPosition;
+	private  double yPosition;
+	private  double xSpeed;
+	private  double ySpeed;
 	private String ballString;
 	private double timeSlice;
 
 	private static final double FRICTION = 0.01;
 	private static final double MINIIMUM_SPEED = 0.083;
-/*
-	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed, double userTimeSlice) {
-		this.xPosition = xPosition; //m/s across
-		this.yPosition = yPosition; //m/s up/down
-		this.xSpeed = xSpeed;
-		this.ySpeed = ySpeed;
-		this.timeSlice = userTimeSlice;
-	}
-*/
+
 	public Ball(double xPosition, double yPosition, double xSpeed, double ySpeed) {
 		this.xPosition = xPosition; //m/s across
 		this.yPosition = yPosition; //m/s up/down
@@ -53,40 +45,23 @@ public class Ball {
 		return ballVelocity;
 	}
 
-	public double UpdateXSpeed() { //what happens when velocity are neg numbers
-		/*
-		xSpeed -= xSpeed * FRICTION;
-		System.out.println("xSpeed: " + xSpeed);
-		*/
+	public double UpdateXSpeed() { 
+
 		return xSpeed;
 	}
-	public double UpdateYSpeed() { //what happens when velocity are neg numbers
-		/*
-		ySpeed -= ySpeed * FRICTION;
-		System.out.println("ySpeed: " + ySpeed);
-		*/
+	public double UpdateYSpeed() { 
 		return ySpeed;
 	}
-	//could do a field class (Field.java)
 
 	public double UpdateXPosition() {
-		/*
-		xPosition += xSpeed;
-		System.out.println("x pos: " + xPosition);
-		*/
    		return xPosition;
 	}
 
 	public double UpdateYPosition() {
-		/*
-		yPosition += ySpeed;
-		System.out.println("y pos: " + yPosition);
-		*/
 		return yPosition;
 	}
 
 	public boolean atRest() {
-		//if ( ( xSpeed*12 <= 1.0 ) && ( ySpeed*12 <= 1.0 ) ) {
 		if ( Math.abs( ballVelocity ) < MINIIMUM_SPEED ) {
 			return true;
 		} else {
@@ -99,9 +74,9 @@ public class Ball {
 		DecimalFormat outputFormat = new DecimalFormat( stringFormat );
 
 		if (atRest() == true) {
-			ballString = "POSITOIN " + outputFormat.format(xPosition) + ", " + outputFormat.format(yPosition) + "    <at rest>";
+			ballString = "position " + outputFormat.format(xPosition) + ", " + outputFormat.format(yPosition) + "    <at rest>";
 		} else {
-			ballString = "POSITOIN " + outputFormat.format(xPosition) + ", " + outputFormat.format(yPosition) + "    SPEED " + outputFormat.format(xSpeed) + ", " + outputFormat.format(ySpeed) + " m/s";
+			ballString = "position " + outputFormat.format(xPosition) + ", " + outputFormat.format(yPosition) + "    SPEED " + outputFormat.format(xSpeed) + ", " + outputFormat.format(ySpeed) + " m/s";
 		}
 		System.out.println(ballString);
 		return ballString;
@@ -156,6 +131,9 @@ public class Ball {
 		b4.moveBall();
 		b4.toString();
 
+
+
+		b1.toString();
 	}
 
 }
