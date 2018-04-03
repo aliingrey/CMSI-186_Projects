@@ -1,0 +1,209 @@
+.
+.
+======================================
+... Testing Ball class ...
+======================================
+
+BaLL CLASS TESTER PROGRAM
+--------------------------
+
+
+new ball - b1
+The velocity of the ball is 6.324555320336759 ft/s.
+
+new ball - b2
+
+new ball - b3
+
+new ball - b4
+.
+.
+.
+.
+======================================
+... Testing Clock class ...
+======================================
+
+CLOCK CLASS TESTER PROGRAM
+--------------------------
+
+  I deleted the validateAngleArg method because I check for the angle in the clock constructor
+
+  Creating a new clock:
+angle between: 5.4996
+total seconds elapsed: 60.0
+00:01:00.0
+.
+.
+======================================
+... Testing SoccerSim no args...
+======================================
+
+  Hello, world, from the SoccerSim program!
+   Sorry you must enter at least one argument
+   Please try again...........
+.
+.
+======================================
+... Testing SoccerSim one arg...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 0 balls with a timeSlice argument.
+the balls do not collide
+-- update --
+true
+.
+.
+======================================
+... Testing SoccerSim two args...
+======================================
+
+  Hello, world, from the SoccerSim program!
+   Sorry you must enter a proper number of arguments
+   Please try again...........
+.
+.
+======================================
+... Testing SoccerSim three args...
+======================================
+
+  Hello, world, from the SoccerSim program!
+   Sorry you must enter a proper number of arguments
+   Please try again...........
+.
+.
+======================================
+... Testing SoccerSim six args...
+======================================
+
+  Hello, world, from the SoccerSim program!
+   Sorry you must enter a proper number of arguments
+   Please try again...........
+.
+.
+======================================
+... Testing SoccerSim out of bounds...
+======================================
+
+  Hello, world, from the SoccerSim program!
+position 1100.0000, 1100.0000    SPEED 99.0000, 99.0000 m/s
+you've created 1 balls
+the balls do not collide
+-- update --
+1100.0
+1100.0
+ball is out of bounds from the x direction
+false
+.
+.
+======================================
+... Testing SoccerSim negative time slice...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 1 balls with a timeSlice argument.
+the balls do not collide
+Threw Exception in thread "main" java.lang.NullPointerException
+        at SoccerSim.UpdateBalls(SoccerSim.java:137)
+        at SoccerSim.main(SoccerSim.java:149)
+.
+.
+======================================
+... Testing SoccerSim time slice too large...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 1 balls with a timeSlice argument.
+the balls do not collide
+Threw Exception in thread "main" java.lang.NullPointerException
+        at SoccerSim.UpdateBalls(SoccerSim.java:137)
+        at SoccerSim.main(SoccerSim.java:149)
+.
+.
+======================================
+... Testing SoccerSim time slice value of zero...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 1 balls with a timeSlice argument.
+the balls do not collide
+Threw Exception in thread "main" java.lang.NullPointerException
+        at SoccerSim.UpdateBalls(SoccerSim.java:137)
+        at SoccerSim.main(SoccerSim.java:149)
+.
+.
+======================================
+... Testing SoccerSim check for collision...
+======================================
+
+  Hello, world, from the SoccerSim program!
+position 10.0000, 10.0000    SPEED 01.0000, 01.0000 m/s
+position 20.0000, 20.0000    SPEED -01.0000, -01.0000 m/s
+you've created 2 balls
+the ball hit the pole!
+the balls do not collide
+-- update --
+10.0
+10.0
+20.0
+20.0
+true
+.
+.
+======================================
+... Testing SoccerSim valid ball should come to rest...
+======================================
+
+  Hello, world, from the SoccerSim program!
+position 10.0000, 10.0000    SPEED 01.0000, 01.0000 m/s
+you've created 1 balls
+the balls do not collide
+-- update --
+10.0
+10.0
+true
+.
+.
+======================================
+... Testing SoccerSim valid ball should go out of bounds...
+======================================
+
+  Hello, world, from the SoccerSim program!
+position 10.0000, 10.0000    SPEED 1000.0000, 1000.0000 m/s
+you've created 1 balls
+the balls do not collide
+-- update --
+10.0
+10.0
+true
+.
+.
+======================================
+... Testing SoccerSim valid ball set six balls subsecond time slice...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 6 balls with a timeSlice argument.
+.
+.
+======================================
+... Testing SoccerSim valid ball set five balls 1.234 second time slice...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 5 balls with a timeSlice argument.
+.
+.
+======================================
+... Testing SoccerSim valid ball set ten balls 10 second time slice...
+======================================
+
+  Hello, world, from the SoccerSim program!
+you've created 10 balls with a timeSlice argument.
+the ball hit the pole!
+.
+.
+======================================
+... End of SoccerSim Testing...
+======================================

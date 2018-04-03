@@ -21,12 +21,12 @@ public class Clock {
    private static final double DEFAULT_TIME_SLICE_IN_SECONDS = 60.0;
    private static final double INVALID_ARGUMENT_VALUE = -1.0;
    private static final double MAXIMUM_DEGREE_VALUE = 360.0;
-   private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834; 
+   private static final double HOUR_HAND_DEGREES_PER_SECOND = 0.00834;
    private static final double MINUTE_HAND_DEGREES_PER_SECOND = 0.1;
 
    private static double degrees = 0;
-   private static double timeSlice = 0; 
-   private double totalSeconds; 
+   public static double timeSlice = 0;   // I changed this to public from private; a "quick fix" but not the best idea!
+   private double totalSeconds;
    private double totalMinutes = 0;
    private double totalHours = 0;
 
@@ -59,7 +59,7 @@ public class Clock {
     totalSeconds += timeSlice;
 
     hours = Math.floor((int)totalSeconds/3600);
-    minutes = Math.floor( ( totalSeconds - ( 3600 * hours ) ) / 60 ); 
+    minutes = Math.floor( ( totalSeconds - ( 3600 * hours ) ) / 60 );
     seconds = (totalSeconds - (hours * 3600) - (minutes * 60)) % 60;
 
     return totalSeconds;
@@ -68,11 +68,11 @@ public class Clock {
    public double validateAngleArg( String argValue ) throws NumberFormatException {
       double returnAngle = 0.0;
 
-      try { 
-        returnAngle = Double.parseDouble( argValue ); 
+      try {
+        returnAngle = Double.parseDouble( argValue );
       }
-      catch (NumberFormatException  nfe ) { 
-        throw new NumberFormatException(" could not convert"); 
+      catch (NumberFormatException  nfe ) {
+        throw new NumberFormatException(" could not convert");
       }
 
       if ( returnAngle < 0 || returnAngle > 360 ) {
@@ -83,11 +83,11 @@ public class Clock {
 
    public double validateTimeSliceArg( String argValue ) {
       double returnTime = 0.0;
-      try { 
-        returnTime = Double.parseDouble( argValue ); 
+      try {
+        returnTime = Double.parseDouble( argValue );
       }
-      catch (NumberFormatException  nfe ) { 
-        throw new NumberFormatException(" could not convert"); 
+      catch (NumberFormatException  nfe ) {
+        throw new NumberFormatException(" could not convert");
       }
 
       if ( returnTime <= 0 || returnTime > 1800.0 ) {
@@ -113,22 +113,22 @@ public class Clock {
    public double getHandAngle() {
 
     double angleBetween = Math.abs( getHourHandAngle() - getMinuteHandAngle() );
-    
+
     if (angleBetween > 180) {
       angleBetween = MAXIMUM_DEGREE_VALUE - angleBetween;
-    }  
+    }
     return angleBetween;
    }
 
    public double getTotalSeconds() { //tells you how far along you are in your simulation
     return totalSeconds;
    }
-  
+
    public double getDegree() {
     return degrees;
    }
 
-   public String toString() { 
+   public String toString() {
     String hmString = "00";
     String secondString = "00.0";
     DecimalFormat hmStringFormat = new DecimalFormat(hmString);
@@ -160,4 +160,4 @@ public class Clock {
       System.out.println("total seconds elapsed: " + clock.getTotalSeconds() );
       System.out.println( clock.toString() );
     }
-} 
+}
