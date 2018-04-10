@@ -82,7 +82,8 @@ public class BrobInt {
        System.out.print( " length: " + length + ", start: " + start );
        System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
     }
-    toArray( myArray );
+    //error here
+    //toArray( myArray );
    //   super();
    }
 
@@ -95,16 +96,13 @@ public class BrobInt {
    *  note that there is no return false, because of throwing the exception
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public boolean validateDigits() {
-    for(int i = 0; i  < gint.length; i++) {
-      if(value < 0 ||  MAX_INT <= value) {
-        throw new IllegalArgumentException("enter a valid value, this value is noty valid");
-        return false;
-      }
+   public boolean validateDigits(String value) {
+    try {
+      double d = Double.parseDouble( value );
+    } catch (NumberFormatException nfe) {
+      return false;
     }
-    //this.brob1 = brob1.clone();
     return true;
-    //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
