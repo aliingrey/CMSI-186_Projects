@@ -51,9 +51,14 @@ public class BrobInt {
    private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string
 
 
-   private static final int CHARS_THAT_FIT = 8;
+   private static final int CHARS_THAT_FIT = 1;
    private int[] values = null;
    private int[] myArray = null;
+   private int[] sum = null;
+
+   private int sum = 0;
+   private int carry;
+   private String newBrobIntString;
 
   /**
    *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
@@ -62,14 +67,13 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String value ) {
-
     int i = 0;
     int length = value.length();
     int start  = length - CHARS_THAT_FIT;
     int size   = (int)(Math.ceil( length / CHARS_THAT_FIT ) + 1);
     myArray = new int[size];
 
-    while( length >= 8 ) {
+    while( length >= 6 ) { //chops into sections of 6
        myArray[i] = Integer.parseInt( value.substring( start, length ) );
        start -= CHARS_THAT_FIT;
        length -= CHARS_THAT_FIT;
@@ -82,12 +86,8 @@ public class BrobInt {
        System.out.print( " length: " + length + ", start: " + start );
        System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
     }
-    //error here
-    //toArray( myArray );
-   //   super();
+    toArray( myArray );
    }
-
-
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to validate that all the characters in the value are valid decimal digits
@@ -111,21 +111,6 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt reverser() {
     //StringBuffer sb = new StringBuffer( args[0] ).reverse();
-
-    
-      /*
-      public static boolean isPalindrome( String s ) {
-      String reverse = new String (""); //empty string to add to 
-      for (int i = s.length() - 1; i > -1; i--) {
-          reverse = reverse + s.charAt(i);
-      }
-      if (s.equals(reverse)) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-      */
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
@@ -139,26 +124,46 @@ public class BrobInt {
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to add the value of a BrobIntk passed as argument to this BrobInt using byte array
-   *  @param  gint         BrobInt to add to this
-   *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt addByte( BrobInt gint ) {
-    //take another int, add it to the initial chunks
-
-    //chunk across digit by digit
-    //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-   }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to add the value of a BrobIntk passed as argument to this BrobInt using int array
    *  @param  gint         BrobInt to add to this
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt addInt( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-   }
+  public int getLength() {
+    return myArray.length();
+  }
+
+  public int[] getArray() {
+    return myArray[];
+  }
+
+  public BrobInt add( BrobInt bigint1 ) {
+    length1 = bigint1.getLength();
+    length2 = this.length();
+    if (length1 > length2) {
+      sum[] = new int[length1 + 1];
+    } else {
+      sum[] = new int[length2 + 1];
+    }
+
+    int carry;
+    int array1 = bigint1.getArray();
+    for (int i = 0; i < sum.length; i++) {
+      sum[i] = array1[i] + myArray[i] + carry;
+      if (sum[i] >= 0) {
+        carry = sum[i] / 10;
+        sum[i] = sum[i] % 10;
+      }
+    }
+    
+    string value = "";
+    for (int i = 0; i <= sum.length; i ++) {
+      value += sum[i];
+    }
+    return new BigInt(value);
+  }
+   
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using bytes
@@ -166,7 +171,20 @@ public class BrobInt {
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtractByte( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+    tring newBrobIntString = "";   // string to be input for the return BrobInt
+    String valueString = "";
+
+    if ( value.compareTo( ZERO ) == 1 ) {
+      valueString  = "-" + value.toString();
+      newBrobIntString = this.add( new BrobInt( valueString ) ).toString();
+    } else {
+      valueString = value.toString().substring( 1 , value.toString().length() );
+      newBrobIntString = this.add( new BrobInt( valueString ) ).toString();
+    }
+
+    return new BrobInt( newBrobIntString );
+  }
+      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
       /*
       Brobintb3 = b1.subtract(b2);
       1. neither has a sign, first number is larger -- simple subtraction: a - b
@@ -180,30 +198,14 @@ public class BrobInt {
       9. both neg, larger abs than arg abs -- remove signs, subract, add neg to result
       10. both neg, this smaller abs than arg abs -- remove signs, swap a & b, subtract, result pos
       */
-   }
+   
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using int array
    *  @param  gint         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtractInt( BrobInt gint ) {
-    /*
-      Brobintb3 = b1.subtract(b2);
-      1. neither has a sign, first number is larger -- simple subtraction: a - b
-      2. both signs positive, first number is larger -- simple subtraction: a - b
-      3. one positive, one no sign, first number is larger -- simple subtraction: a - b
-      4. no signs, first number is smaller -- swap a & b, subtract a - b, result negative
-      5. both signs positive, first number is smaller -- swap a & b, subtract a - b, result negative
-      6. one positive, one no sign, first number is smaller -- swap a & b, subtract a - b, result negative
-      7. no sign, arg neg -- remove neg from arg and call this.add( arg )
-      8. this neg, arg pos -- add neg to arg and call this.add( arg )
-      9. both neg, larger abs than arg abs -- remove signs, subract, add neg to result
-      10. both neg, this smaller abs than arg abs -- remove signs, swap a & b, subtract, result pos
-      */
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-
-   }
+ 
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to multiply the value of a BrobIntk passed as argument to this BrobInt
@@ -277,12 +279,11 @@ public class BrobInt {
    *  could do another one with an argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-      String byteVersionOutput = "";
-      for( int i = 0; i < byteVersion.length; i++ ) {
-         byteVersionOutput = byteVersionOutput.concat( Byte.toString( byteVersion[i] ) );
+      String intString = "";
+      for( int x : myArray) {
+        value += x;
       }
-      byteVersionOutput = new String( new StringBuffer( byteVersionOutput ).reverse() );
-      return internalValue;
+      return value;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -298,10 +299,8 @@ public class BrobInt {
    *  note:  we don't really care about these
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
-      BrobInt b1 = new BrobInt(1234123123);
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
       System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
-      //BrobInt gint = new BrobInt(12345678901234567890);
       System.exit( 0 );
    }
 }
