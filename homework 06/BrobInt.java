@@ -56,7 +56,7 @@ public class BrobInt {
    private int[] myArray = null;
    private int[] sum = null;
 
-   private int sum = 0;
+   //private int sum = 0;
    private int carry;
    private String newBrobIntString;
 
@@ -86,7 +86,7 @@ public class BrobInt {
        System.out.print( " length: " + length + ", start: " + start );
        System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
     }
-    toArray( myArray );
+    //toArray( myArray );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,30 +135,35 @@ public class BrobInt {
   }
 
   public int[] getArray() {
-    return myArray[];
+    return myArray;
   }
 
   public BrobInt add( BrobInt bigint1 ) {
-    length1 = bigint1.getLength();
-    length2 = this.length();
+    int length1 = bigint1.getLength();
+    int length2 = this.length();
+    int sum[];
+    int smaller[];
+    
     if (length1 > length2) {
-      sum[] = new int[length1 + 1];
+      sum = new int[length1];
+      smaller = new int[length2];
     } else {
-      sum[] = new int[length2 + 1];
+      sum = new int[length2];
+      smaller = new int[length1];
     }
 
     int carry;
     int array1 = bigint1.getArray();
-    for (int i = 0; i < sum.length; i++) {
+    for (int i = 0; i < smaller.length; i++) {
       sum[i] = array1[i] + myArray[i] + carry;
-      if (sum[i] >= 0) {
-        carry = sum[i] / 10;
-        sum[i] = sum[i] % 10;
+      if (sum[i] > 999999) {
+        carry = sum[i] / 1000000;
+        sum[i] = sum[i] % 1000000;
       }
     }
-    
+
     string value = "";
-    for (int i = 0; i <= sum.length; i ++) {
+    for (int i = 0; i <= sum.length - 1; i ++) {
       value += sum[i];
     }
     return new BigInt(value);
@@ -170,19 +175,34 @@ public class BrobInt {
    *  @param  gint         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtractByte( BrobInt gint ) {
-    tring newBrobIntString = "";   // string to be input for the return BrobInt
-    String valueString = "";
+   public BrobInt subtract( BrobInt bigint1 ) {
+    int length1 = bigint1.getLength();
+    int length2 = this.length;
+    int difference[];
 
-    if ( value.compareTo( ZERO ) == 1 ) {
-      valueString  = "-" + value.toString();
-      newBrobIntString = this.add( new BrobInt( valueString ) ).toString();
+    if (length2 > length1) {
+      difference = new int[length1];
     } else {
-      valueString = value.toString().substring( 1 , value.toString().length() );
-      newBrobIntString = this.add( new BrobInt( valueString ) ).toString();
+      difference = new int[length2];
     }
 
-    return new BrobInt( newBrobIntString );
+    int carry;
+    int array1 = bigint1.getArray();
+
+    for (int i = 0; i < difference.length; i++) {
+      difference[i] = array1[i] + myArray[i] + carry;
+      if (difference[i] >= 0) {
+        carry = difference[i] / 10;
+        difference[i] = difference[i] % 10;
+      }
+    }
+
+    string value = "";
+    for (int i = 0; i <= difference.length; i ++) {
+      value += difference[i];
+    }
+    return new BigInt(value);
+
   }
       //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
       /*
