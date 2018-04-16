@@ -131,7 +131,7 @@ public class BrobInt {
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   public int getLength() {
-    return myArray.length();
+    return myArray.length;
   }
 
   public int[] getArray() {
@@ -140,10 +140,10 @@ public class BrobInt {
 
   public BrobInt add( BrobInt bigint1 ) {
     int length1 = bigint1.getLength();
-    int length2 = this.length();
+    int length2 = this.getLength();
     int sum[];
     int smaller[];
-    
+
     if (length1 > length2) {
       sum = new int[length1];
       smaller = new int[length2];
@@ -153,7 +153,7 @@ public class BrobInt {
     }
 
     int carry;
-    int array1 = bigint1.getArray();
+    int array1[] = bigint1.getArray();
     for (int i = 0; i < smaller.length; i++) {
       sum[i] = array1[i] + myArray[i] + carry;
       if (sum[i] > 999999) {
@@ -162,11 +162,11 @@ public class BrobInt {
       }
     }
 
-    string value = "";
+    String value = "";
     for (int i = 0; i <= sum.length - 1; i ++) {
       value += sum[i];
     }
-    return new BigInt(value);
+    return new BrobInt(value);
   }
    
 
@@ -177,31 +177,31 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt bigint1 ) {
     int length1 = bigint1.getLength();
-    int length2 = this.length;
+    int length2 = this.getLength();
     int difference[];
-
-    if (length2 > length1) {
-      difference = new int[length1];
-    } else {
-      difference = new int[length2];
-    }
-
     int carry;
-    int array1 = bigint1.getArray();
-
-    for (int i = 0; i < difference.length; i++) {
-      difference[i] = array1[i] + myArray[i] + carry;
-      if (difference[i] >= 0) {
-        carry = difference[i] / 10;
-        difference[i] = difference[i] % 10;
+    int array1[] = bigint1.getArray();
+    if (length2 > length1) {
+      difference = new int[length2];
+      for (int i = 0; i < difference.length; i++) {
+        difference[i] = array1[i] - myArray[i];
+        if (difference[i] < 0) {
+          carry = difference[i];
+          //difference[i] = difference[i] % 10;
+        }
       }
+
+    } else if (length2 < length1) {
+      difference = new int[length1];
     }
 
-    string value = "";
+    
+
+    String value = "";
     for (int i = 0; i <= difference.length; i ++) {
       value += difference[i];
     }
-    return new BigInt(value);
+    return new BrobInt(value);
 
   }
       //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
