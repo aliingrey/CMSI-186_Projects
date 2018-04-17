@@ -67,26 +67,35 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String value ) {
+    //Doofus d = new Doofus()
+    //BrobInt b1 = new BrobInt();
+    internalValue = value;
     int i = 0;
     int length = value.length();
     int start  = length - CHARS_THAT_FIT;
     int size   = (int)(Math.ceil( length / CHARS_THAT_FIT ) + 1);
-    myArray = new int[size];
+    myArray = new int[size]; //d.values = new int[ size ];
 
     while( length >= 6 ) { //chops into sections of 6
        myArray[i] = Integer.parseInt( value.substring( start, length ) );
        start -= CHARS_THAT_FIT;
        length -= CHARS_THAT_FIT;
+       /*
        System.out.print( " length: " + length + ", start: " + start );
        System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
+       */
        i++;
     }
     if( length > 0 ) {
        myArray[i] = Integer.parseInt( value.substring( 0, length ) );
+       /*
        System.out.print( " length: " + length + ", start: " + start );
        System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
+       */
     }
-    //toArray( myArray );
+    
+    toArray( myArray );
+    //System.out.println("myArray: " + myArray);
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,22 +149,26 @@ public class BrobInt {
 
   public BrobInt add( BrobInt bigint1 ) {
     int length1 = bigint1.getLength();
-    int length2 = this.getLength();
+    int thisLength = this.getLength();
     int sum[];
     int smaller[];
+    int carry = 0;
 
-    if (length1 > length2) {
+    if (length1 > thisLength) {
       sum = new int[length1];
-      smaller = new int[length2];
+      smaller = new int[thisLength];
+      System.out.println("sum: " + sum + "smaller " + smaller);
     } else {
-      sum = new int[length2];
+      sum = new int[thisLength];
       smaller = new int[length1];
+      System.out.println("sum: " + sum + "smaller " + smaller);
     }
 
-    int carry;
+    
     int array1[] = bigint1.getArray();
     for (int i = 0; i < smaller.length; i++) {
       sum[i] = array1[i] + myArray[i] + carry;
+      System.out.println("sum: " + sum);
       if (sum[i] > 999999) {
         carry = sum[i] / 1000000;
         sum[i] = sum[i] % 1000000;
@@ -165,6 +178,7 @@ public class BrobInt {
     String value = "";
     for (int i = 0; i <= sum.length - 1; i ++) {
       value += sum[i];
+      System.out.println("value: " + value);
     }
     return new BrobInt(value);
   }
@@ -176,33 +190,31 @@ public class BrobInt {
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public BrobInt subtract( BrobInt bigint1 ) {
+    
     int length1 = bigint1.getLength();
-    int length2 = this.getLength();
+    int thisLength = this.getLength();
     int difference[];
     int carry;
     int array1[] = bigint1.getArray();
-    if (length2 > length1) {
-      difference = new int[length2];
+    if (thisLength > length1) {
+      difference = new int[thisLength];
       for (int i = 0; i < difference.length; i++) {
         difference[i] = array1[i] - myArray[i];
         if (difference[i] < 0) {
           carry = difference[i];
-          //difference[i] = difference[i] % 10;
+          difference[i] = difference[i] % 10;
         }
       }
 
-    } else if (length2 < length1) {
+    } else {
       difference = new int[length1];
     }
-
-    
 
     String value = "";
     for (int i = 0; i <= difference.length; i ++) {
       value += difference[i];
     }
     return new BrobInt(value);
-
   }
       //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
       /*
@@ -301,15 +313,15 @@ public class BrobInt {
    public String toString() {
       String intString = "";
       for( int x : myArray) {
-        value += x;
+        intString += x;
       }
-      return value;
+      return intString;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to display an Array representation of this BrobInt as its bytes
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public void toArray( byte[] d ) {
+   public void toArray( int[] d ) {
       System.out.println( Arrays.toString( d ) );
    }
 
@@ -320,7 +332,7 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
+      //System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
       System.exit( 0 );
    }
 }
