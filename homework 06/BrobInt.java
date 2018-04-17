@@ -46,15 +46,17 @@ public class BrobInt {
 
   /// These are the internal fields
    private String internalValue = "";        // internal String representation of this BrobInt
-   private byte   sign          = 0;         // "0" is positive, "1" is negative
-   private String reversed      = "";        // the backwards version of the internal String representation
+   private String reversed;        // the backwards version of the internal String representation
    private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string
 
 
-   private static final int CHARS_THAT_FIT = 6;
+   private static final int CHARS_THAT_FIT = 8;
    private int[] values = null;
-   private int[] myArray = null;
+   private int[] sectionArray = null;
    private int[] sum = null;
+
+   private boolean isPositive;
+   private boolean isNegative;
 
    //private int sum = 0;
    private int carry;
@@ -67,23 +69,29 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String value ) {
-    internalValue = value;
-    int i = 0;
-    int length = value.length();
-    int start  = length - CHARS_THAT_FIT;
-    int size   = (int)(Math.ceil( length / CHARS_THAT_FIT ) + 1);
-    myArray = new int[size];
+    if (validateDigits(value) == true){
+        internalValue = value;
+        int i = 0;
+        int length = value.length();
+        int start  = length - CHARS_THAT_FIT;
+        int size   = (int)(Math.ceil( length / CHARS_THAT_FIT ) + 1);
+        sectionArray = new int[size];
 
-    while( length >= CHARS_THAT_FIT ) { //chops into sections of 6
-       myArray[i] = Integer.parseInt( value.substring( start, length ) );
-       start -= CHARS_THAT_FIT;
-       length -= CHARS_THAT_FIT;
-       i++;
+        while( length >= CHARS_THAT_FIT ) { //chops into sections of 6
+           sectionArray[i] = Integer.parseInt( value.substring( start, length ) );
+           start -= CHARS_THAT_FIT;
+           length -= CHARS_THAT_FIT;
+           i++;
+        }
+        if( length > 0 ) {
+           sectionArray[i] = Integer.parseInt( value.substring( 0, length ) );
+        }
+        toArray( sectionArray );
+
+    } else {
+      System.out.println("Numbers can't be converted");
+      System.exit(1);
     }
-    if( length > 0 ) {
-       myArray[i] = Integer.parseInt( value.substring( 0, length ) );
-    }
-    toArray( myArray );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,24 +102,58 @@ public class BrobInt {
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean validateDigits(String value) {
-    try {
-      double d = Double.parseDouble( value );
-    } catch (NumberFormatException nfe) {
-      return false;
-    }
-    return true;
+    if (value.charAt(0) == '+' || value.charAt(0) == '-') {
+
+      for (int i = 1; i <= value.length(); i++) {
+        try {
+          double d = Double.parseDouble( value.substring(i, i + 1) );
+        } catch (NumberFormatException nfe) {
+          return false;
+        }
+        internalValue = value.substring(1);
+     }
+
+      if (value.charAt(0) == '+') {
+        isPositive = true;
+        isNegative = false;
+      }
+      
+      if (value.charAt(0) == '-') {
+        isNegative = true;
+        isPositive = false;
+      }
+    } else {
+      try {
+        double d = Double.parseDouble( value );
+        isPositive = true;
+        isNegative = false;
+      } catch (NumberFormatException nfe) {
+        return false;
+      }
+      internalValue = value.substring(0);
+      
+     }
+     return true;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to reverse the value of this BrobInt
    *  @return BrobInt that is the reverse of the value of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt reverser(String[] value) {
-    /*
-      StringBuffer sb = new StringBuffer( value[0] ).reverse();
-      return sb;
-    */
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+   public BrobInt reverser(String value) { 
+    StringBuffer sb;
+    if (value.charAt(0) == '+' || value.charAt(0) == '-') {
+      sb = new StringBuffer( value.substring(1) ).reverse();
+    } else {
+      sb = new StringBuffer( value ).reverse();
+    }
+    return new BrobInt (sb.toString());
+   }
+
+
+
+   public BrobInt reverser() {
+     return new BrobInt(new StringBuffer( internalValue ).reverse().toString());
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,11 +173,11 @@ public class BrobInt {
    *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   public int getLength() {
-    return myArray.length;
+    return sectionArray.length;
   }
 
   public int[] getArray() {
-    return myArray;
+    return sectionArray;
   }
 
   public BrobInt add( BrobInt b1 ) {
@@ -158,7 +200,7 @@ public class BrobInt {
     
     int array1[] = b1.getArray();
     for (int i = 0; i < smaller.length; i++) {
-      sum[i] = array1[i] + myArray[i] + carry;
+      sum[i] = array1[i] + sectionArray[i] + carry;
       //System.out.println("sum: " + sum);
       if (sum[i] > 999999) {
         carry = sum[i] / 1000000;
@@ -190,7 +232,7 @@ public class BrobInt {
     if (thisLength > length1) {
       difference = new int[thisLength];
       for (int i = 0; i < difference.length; i++) {
-        difference[i] = array1[i] - myArray[i];
+        difference[i] = array1[i] - sectionArray[i];
         if (difference[i] < 0) {
           carry = difference[i];
           difference[i] = difference[i] % 10;
@@ -303,7 +345,7 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
       String intString = "";
-      for( int x : myArray) {
+      for( int x : sectionArray) {
         intString += x;
       }
       return intString;
