@@ -51,7 +51,7 @@ public class BrobInt {
    private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string
 
 
-   private static final int CHARS_THAT_FIT = 1;
+   private static final int CHARS_THAT_FIT = 6;
    private int[] values = null;
    private int[] myArray = null;
    private int[] sum = null;
@@ -67,35 +67,23 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String value ) {
-    //Doofus d = new Doofus()
-    //BrobInt b1 = new BrobInt();
     internalValue = value;
     int i = 0;
     int length = value.length();
     int start  = length - CHARS_THAT_FIT;
     int size   = (int)(Math.ceil( length / CHARS_THAT_FIT ) + 1);
-    myArray = new int[size]; //d.values = new int[ size ];
+    myArray = new int[size];
 
-    while( length >= 6 ) { //chops into sections of 6
+    while( length >= CHARS_THAT_FIT ) { //chops into sections of 6
        myArray[i] = Integer.parseInt( value.substring( start, length ) );
        start -= CHARS_THAT_FIT;
        length -= CHARS_THAT_FIT;
-       /*
-       System.out.print( " length: " + length + ", start: " + start );
-       System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
-       */
        i++;
     }
     if( length > 0 ) {
        myArray[i] = Integer.parseInt( value.substring( 0, length ) );
-       /*
-       System.out.print( " length: " + length + ", start: " + start );
-       System.out.println( "  -- converted values[" + i + "] is: " + myArray[i] );
-       */
     }
-    
     toArray( myArray );
-    //System.out.println("myArray: " + myArray);
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,8 +106,11 @@ public class BrobInt {
    *  Method to reverse the value of this BrobInt
    *  @return BrobInt that is the reverse of the value of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt reverser() {
-    //StringBuffer sb = new StringBuffer( args[0] ).reverse();
+   public BrobInt reverser(String[] value) {
+    /*
+      StringBuffer sb = new StringBuffer( value[0] ).reverse();
+      return sb;
+    */
       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
    }
 
@@ -147,8 +138,8 @@ public class BrobInt {
     return myArray;
   }
 
-  public BrobInt add( BrobInt bigint1 ) {
-    int length1 = bigint1.getLength();
+  public BrobInt add( BrobInt b1 ) {
+    int length1 = b1.getLength();
     int thisLength = this.getLength();
     int sum[];
     int smaller[];
@@ -157,18 +148,18 @@ public class BrobInt {
     if (length1 > thisLength) {
       sum = new int[length1];
       smaller = new int[thisLength];
-      System.out.println("sum: " + sum + "smaller " + smaller);
+      //System.out.println("sum: " + sum + "smaller " + smaller);
     } else {
       sum = new int[thisLength];
       smaller = new int[length1];
-      System.out.println("sum: " + sum + "smaller " + smaller);
+      //System.out.println("sum: " + sum + "smaller " + smaller);
     }
 
     
-    int array1[] = bigint1.getArray();
+    int array1[] = b1.getArray();
     for (int i = 0; i < smaller.length; i++) {
       sum[i] = array1[i] + myArray[i] + carry;
-      System.out.println("sum: " + sum);
+      //System.out.println("sum: " + sum);
       if (sum[i] > 999999) {
         carry = sum[i] / 1000000;
         sum[i] = sum[i] % 1000000;
@@ -178,7 +169,7 @@ public class BrobInt {
     String value = "";
     for (int i = 0; i <= sum.length - 1; i ++) {
       value += sum[i];
-      System.out.println("value: " + value);
+      //System.out.println("value: " + value);
     }
     return new BrobInt(value);
   }
@@ -189,13 +180,13 @@ public class BrobInt {
    *  @param  gint         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt subtract( BrobInt bigint1 ) {
+   public BrobInt subtract( BrobInt b1 ) {
     
-    int length1 = bigint1.getLength();
+    int length1 = b1.getLength();
     int thisLength = this.getLength();
     int difference[];
     int carry;
-    int array1[] = bigint1.getArray();
+    int array1[] = b1.getArray();
     if (thisLength > length1) {
       difference = new int[thisLength];
       for (int i = 0; i < difference.length; i++) {
@@ -332,7 +323,7 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      //System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
+      BrobInt g1 = new BrobInt( "144127909719710664015092431502440849849506284148982076191826176553" );
       System.exit( 0 );
    }
 }
