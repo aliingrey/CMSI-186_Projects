@@ -50,12 +50,11 @@ public class BrobInt {
    private byte[] byteVersion   = null;      // byte array for storing the string values; uses the reversed string
 
 
-   private static final int CHARS_THAT_FIT = 8;
+  // private static final int CHARS_THAT_FIT = 8;
    private int[] values = null;
    private int[] sectionArray = null;
    private int[] sum = null;
 
-   private boolean isPositive;
    private boolean isNegative;
 
    //private int sum = 0;
@@ -69,8 +68,19 @@ public class BrobInt {
    *  @param  value  String value to make into a BrobInt
    */
    public BrobInt( String value ) {
-    if (validateDigits(value) == true){
-        internalValue = value;
+    if (validateDigits(value) == true) {
+      if (value.charAt(0) == '+') {
+        value = value.substring(1);
+        isNegative = false;
+
+      } 
+      if  (value.charAt(0) == '-') {
+        value = value.substring(1);
+        isNegative = true;
+      }
+      
+      internalValue = value;
+        /*
         int i = 0;
         int length = value.length();
         int start  = length - CHARS_THAT_FIT;
@@ -83,11 +93,21 @@ public class BrobInt {
            length -= CHARS_THAT_FIT;
            i++;
         }
+        */
+      int size = value.length();
+      sectionArray = new int[size];
+        
+      int j = 0;
+      for (int i = size - 1; i >= 0; i--) {
+        sectionArray[i] = value.charAt(j) - 48;
+        j++;
+      }
+        /*
         if( length > 0 ) {
            sectionArray[i] = Integer.parseInt( value.substring( 0, length ) );
         }
+        */
         toArray( sectionArray );
-
     } else {
       System.out.println("Numbers can't be converted");
       System.exit(1);
@@ -103,10 +123,8 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public boolean validateDigits(String value) {
     if (value.charAt(0) == '+' || value.charAt(0) == '-') {
-
       for (int i = 1; i <= value.length(); i++) {
         try {
-          double d = Double.parseDouble( value.substring(i, i + 1) );
         } catch (NumberFormatException nfe) {
           return false;
         }
@@ -114,18 +132,15 @@ public class BrobInt {
      }
 
       if (value.charAt(0) == '+') {
-        isPositive = true;
         isNegative = false;
       }
       
       if (value.charAt(0) == '-') {
         isNegative = true;
-        isPositive = false;
       }
     } else {
       try {
         double d = Double.parseDouble( value );
-        isPositive = true;
         isNegative = false;
       } catch (NumberFormatException nfe) {
         return false;
@@ -365,7 +380,7 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      BrobInt g1 = new BrobInt( "144127909719710664015092431502440849849506284148982076191826176553" );
+      BrobInt g1 = new BrobInt( "123456789" );
       System.exit( 0 );
    }
 }
