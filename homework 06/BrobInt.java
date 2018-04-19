@@ -179,15 +179,11 @@ public class BrobInt {
     int[] smallArray;
     int[] largerArray;
 
-    //int sum[];
     int carry = 0;
 
     int shorterLength;
     int longerLength;
-    /*
-    BrobInt largerValue;
-    BrobInt smallerValue;
-    */
+
 
     if (!this.isNegative() && b1.isNegative()){
 
@@ -264,47 +260,39 @@ public class BrobInt {
     isNegative = true;
    }
 
-   public BrobInt subtract(BrobInt bigInt1) {
-    int length1 = bigInt1.getLength();
+   public BrobInt subtract(BrobInt b1) {
+    int length1 = b1.getLength();
     int length2 = this.getLength();
-    int[] array1 = bigInt1.getArray();
+    int[] array1 = b1.getArray();
     int diff[];
 
 
-    if (!this.isNegative() && bigInt1.isNegative()){
-      BrobInt temp1 = new BrobInt(this.toString());
-      BrobInt temp2 = new BrobInt(bigInt1.toString());
-      temp2.makePositive();
-      return temp1.add(temp2);
+    if (!this.isNegative() && b1.isNegative()){
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempb1.makePositive();
+      return tempThis.add(tempb1);
     }
 
-
-    if (this.isNegative() && !bigInt1.isNegative()){
-      BrobInt temp1 = new BrobInt(this.toString());
-      BrobInt temp2 = new BrobInt(bigInt1.toString());
-      temp2.makeNegative();
-      return temp1.add(temp2);
+    if (this.isNegative() && !b1.isNegative()){
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempb1.makeNegative();
+      return tempThis.add(b1);
     }
 
-
-    if (this.isNegative() && bigInt1.isNegative()){
-      BrobInt temp1 = new BrobInt(this.toString());
-      BrobInt temp2 = new BrobInt(bigInt1.toString());
-      temp1.makePositive();
-      temp2.makePositive();
-      return temp2.subtract(temp1);
+    if (this.isNegative() && b1.isNegative()){
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempThis.makePositive();
+      tempb1.makePositive();
+      return tempb1.subtract(tempThis);
     }
-
- 
 
     if (length1 > length2) {
-
       diff = new int[length1];
-
       for (int i = 0; i < length2; i++){
-
         diff[i] = array1[i] - sectionArray[i];
-
         if (diff[i] < 0) {
           array1[i+1]--;
           diff[i] = (array1[i] + 10) - sectionArray[i];
@@ -344,14 +332,10 @@ public class BrobInt {
         for (int i = diff.length - 1; i >= 0; i--)
           value += diff[i];
         return new BrobInt(value);
-
     }
-
- 
-
     else {
       diff = new int[length2];
-      if (bigInt1.compareTo(this) > 0) {
+      if (b1.compareTo(this) > 0) {
 
         for (int i = 0; i < length2; i++){
           diff[i] = array1[i] - sectionArray[i];
@@ -365,7 +349,7 @@ public class BrobInt {
           value += diff[i];
         return new BrobInt(value);
       }
-      if (bigInt1.compareTo(this) < 0) {
+      if (b1.compareTo(this) < 0) {
         for (int i = 0; i < length1; i++){
           diff[i] = sectionArray[i] - array1[i];
           if (diff[i] < 0) {
@@ -374,25 +358,131 @@ public class BrobInt {
           }
         }
         String value = "";
-        for (int i = diff.length - 1; i >= 0; i--)
+        for (int i = diff.length - 1; i >= 0; i--) {
           value += diff[i];
+        }
         return new BrobInt(value);
       }
-      else
+      else {
         return new BrobInt("0");
+      }
     }
-
   }
 
+ public BrobInt divide(BrobInt b1) {
+    if (this.compareTo(b1) == 0)
+      return new BrobInt("1");
+
+    if (this.compareTo(b1) < 0)
+      return new BrobInt("0");
+
+    int[] quotient = new int[this.getLength()];
+    String value = "";
+    int count = 0;
+    int index = 0;
+
+    try {
+      for (int i = 0; i < this.getLength(); i++) {
+        value += internalValue.charAt(i);
+        BrobInt temp = new BrobInt(value);
+        count = 0;
+
+        if (b1.compareTo(temp) <= 0) {
+          while (b1.compareTo(temp) <= 0) {
+            temp = temp.subtract(b1);
+            count++;
+            index = i;
+          }
+        }
+        else {
+          count = 0;
+        }
+        value = temp.toString();
+        if (value.charAt(0) == '0') {
+          value = value.substring(1);
+        }
+        quotient[i] = count;
+      }
+    }
+
+    catch(IndexOutOfBoundsException e) {
+      if (value.charAt(0) == '0')
+        value = value.substring(1);
+      quotient[index] = count;
+    };
+
+    String strQuotient = "";
+    for (int x : quotient)
+      strQuotient += x;
+
+    return new BrobInt(strQuotient);
+  }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to divide the value of this BrobIntk by the BrobInt passed as argument
    *  @param  gint         BrobInt to divide this by
    *  @return BrobInt that is the dividend of this BrobInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt divide( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-   }
+   
+   public BrobInt multiply( BrobInt b1 ) {
+    int argLength = b1.getLength();
+    int length1 = this.getLength();
+    int[] array1 = b1.getArray();
+    int[] smallArray;
+    int[] largerArray;
+
+    int product[];
+    int carry = 0;
+
+    int shorterLength;
+    int longerLength;
+  
+    if (length1 > argLength) {
+      shorterLength = argLength;
+      longerLength = length1;
+      smallArray = sectionArray;
+      largerArray = array1;
+    }
+    else if (length1 < argLength) {
+      shorterLength = length1;
+      longerLength = argLength;
+      smallArray = array1;
+      largerArray = sectionArray;
+    }
+    else {
+      shorterLength = length1;
+      longerLength = argLength;
+      smallArray = array1;
+      largerArray = sectionArray;
+    }
+    product = new int[shorterLength + longerLength];
+    for (int i = 0; i < length1; i++){
+      for(int j = 0; j < argLength; j++){
+        product[i + j] = sectionArray[i] * array1[j];
+      }
+    }
+    for(int i = 0; i < product.length; i++){
+      if(product[i] >= 10){
+        while(product[i] >= 10){
+          product[i] -= 10;
+          product[i + 1] += 1;
+        }
+      }
+    }
+    
+
+    String newString = "";
+    if((!this.isNegative && b1.isNegative) || (this.isNegative && !b1.isNegative)){
+      newString += '-';
+    }
+    for(int i = product.length - 1; i >= 0; i--){
+      newString = newString + product[i];  
+    }
+
+    return new BrobInt(newString);
+  }
+
+  //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to get the remainder of division of this BrobInt by the one passed as argument
@@ -461,12 +551,12 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      BrobInt g1 = new BrobInt( "55" );
-      BrobInt g2 = new BrobInt( "101" );
+      BrobInt g1 = new BrobInt( "50" );
+      BrobInt g2 = new BrobInt( "10" );
       System.out.println("g1 " + g1.toString());
       System.out.println("g2 " + g2.toString());
 
-      System.out.println("sum: " + g1.subtract(g2));
+      System.out.println(g1.multiply(g2));
  
       System.exit( 0 );
    }
