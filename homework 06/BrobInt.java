@@ -54,6 +54,9 @@ public class BrobInt {
    private int[] values = null;
    private int[] sectionArray = null;
    private int[] sum = null;
+   private int[] difference = null;
+   private int[] smaller = null;
+   private int[] bigger = null;
 
    private boolean isNegative;
 
@@ -78,36 +81,17 @@ public class BrobInt {
         value = value.substring(1);
         isNegative = true;
       }
-      
-      internalValue = value;
-        /*
-        int i = 0;
-        int length = value.length();
-        int start  = length - CHARS_THAT_FIT;
-        int size   = (int)(Math.ceil( length / CHARS_THAT_FIT ) + 1);
-        sectionArray = new int[size];
 
-        while( length >= CHARS_THAT_FIT ) { //chops into sections of 6
-           sectionArray[i] = Integer.parseInt( value.substring( start, length ) );
-           start -= CHARS_THAT_FIT;
-           length -= CHARS_THAT_FIT;
-           i++;
-        }
-        */
+      internalValue = value;
       int size = value.length();
       sectionArray = new int[size];
         
-      int j = 0;
+      int j = 0; //creates array and puts values in reverse order
       for (int i = size - 1; i >= 0; i--) {
         sectionArray[i] = value.charAt(j) - 48;
         j++;
       }
-        /*
-        if( length > 0 ) {
-           sectionArray[i] = Integer.parseInt( value.substring( 0, length ) );
-        }
-        */
-        toArray( sectionArray );
+      //toArray( sectionArray );
     } else {
       System.out.println("Numbers can't be converted");
       System.exit(1);
@@ -121,35 +105,25 @@ public class BrobInt {
    *  note that there is no return false, because of throwing the exception
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public boolean validateDigits(String value) {
+   public boolean validateDigits(String value) { 
     if (value.charAt(0) == '+' || value.charAt(0) == '-') {
-      for (int i = 1; i <= value.length(); i++) {
         try {
+          double d = Double.parseDouble( value.substring(1) );
         } catch (NumberFormatException nfe) {
           return false;
         }
         internalValue = value.substring(1);
-     }
-
-      if (value.charAt(0) == '+') {
-        isNegative = false;
-      }
-      
-      if (value.charAt(0) == '-') {
-        isNegative = true;
-      }
     } else {
       try {
         double d = Double.parseDouble( value );
-        isNegative = false;
       } catch (NumberFormatException nfe) {
         return false;
       }
-      internalValue = value.substring(0);
-      
-     }
-     return true;
+      //internalValue = value.substring(0);
+     
    }
+   return true;
+  }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to reverse the value of this BrobInt
@@ -164,8 +138,6 @@ public class BrobInt {
     }
     return new BrobInt (sb.toString());
    }
-
-
 
    public BrobInt reverser() {
      return new BrobInt(new StringBuffer( internalValue ).reverse().toString());
@@ -195,41 +167,87 @@ public class BrobInt {
     return sectionArray;
   }
 
-  public BrobInt add( BrobInt b1 ) {
-    int length1 = b1.getLength();
-    int thisLength = this.getLength();
-    int sum[];
-    int smaller[];
-    int carry = 0;
+  public boolean isNegative() {
+    return isNegative;
+  }
 
-    if (length1 > thisLength) {
-      sum = new int[length1];
-      smaller = new int[thisLength];
-      //System.out.println("sum: " + sum + "smaller " + smaller);
-    } else {
-      sum = new int[thisLength];
-      smaller = new int[length1];
-      //System.out.println("sum: " + sum + "smaller " + smaller);
+
+  public BrobInt add(BrobInt b1) {
+    int argLength = b1.getLength();
+    int length1 = this.getLength();
+    int[] array1 = b1.getArray();
+
+    int sum[];
+    int carry = 0;
+ 
+    if (!this.isNegative() && b1.isNegative()){
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempb1.makePositive();
+      return tempThis.subtract(tempb1);
+    } 
+
+    if (this.isNegative() && !b1.isNegative()){
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempThis.makePositive();
+      return tempb1.subtract(tempThis);
     }
 
-    
-    int array1[] = b1.getArray();
-    for (int i = 0; i < smaller.length; i++) {
-      sum[i] = array1[i] + sectionArray[i] + carry;
-      //System.out.println("sum: " + sum);
-      if (sum[i] > 999999) {
-        carry = sum[i] / 1000000;
-        sum[i] = sum[i] % 1000000;
+    if (argLength > length1) {
+      sum = new int[argLength + 1];
+      for (int i = 0; i < length1; i++){
+        sum[i] = array1[i] + sectionArray[i] + carry;
+        carry = sum[i] / 10;
+        sum[i] = sum[i] % 10;
       }
+
+      for (int i = length1; i < argLength; i++){
+        sum[i] = array1[i] + carry;
+        carry = sum[i] / 10;
+        sum[i] = sum[i] % 10;
+      }
+      sum[sum.length - 1] = carry;
+    }
+    else if (argLength < length1) {
+      sum = new int[length1 + 1];
+      for (int i = 0; i < argLength; i++){
+        sum[i] = array1[i] + sectionArray[i] + carry;
+        carry = sum[i] / 10;
+        sum[i] = sum[i] % 10;
+      }
+
+      for (int i = argLength; i < length1; i++){
+        sum[i] = sectionArray[i] + carry;
+        carry = sum[i] / 10;
+        sum[i] = sum[i] % 10;
+      }
+      sum[sum.length - 1] = carry;
+    }
+    else {
+      sum = new int[length1 + 1];
+      for (int i = 0; i < argLength; i++){
+        sum[i] = array1[i] + sectionArray[i] + carry;
+        carry = sum[i] / 10;
+        sum[i] = sum[i] % 10;
+      }
+      sum[sum.length - 1] = carry;
+    }
+
+    if (this.isNegative() && b1.isNegative()){
+      String value = "-";
+      for (int i = sum.length - 1; i >= 0; i--)
+        value += sum[i];
+      return new BrobInt(value);
     }
 
     String value = "";
-    for (int i = 0; i <= sum.length - 1; i ++) {
+    for (int i = sum.length - 1; i >= 0; i--)
       value += sum[i];
-      //System.out.println("value: " + value);
-    }
     return new BrobInt(value);
   }
+
+ 
    
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -237,75 +255,155 @@ public class BrobInt {
    *  @param  gint         BrobInt to subtract from this
    *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   public void makePositive() {
+    isNegative = false;
+   }
+
    public BrobInt subtract( BrobInt b1 ) {
-    
     int length1 = b1.getLength();
-    int thisLength = this.getLength();
+    int argLength = this.getLength();
+    int array1[] = b1.getArray();
+
     int difference[];
     int carry;
-    int array1[] = b1.getArray();
-    if (thisLength > length1) {
-      difference = new int[thisLength];
-      for (int i = 0; i < difference.length; i++) {
-        difference[i] = array1[i] - sectionArray[i];
-        if (difference[i] < 0) {
-          carry = difference[i];
-          difference[i] = difference[i] % 10;
+
+    int compareVal = b1.compareTo(this);
+ 
+    if (b1.isNegative() && !this.isNegative()) { //one negative --> call add
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempb1.makePositive(); //make pos number: cuts of neg sign, so it's a positive number
+      return tempThis.add(tempb1); // this - - b1 = this + b1
+    } 
+    if (!b1.isNegative() && this.isNegative()) { //one negative --> call add
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempThis.makePositive();
+      return tempb1.add(tempThis);
+    } 
+    if (b1.isNegative() && this.isNegative()) { //both negative --> call subtraction
+      BrobInt tempThis = new BrobInt(this.toString());
+      BrobInt tempb1 = new BrobInt(b1.toString());
+      tempThis.makePositive();
+      tempb1.makePositive();
+      return tempThis.subtract(tempb1);
+    }
+    if (!b1.isNegative() && !this.isNegative) { //neither has a sign
+      if (argLength > length1) { //this is longer, therefore is greater -- simple subrtraction
+        difference = new int[argLength];
+        for (int i = 0; i < difference.length; i++) {
+          difference[i] = array1[i] - sectionArray[i];
+          if (difference[i] < 0) {
+            carry = difference[i];
+            difference[i] = difference[i] % 10;
+          }
+        }
+        for (int i = length1; i < argLength; i++) { //drops down numbers that did not get subtracted
+        difference[i] = array1[i];
+        String value = "-";
+        for (int j = difference.length - 1; j >= 0; j--) { //puts numbers back into string
+          value += difference[j];
+        }
+        return new BrobInt(value);
+      }
+      } else if (argLength < length1) { //b1 is longer, therefore is greater -- simple subrtraction
+        difference = new int[length1];
+        for (int i = 0; i < difference.length; i++) {
+          difference[i] = sectionArray[i] - array1[i];
+          if (difference[i] < 0) {
+            carry = difference[i];
+            difference[i] = difference[i] % 10;
+          }
+        }
+        for (int i = length1; i < argLength; i++) { //drops down numbers that did not get subtracted
+            difference[i] = array1[i];
+            String value = "-";
+                for (int j = difference.length - 1; j >= 0; j--) { //puts numbers back into string
+                  value += difference[j];
+                }
+            return new BrobInt(value);
         }
       }
+      
+    }
+  
+    if (argLength > length1) { //this is larger
+      difference = new int[argLength];
+      for (int i = 0; i < length1; i++) {
+        difference[i] = sectionArray[i] - array1[i];
+        if (difference[i] < 0) {
+          sectionArray[i + 1] = sectionArray[i + 1] - 1;
+          difference[i] = (sectionArray[i] + 10) - array1[i];
+        }
+      }
+      for (int i = length1; i < argLength; i++) { //drops down numbers that did not get subtracted
+        difference[i] = array1[i];
+       }
 
-    } else {
+      String value = "-";
+      for (int j = difference.length - 1; j >= 0; j--) { //puts numbers back into string
+          value += difference[j];
+      }
+      return new BrobInt(value);
+      
+    } else if (argLength < length1) {
       difference = new int[length1];
+      for (int i = 0; i < argLength; i++) {
+        difference[i] = array1[i] - sectionArray[i];
+        if (difference[i] < 0) {
+          array1[i + 1] = array1[i + 1] - 1;
+          difference[i] = (array1[i] + 10) - sectionArray[i];
+        }
+      }
+      for (int i = length1; i < argLength; i++) {
+        difference[i] = array1[i];
+      }
+
+      String value = "";
+      for (int j = difference.length - 1; j >= 0; j--) {
+          value += difference[j];
+      }
+      return new BrobInt(value);
+      
+    } 
+    
+    else {
+      difference = new int[length1];
+      if (compareVal > 0) { 
+        for (int i = 0; i < length1; i ++) {
+          difference[i] = array1[i] - sectionArray[i];
+          if (difference[i] < 0) {
+            array1[i + 1] = array1[i + 1] - 1;
+            difference[i] = (array1[i] + 10) - sectionArray[i];
+          }
+        }
+        String value = "-";
+        for (int i = difference.length - 1; i >= 0; i --) {
+          value += difference[i];
+        }
+        return new BrobInt(value);
+      }
+      if (compareVal < 0) {
+        for (int i = 0; i < length1; i ++) {
+          difference[i] = sectionArray[i] - array1[i];
+          if (difference[i] < 0) {
+            array1[i + 1] = array1[i + 1] - 1;
+            difference[i] = (sectionArray[i] + 10) - array1[i];
+          }
+        }
+        String value = "";
+        for (int i = difference.length - 1; i >= 0; i --) {
+          value += difference[i];
+        }
+        return new BrobInt(value);
+      }
+      else { //equal
+        return new BrobInt("0");
+      }
     }
 
-    String value = "";
-    for (int i = 0; i <= difference.length; i ++) {
-      value += difference[i];
-    }
-    return new BrobInt(value);
-  }
-      //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-      /*
-      Brobintb3 = b1.subtract(b2);
-      1. neither has a sign, first number is larger -- simple subtraction: a - b
-      2. both signs positive, first number is larger -- simple subtraction: a - b
-      3. one positive, one no sign, first number is larger -- simple subtraction: a - b
-      4. no signs, first number is smaller -- swap a & b, subtract a - b, result negative
-      5. both signs positive, first number is smaller -- swap a & b, subtract a - b, result negative
-      6. one positive, one no sign, first number is smaller -- swap a & b, subtract a - b, result negative
-      7. no sign, arg neg -- remove neg from arg and call this.add( arg )
-      8. this neg, arg pos -- add neg to arg and call this.add( arg )
-      9. both neg, larger abs than arg abs -- remove signs, subract, add neg to result
-      10. both neg, this smaller abs than arg abs -- remove signs, swap a & b, subtract, result pos
-      */
-   
+ }
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using int array
-   *  @param  gint         BrobInt to subtract from this
-   *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
- 
-
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   *  Method to multiply the value of a BrobIntk passed as argument to this BrobInt
-   *  @param  gint         BrobInt to multiply by this
-   *  @return BrobInt that is the product of the value of this BrobInt and the one passed in
-   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt multiply( BrobInt gint ) {
-      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-      /*
-      russian peasant multiplication:
-        double / half / sum
-        double - add it to it'self
-        half - use half class 
-        sum - keep track of sum, if the half is odd, add the double in
-      how do we know number of digits?
-        take "worst case scenario" 
-        use 9s to multiply
-        + 1 place for a sign
-      */
-   }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to divide the value of this BrobIntk by the BrobInt passed as argument
@@ -359,18 +457,21 @@ public class BrobInt {
    *  could do another one with an argument
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public String toString() {
-      String intString = "";
-      for( int x : sectionArray) {
-        intString += x;
-      }
-      return intString;
+    if (internalValue.charAt(0) == '0' && internalValue.length() > 1) {
+      internalValue = internalValue.substring(1);
+    }
+    if (isNegative == true) {
+      internalValue = "-" + internalValue;
+    }
+    return internalValue;
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to display an Array representation of this BrobInt as its bytes
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public void toArray( int[] d ) {
-      System.out.println( Arrays.toString( d ) );
+
+    System.out.println( Arrays.toString( d ) );
    }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -380,7 +481,13 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      BrobInt g1 = new BrobInt( "123456789" );
+      BrobInt g1 = new BrobInt( "55" );
+      BrobInt g2 = new BrobInt( "101" );
+      System.out.println("g1 " + g1.toString());
+      System.out.println("g2 " + g2.toString());
+
+      System.out.println("sum: " + g1.add(g2));
+ 
       System.exit( 0 );
    }
 }
