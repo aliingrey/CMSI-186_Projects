@@ -95,7 +95,6 @@ public class BrobInt {
         sectionArray[i] = value.charAt(j) - 48;
         j++;
       }
-      //toArray( sectionArray );
     } else {
       System.out.println("Numbers can't be converted");
       System.exit(1);
@@ -122,9 +121,7 @@ public class BrobInt {
         double d = Double.parseDouble( value );
       } catch (NumberFormatException nfe) {
         return false;
-      }
-      //internalValue = value.substring(0);
-     
+      }     
    }
    return true;
   }
@@ -189,15 +186,14 @@ public class BrobInt {
     int longerLength;
 
 
-    if (!this.isNegative() && b1.isNegative()){
-
+    if (!this.isNegative() && b1.isNegative()){ // -- makes add
       BrobInt tempThis = new BrobInt(this.toString());
       BrobInt tempb1 = new BrobInt(b1.toString());
       tempb1.makePositive();
       return tempThis.subtract(tempb1);
     } 
 
-    if (this.isNegative() && !b1.isNegative()){
+    if (this.isNegative() && !b1.isNegative()){ // -- makes add
       BrobInt tempThis = new BrobInt(this.toString());
       BrobInt tempb1 = new BrobInt(b1.toString());
       tempThis.makePositive();
@@ -237,6 +233,7 @@ public class BrobInt {
     }
 
     sum[sum.length - 1] = carry;
+
     if (this.isNegative() && b1.isNegative() ) {
       String value = "-";
       for (int i = sum.length - 1; i >= 0; i--)
@@ -372,56 +369,11 @@ public class BrobInt {
       }
     }
   }
-
+/*
  public BrobInt divide(BrobInt b1) {
-    if (this.compareTo(b1) == 0)
-      return new BrobInt("1");
-
-    if (this.compareTo(b1) < 0)
-      return new BrobInt("0");
-
-    int[] quotient = new int[this.getLength()];
-    String value = "";
-    int count = 0;
-    int index = 0;
-
-    try {
-      for (int i = 0; i < this.getLength(); i++) {
-        value += internalValue.charAt(i);
-        BrobInt temp = new BrobInt(value);
-        count = 0;
-
-        if (b1.compareTo(temp) <= 0) {
-          while (b1.compareTo(temp) <= 0) {
-            temp = temp.subtract(b1);
-            count++;
-            index = i;
-          }
-        }
-        else {
-          count = 0;
-        }
-        value = temp.toString();
-        if (value.charAt(0) == '0') {
-          value = value.substring(1);
-        }
-        quotient[i] = count;
-      }
-    }
-
-    catch(IndexOutOfBoundsException e) {
-      if (value.charAt(0) == '0')
-        value = value.substring(1);
-      quotient[index] = count;
-    };
-
-    String strQuotient = "";
-    for (int x : quotient)
-      strQuotient += x;
-
-    return new BrobInt(strQuotient);
-  }
-
+  throw
+ }
+*/
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to divide the value of this BrobIntk by the BrobInt passed as argument
    *  @param  gint         BrobInt to divide this by
@@ -461,20 +413,19 @@ public class BrobInt {
     }
     product = new int[shorterLength + longerLength];
     for (int i = 0; i < length1; i++){
-      for(int j = 0; j < argLength; j++){
+      for (int j = 0; j < argLength; j++){
         product[i + j] = sectionArray[i] * array1[j];
       }
     }
-    for(int i = 0; i < product.length; i++){
-      if(product[i] >= 10){
-        while(product[i] >= 10){
+    for (int i = 0; i < product.length; i++){
+      if (product[i] >= 10){
+        while (product[i] >= 10) {
           product[i] -= 10;
           product[i + 1] += 1;
         }
       }
     }
     
-
     String newString = "";
     if((!this.isNegative && b1.isNegative) || (this.isNegative && !b1.isNegative)){
       newString += '-';
@@ -555,25 +506,15 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      BrobInt g1 = new BrobInt( "-52313" );
+      BrobInt g1 = new BrobInt( "1000" );
       BrobInt g2 = new BrobInt( "3332" );
       BrobInt g3 = new BrobInt( "1000" );
-      //BrobInt g2 = new BrobInt( "-10" );
-      //BrobInt g3 = new BrobInt( "10" );
       System.out.println("g1 " + g1.toString());
       System.out.println("g2 " + g2.toString());
       System.out.println("add" + g1.add(g2));
-      System.out.println("subtract" + g1.subtract(g2));
-      System.out.println("multiply" + g1.multiply(g2));
-      System.out.println("divide" + g1.divide(g2));
-
-      System.out.println("g2 " + g2.toString());
-      System.out.println("g3 " + g3.toString());
-      System.out.println("add" + g3.add(g2));
-      System.out.println("subtract" + g2.subtract(g3));
-      System.out.println("multiply" + g3.multiply(g2));
-      System.out.println("divide" + g2.divide(g3));
- 
+      System.out.println("subtract " + g1.subtract(g2));
+      System.out.println("subtract " + g2.subtract(g3));
+      System.out.println("multiply " + g1.multiply(g2));
       System.exit( 0 );
    }
 }
