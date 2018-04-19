@@ -82,6 +82,10 @@ public class BrobInt {
         isNegative = true;
       }
 
+      while (value.charAt(0) == '0' && value.length() > 1) {
+        value = value.substring(1);
+      }
+
       internalValue = value;
       int size = value.length();
       sectionArray = new int[size];
@@ -551,12 +555,24 @@ public class BrobInt {
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
-      BrobInt g1 = new BrobInt( "50" );
-      BrobInt g2 = new BrobInt( "10" );
+      BrobInt g1 = new BrobInt( "-52313" );
+      BrobInt g2 = new BrobInt( "3332" );
+      BrobInt g3 = new BrobInt( "1000" );
+      //BrobInt g2 = new BrobInt( "-10" );
+      //BrobInt g3 = new BrobInt( "10" );
       System.out.println("g1 " + g1.toString());
       System.out.println("g2 " + g2.toString());
+      System.out.println("add" + g1.add(g2));
+      System.out.println("subtract" + g1.subtract(g2));
+      System.out.println("multiply" + g1.multiply(g2));
+      System.out.println("divide" + g1.divide(g2));
 
-      System.out.println(g1.multiply(g2));
+      System.out.println("g2 " + g2.toString());
+      System.out.println("g3 " + g3.toString());
+      System.out.println("add" + g3.add(g2));
+      System.out.println("subtract" + g2.subtract(g3));
+      System.out.println("multiply" + g3.multiply(g2));
+      System.out.println("divide" + g2.divide(g3));
  
       System.exit( 0 );
    }
