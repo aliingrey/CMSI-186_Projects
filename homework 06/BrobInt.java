@@ -176,11 +176,21 @@ public class BrobInt {
     int argLength = b1.getLength();
     int length1 = this.getLength();
     int[] array1 = b1.getArray();
+    int[] smallArray;
+    int[] largerArray;
 
-    int sum[];
+    //int sum[];
     int carry = 0;
- 
+
+    int shorterLength;
+    int longerLength;
+    /*
+    BrobInt largerValue;
+    BrobInt smallerValue;
+    */
+
     if (!this.isNegative() && b1.isNegative()){
+
       BrobInt tempThis = new BrobInt(this.toString());
       BrobInt tempb1 = new BrobInt(b1.toString());
       tempb1.makePositive();
@@ -193,48 +203,41 @@ public class BrobInt {
       tempThis.makePositive();
       return tempb1.subtract(tempThis);
     }
-
-    if (argLength > length1) {
-      sum = new int[argLength + 1];
-      for (int i = 0; i < length1; i++){
-        sum[i] = array1[i] + sectionArray[i] + carry;
-        carry = sum[i] / 10;
-        sum[i] = sum[i] % 10;
-      }
-
-      for (int i = length1; i < argLength; i++){
-        sum[i] = array1[i] + carry;
-        carry = sum[i] / 10;
-        sum[i] = sum[i] % 10;
-      }
-      sum[sum.length - 1] = carry;
+    if (length1 > argLength) {
+      shorterLength = argLength;
+      longerLength = length1;
+      smallArray = sectionArray;
+      largerArray = array1;
     }
-    else if (argLength < length1) {
-      sum = new int[length1 + 1];
-      for (int i = 0; i < argLength; i++){
-        sum[i] = array1[i] + sectionArray[i] + carry;
-        carry = sum[i] / 10;
-        sum[i] = sum[i] % 10;
-      }
-
-      for (int i = argLength; i < length1; i++){
-        sum[i] = sectionArray[i] + carry;
-        carry = sum[i] / 10;
-        sum[i] = sum[i] % 10;
-      }
-      sum[sum.length - 1] = carry;
+    else if (length1 < argLength) {
+      shorterLength = length1;
+      longerLength = argLength;
+      smallArray = array1;
+      largerArray = sectionArray;
     }
     else {
-      sum = new int[length1 + 1];
-      for (int i = 0; i < argLength; i++){
-        sum[i] = array1[i] + sectionArray[i] + carry;
-        carry = sum[i] / 10;
-        sum[i] = sum[i] % 10;
-      }
-      sum[sum.length - 1] = carry;
+      shorterLength = length1;
+      longerLength = argLength;
+      smallArray = array1;
+      largerArray = sectionArray;
     }
 
-    if (this.isNegative() && b1.isNegative()){
+    int sum[] = new int[longerLength + 1]; 
+
+    for (int i = 0; i < shorterLength; i++) {
+      sum[i] = array1[i] + sectionArray[i] + carry;
+      carry = sum[i] / 10;
+      sum[i] = sum[i] % 10;
+    }
+
+    for (int i = shorterLength; i < longerLength; i++) {
+      sum[i] = smallArray[i] + carry;
+      carry = sum[i] / 10;
+      sum[i] = sum[i] % 10;
+    }
+
+    sum[sum.length - 1] = carry;
+    if (this.isNegative() && b1.isNegative() ) {
       String value = "-";
       for (int i = sum.length - 1; i >= 0; i--)
         value += sum[i];
@@ -247,8 +250,6 @@ public class BrobInt {
     return new BrobInt(value);
   }
 
- 
-   
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to subtract the value of a BrobIntk passed as argument to this BrobInt using bytes
@@ -277,7 +278,6 @@ public class BrobInt {
       return temp1.add(temp2);
     }
 
- 
 
     if (this.isNegative() && !bigInt1.isNegative()){
       BrobInt temp1 = new BrobInt(this.toString());
@@ -286,7 +286,6 @@ public class BrobInt {
       return temp1.add(temp2);
     }
 
- 
 
     if (this.isNegative() && bigInt1.isNegative()){
       BrobInt temp1 = new BrobInt(this.toString());
@@ -351,9 +350,7 @@ public class BrobInt {
  
 
     else {
-
       diff = new int[length2];
-
       if (bigInt1.compareTo(this) > 0) {
 
         for (int i = 0; i < length2; i++){
@@ -380,7 +377,6 @@ public class BrobInt {
         for (int i = diff.length - 1; i >= 0; i--)
           value += diff[i];
         return new BrobInt(value);
-
       }
       else
         return new BrobInt("0");
