@@ -82,7 +82,7 @@ public class BrobInt {
         isNegative = true;
       }
 
-      while (value.charAt(0) == '0' && value.length() > 1) {
+      while (value.charAt(0) == '0' && value.length() > 1) { //gets rid of zeros
         value = value.substring(1);
       }
 
