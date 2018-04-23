@@ -76,7 +76,7 @@ public class BrobInt {
         value = value.substring(1);
         isNegative = false;
 
-      } 
+      }
       if  (value.charAt(0) == '-') {
         value = value.substring(1);
         isNegative = true;
@@ -89,7 +89,7 @@ public class BrobInt {
       internalValue = value;
       int size = value.length();
       sectionArray = new int[size];
-        
+
       int j = 0; //creates array and puts values in reverse order
       for (int i = size - 1; i >= 0; i--) {
         sectionArray[i] = value.charAt(j) - 48;
@@ -108,7 +108,7 @@ public class BrobInt {
    *  note that there is no return false, because of throwing the exception
    *  note also that this must check for the '+' and '-' sign digits
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public boolean validateDigits(String value) { 
+   public boolean validateDigits(String value) {
     if (value.charAt(0) == '+' || value.charAt(0) == '-') {
         try {
           double d = Double.parseDouble( value.substring(1) );
@@ -121,7 +121,7 @@ public class BrobInt {
         double d = Double.parseDouble( value );
       } catch (NumberFormatException nfe) {
         return false;
-      }     
+      }
    }
    return true;
   }
@@ -130,7 +130,7 @@ public class BrobInt {
    *  Method to reverse the value of this BrobInt
    *  @return BrobInt that is the reverse of the value of this BrobInt
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   public BrobInt reverser(String value) { 
+   public BrobInt reverser(String value) {
     StringBuffer sb;
     if (value.charAt(0) == '+' || value.charAt(0) == '-') {
       sb = new StringBuffer( value.substring(1) ).reverse();
@@ -191,7 +191,7 @@ public class BrobInt {
       BrobInt tempb1 = new BrobInt(b1.toString());
       tempb1.makePositive();
       return tempThis.subtract(tempb1);
-    } 
+    }
 
     if (this.isNegative() && !b1.isNegative()){ // -- makes add
       BrobInt tempThis = new BrobInt(this.toString());
@@ -218,7 +218,7 @@ public class BrobInt {
       largerArray = sectionArray;
     }
 
-    int sum[] = new int[longerLength + 1]; 
+    int sum[] = new int[longerLength + 1];
 
     for (int i = 0; i < shorterLength; i++) {
       sum[i] = array1[i] + sectionArray[i] + carry;
@@ -379,7 +379,6 @@ public class BrobInt {
    *  @param  gint         BrobInt to divide this by
    *  @return BrobInt that is the dividend of this BrobInt divided by the one passed in
    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-   
    public BrobInt multiply( BrobInt b1 ) {
     int argLength = b1.getLength();
     int length1 = this.getLength();
@@ -392,7 +391,7 @@ public class BrobInt {
 
     int shorterLength;
     int longerLength;
-  
+
     if (length1 > argLength) {
       shorterLength = argLength;
       longerLength = length1;
@@ -425,19 +424,29 @@ public class BrobInt {
         }
       }
     }
-    
+
     String newString = "";
     if((!this.isNegative && b1.isNegative) || (this.isNegative && !b1.isNegative)){
       newString += '-';
     }
     for(int i = product.length - 1; i >= 0; i--){
-      newString = newString + product[i];  
+      newString = newString + product[i];
     }
 
     return new BrobInt(newString);
   }
 
   //throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   *  Method to perform division of this BrobInt by the one passed as argument
+   *  @param  gint         BrobInt to divide this one by
+   *  @return BrobInt that is the quotient of division of this BrobInt by the one passed in
+   *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   public BrobInt divide( BrobInt gint ) {
+      throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+
+   }
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *  Method to get the remainder of division of this BrobInt by the one passed as argument
