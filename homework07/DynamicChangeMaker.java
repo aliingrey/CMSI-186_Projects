@@ -54,8 +54,8 @@ public class DynamicChangeMaker {
                 System.out.println("IMPOSSIBLE: " + amount + " can't be made with those denominations.");
             } else {
                 int coinTotal = change.total();
-                System.out.println(amount + " cents can be made with " + coinTotal + " coin"  +
-            	coinTotal + " as follows:");
+                System.out.println(amount + " cents can be made with " + coinTotal + " coin(s)"  +
+            	" as follows:");
 
                 for (int i = 0; i < denoms.length; i++) {
                     int coinCount = change.getElement(i);
@@ -93,7 +93,7 @@ public class DynamicChangeMaker {
                 if (row != 0) {
                     if (!tuples[row][column].equals(Tuple.IMPOSSIBLE)) {
                         if (tuples[row - 1][column].equals(Tuple.IMPOSSIBLE)) {
-                        } else if (!tuples[row - 1[column].equals(Tuple.IMPOSSIBLE)) {
+                        } else if (!tuples[row - 1][column].equals(Tuple.IMPOSSIBLE)) {
                             if (tuples[row - 1][column].total() < tuples[row][column].total()) {
                                  tuples[row][column] = tuples[row - 1][column];
                             } else {
