@@ -2,7 +2,6 @@
  * File name  :  Tuple.java
  * Purpose    :  Program to represent a tuple of integers, indexed from zero
  * @author    :  Ali Ingrey
- * @author    :  B.J. Johnson totally ripped off from the original
  * Date       :  2017-04-19
  * Description:  This program provides a "Tuple" class which is basically a set of "n" integers that are
  *                handled as a unit.  This class is intended to be used as part of homework 7, the coin
@@ -79,11 +78,10 @@ public class Tuple {
   /**
    * Returns whether the tuple is impossible.
    *
-   * @return whether the tuple is imposible
+   * @return whether the tuple is impossible
    */
    public boolean isImpossible() {
-      //if change cannot be made, outputs the message IMPOSSIBLE
-      return this == IMPOSSIBLE;
+      return this.equals( IMPOSSIBLE );
    }
 
   /**
@@ -141,13 +139,6 @@ public class Tuple {
    * @return the element-wise sum of this and t
    */
    public Tuple add( Tuple t ) {
-      /*
-      int sum = 0;
-        for (int i = 0; i < length(); i++) {
-            sum = sum + getElement(i);
-        }
-        return sum;
-      */
 
       if( length() != t.length()) {
          throw new IllegalArgumentException();
@@ -170,8 +161,7 @@ public class Tuple {
    */
    @Override
    public boolean equals( Object t ) {
-      if( (t == null) || !(t instanceof Tuple) ||
-          (length() != ((Tuple)t).length())       ) {
+      if( (t == null) || (!(t instanceof Tuple)) || (length() != ((Tuple)t).length())       ) {
          return false;
       }
 
