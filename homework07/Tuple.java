@@ -20,6 +20,7 @@
  *                                    use them; added explanatory notes to comments; fixed hashCode() to
  *                                    start product at "1" instead of "0" to prevent all codes from being
  *                                    zero, and also checked to make sure that IMPOSSIBLE *does* return 0.
+ 
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
