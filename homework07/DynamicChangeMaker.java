@@ -32,7 +32,6 @@ public class DynamicChangeMaker {
                     System.out.println("Denominations must all be greater than zero.\n");
                     System.exit( 0 );
                 }
-
                 for (int j = 0; j < i; j++) {
                     if (denoms[j] == denoms[i]) {
                         System.out.println("You entered " + denoms[i] + "multiple times. Duplicate denominations are not allowed.\n");
