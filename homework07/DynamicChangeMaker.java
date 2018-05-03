@@ -4,7 +4,7 @@
  *  Author        :  Ali Ingrey
  *  Date          :  2018-05-03
  *  Description   :  
- *  Notes         :  None
+ *  Notes         :  If change cannot be made, outputs impossible message. 
  *  Warnings      :  None
  *  Exceptions    :  None
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
